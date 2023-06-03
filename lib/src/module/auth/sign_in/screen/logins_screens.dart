@@ -11,12 +11,13 @@ import '../../local_storage/local_storage.dart';
 import '../controller/contoller.dart';
 
 class LoginScreens extends StatelessWidget {
-  LoginScreens({super.key});
-  final logController = Get.put(ControllerSignin());
-  var phone = LocalStorage().getStringData(key: "ph");
-  var password = LocalStorage().getStringData(key: "passs");
+  const LoginScreens({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final logController = Get.put(ControllerSignin());
+    var phone = LocalStorage().getStringData(key: "ph");
+    var password = LocalStorage().getStringData(key: "passs");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -62,7 +63,7 @@ class LoginScreens extends StatelessWidget {
               Expanded(
                 flex: 3,
                 child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomTextFiled(
                       title: 'Phone',
@@ -98,7 +99,7 @@ class LoginScreens extends StatelessWidget {
                           icon: Icon(logController.isGreyEye.value
                               ? Icons.visibility
                               : Icons.visibility_off)),
-                
+
                       //initialValues: controllerPassword.text,
                       labelText: 'Password',
                       isValidate: false,
@@ -131,7 +132,9 @@ class LoginScreens extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     CustomButtons(
                       title: 'Sign In',
                       onTap: () {
@@ -141,9 +144,9 @@ class LoginScreens extends StatelessWidget {
                             alertSuccessSnackbar(
                                 message: 'Login Successful', title: 'Success');
                           });
-                
+
                           context.go('/home-router');
-                
+
                           // Navigator.push(context,
                           //     MaterialPageRoute(builder: (context) {
                           //   return const HomePage();

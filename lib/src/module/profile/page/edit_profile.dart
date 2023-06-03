@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:intl/intl.dart';
-
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
 
@@ -32,29 +30,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
   int index = 0;
   DateTime selectedDate = DateTime.now();
   bool showDate = false;
-  Future<DateTime> _selectDate(BuildContext context) async {
-    final selected = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-    );
-    if (selected != null && selected != selectedDate) {
-      setState(() {
-        selectedDate = selected;
-      });
-    }
-    return selectedDate;
-  }
 
-  String getDate() {
-    // ignore: unnecessary_null_comparison
-    if (selectedDate == null) {
-      return 'select date';
-    } else {
-      return DateFormat('MMM d, yyyy').format(selectedDate);
-    }
-  }
+  // String getDate() {
+  //   if (selectedDate == DateTime.now()) {
+  //     return 'select date';
+  //   } else {
+  //     return DateFormat('MMM d, yyyy').format(selectedDate);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +65,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   const Divider(),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20,right: 5, bottom: 20, top: 20),
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 5, bottom: 20, top: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -113,85 +97,92 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ))
                       ],
                     ),
-                   
                   ),
-                   const Divider(),
-                   Padding(
-                     padding: const EdgeInsets.only(left: 20,right: 20, bottom: 20,top: 10),
-                     child: Row(
+                  const Divider(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20, right: 20, bottom: 20, top: 10),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children:  [
-                        Text("Account ID", style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontWeight: FontWeight.w500
-                        ),),
-                        Text("DIP0001", style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                         color: AppColor.grey1Color
-                        ),),
+                      children: [
+                        Text(
+                          "Account ID",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "DIP0001",
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall!
+                              .copyWith(color: AppColor.grey1Color),
+                        ),
                       ],
-                     ),
-                   )
+                    ),
+                  )
                 ],
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
-              padding: const EdgeInsets.only(left: 20,top: 15, bottom: 15,right: 10),
-              color: Colors.white,
-              child:const CustomSettingRow(
-                title: 'Change Account Password',
-              )
+                padding: const EdgeInsets.only(
+                    left: 20, top: 15, bottom: 15, right: 10),
+                color: Colors.white,
+                child: const CustomSettingRow(
+                  title: 'Change Account Password',
+                )),
+            const SizedBox(
+              height: 10,
             ),
-            const SizedBox(height: 10,),
             Container(
-              padding: const EdgeInsets.only(left: 20,top: 15, bottom: 15,right: 10),
-              color: Colors.white,
-              child:Column(
-                children: const [
-                  CustomSettingRow(
-                    title: 'Name',
-                    lastText:'Add',
-                    isLastText: true,
-                   
-                  ),
-                  Divider(),
-                  CustomSettingRow(
-                    title: 'Phone Number',
-                    lastText:'09339596',
-                    isLastText: true,
-                   
-                  ),
-                   Divider(),
-                  CustomSettingRow(
-                    title: 'Email Address',
-                     lastText:'Add',
-                    isLastText: true,
-                   
-                  ),
-                   Divider(),
-                  CustomSettingRow(
-                    title: 'Gender',
-                    isMoreText: true,
-                    moreText: 'Male',
-                   
-                  ),
-                   Divider(),
-                  CustomSettingRow(
-                    title: 'Birthday',
-                   
-                  ),
-                  
-                   
-                ],
-              )
+                padding: const EdgeInsets.only(
+                    left: 20, top: 15, bottom: 15, right: 10),
+                color: Colors.white,
+                child: const Column(
+                  children: [
+                    CustomSettingRow(
+                      title: 'Name',
+                      lastText: 'Add',
+                      isLastText: true,
+                    ),
+                    Divider(),
+                    CustomSettingRow(
+                      title: 'Phone Number',
+                      lastText: '09339596',
+                      isLastText: true,
+                    ),
+                    Divider(),
+                    CustomSettingRow(
+                      title: 'Email Address',
+                      lastText: 'Add',
+                      isLastText: true,
+                    ),
+                    Divider(),
+                    CustomSettingRow(
+                      title: 'Gender',
+                      isMoreText: true,
+                      moreText: 'Male',
+                    ),
+                    Divider(),
+                    CustomSettingRow(
+                      title: 'Birthday',
+                    ),
+                  ],
+                )),
+            const SizedBox(
+              height: 10,
             ),
-            const SizedBox(height: 10,),
-             Container(
-              padding: const EdgeInsets.only(left: 20,top: 15, bottom: 15,right: 10),
-              color: Colors.white,
-              child:const CustomSettingRow(
-                title: 'Delete Account',
-              )
-            ),
+            Container(
+                padding: const EdgeInsets.only(
+                    left: 20, top: 15, bottom: 15, right: 10),
+                color: Colors.white,
+                child: const CustomSettingRow(
+                  title: 'Delete Account',
+                )),
           ],
         )
         // Column(
@@ -366,7 +357,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             setState(() {
               index = value;
             });
-            final item = items[index];
+            // final item = items[index];
           },
           children: items
               .map((e) => Center(

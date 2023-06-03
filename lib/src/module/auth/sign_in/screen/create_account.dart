@@ -10,15 +10,15 @@ import '../controller/contoller.dart';
 import '../widget/customsignin.dart';
 
 class CreateAccoutn extends StatelessWidget {
-  CreateAccoutn({Key? key, this.isSelect = true}) : super(key: key);
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerPassword = TextEditingController();
-  final _controller = Get.put(ControllerSignin());
-  final _formKey = GlobalKey<FormState>();
+  const CreateAccoutn({Key? key, this.isSelect = true}) : super(key: key);
   final bool? isSelect;
-
   @override
   Widget build(BuildContext context) {
+    TextEditingController controllerEmail = TextEditingController();
+    TextEditingController controllerPassword = TextEditingController();
+    final controller = Get.put(ControllerSignin());
+    final formKey = GlobalKey<FormState>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -43,7 +43,7 @@ class CreateAccoutn extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Obx(
             () => Form(
-              key: _formKey,
+              key: formKey,
               child: Column(
                 children: [
                   const Text(
@@ -59,7 +59,7 @@ class CreateAccoutn extends StatelessWidget {
                   CustomTextFiled(
                     hintText: "Email",
                     onTap: () {},
-                    prifixIcon: _controller.isInputEmail.value == ""
+                    prifixIcon: controller.isInputEmail.value == ""
                         ? Image.asset("assets/png/email_grey.png")
                         : Image.asset("assets/png/black_email.png"),
                     initialValues: controllerEmail.text,
@@ -68,7 +68,7 @@ class CreateAccoutn extends StatelessWidget {
                         color: Colors.black,
                         fontWeight: FontWeight.w500),
                     onChanges: (e) {
-                      _controller.isInputEmail.value = e;
+                      controller.isInputEmail.value = e;
                     },
                   ),
                   CustomTextFiled(
@@ -76,17 +76,17 @@ class CreateAccoutn extends StatelessWidget {
                     hintText: 'Password',
                     maxlenght: 4,
                     isObscureText: true,
-                    prifixIcon: _controller.isPassword.value == ""
+                    prifixIcon: controller.isPassword.value == ""
                         ? Image.asset("assets/png/Lock.png")
                         : Image.asset("assets/png/Lock._bluepng.png"),
-                    suffixIcon: _controller.isPassword.value == ""
+                    suffixIcon: controller.isPassword.value == ""
                         ? Image.asset("assets/png/eye_grey.png")
                         : Image.asset("assets/png/fill_eye_blue.png"),
                     initialValues: controllerPassword.text,
                     labelText: 'Password',
                     isValidate: false,
                     onChanges: (ps) {
-                      _controller.isPassword.value = ps;
+                      controller.isPassword.value = ps;
                     },
                   ),
                   const SizedBox(
@@ -98,12 +98,12 @@ class CreateAccoutn extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          _controller.isvalidate.value = true;
+                          controller.isvalidate.value = true;
 
                           debugPrint(
-                              "=====> ${_controller.isvalidate.value = true}");
+                              "=====> ${controller.isvalidate.value = true}");
                         },
-                        child: _controller.isvalidate.value
+                        child: controller.isvalidate.value
                             ? Image.asset("assets/png/uncheck.png")
                             : Image.asset("assets/png/isclick.png"),
                       ),
@@ -125,8 +125,8 @@ class CreateAccoutn extends StatelessWidget {
                         ),
                       );
                     },
-                    isDisable: _controller.isPassword.value == "" ||
-                        _controller.isInputEmail.value == "",
+                    isDisable: controller.isPassword.value == "" ||
+                        controller.isInputEmail.value == "",
                     isOutline: false,
                     textStyle: const TextStyle(color: Color(0xffBDBDBD)),
                     title: "Next",
@@ -162,10 +162,10 @@ class CreateAccoutn extends StatelessWidget {
                   const SizedBox(
                     height: 50,
                   ),
-                  Row(
+                  const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CustomSigninAccoun(
                         image: "assets/png/fb.png",
                       ),

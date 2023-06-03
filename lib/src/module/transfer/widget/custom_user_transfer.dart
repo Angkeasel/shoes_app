@@ -2,9 +2,10 @@ import 'package:allpay/src/module/transfer/model/model.dart';
 import 'package:flutter/material.dart';
 
 class CustomUserTransfer extends StatelessWidget {
-  CustomUserTransfer({Key? key, this.model, this.onTap}) : super(key: key);
-  TransferModel? model;
-  Function? onTap;
+  const CustomUserTransfer({Key? key, this.model, this.onTap})
+      : super(key: key);
+  final TransferModel? model;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {

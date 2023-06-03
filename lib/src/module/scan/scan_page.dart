@@ -51,16 +51,17 @@ class ScanPage extends StatelessWidget {
                     ),
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: MobileScanner(
-                        allowDuplicates: false,
-                        controller: MobileScannerController(),
-                        onDetect: (barcode, args) {
-                          if (barcode.rawValue == null) {
-                            debugPrint('Failed to scan Barcode');
-                          } else {
-                            final String code = barcode.rawValue!;
-                            debugPrint('Barcode found! $code');
-                          }
-                        }),
+                      controller: MobileScannerController(
+                          detectionSpeed: DetectionSpeed.noDuplicates),
+                      onDetect: (barcodes) {
+                        if (barcodes.raw == null) {
+                          debugPrint('Failed to scan barcodes');
+                        } else {
+                          final String code = barcodes.raw!;
+                          debugPrint('Barcode found! $code');
+                        }
+                      },
+                    ),
                   ),
                   Container(
                     width: 100,

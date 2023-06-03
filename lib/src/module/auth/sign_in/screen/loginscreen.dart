@@ -10,13 +10,14 @@ import '../controller/contoller.dart';
 import '../widget/customsignin.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
-  TextEditingController controllerEmail = TextEditingController();
-  TextEditingController controllerPassword = TextEditingController();
-  final controller = Get.put(ControllerSignin());
-  final _formKey = GlobalKey<FormState>();
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    TextEditingController controllerEmail = TextEditingController();
+    TextEditingController controllerPassword = TextEditingController();
+    final controller = Get.put(ControllerSignin());
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -41,7 +42,7 @@ class LoginScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20.0),
           child: Obx(
             () => Form(
-              key: _formKey,
+              key: formKey,
               child: Column(
                 children: [
                   const Text(
@@ -171,10 +172,10 @@ class LoginScreen extends StatelessWidget {
                   const SizedBox(
                     height: 50,
                   ),
-                  Row(
+                  const Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       CustomSigninAccoun(
                         image: "assets/png/fb.png",
                       ),
@@ -199,7 +200,7 @@ class LoginScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => CreateAccoutn()));
+                                  builder: (context) => const CreateAccoutn()));
                         },
                         child: const Text(
                           "Sign in",

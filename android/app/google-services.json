@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "930276136204",
+    "project_id": "shoesthesis",
+    "storage_bucket": "shoesthesis.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930276136204:android:9cccac45ae606508f42529",
+        "android_client_info": {
+          "package_name": "com.example.allpay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930276136204-ehulv3p334j773lbujif3vfa2kp8h2u7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-N-dyrDoWzhK-1_e7YU0foWJYeogrmNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930276136204-ehulv3p334j773lbujif3vfa2kp8h2u7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

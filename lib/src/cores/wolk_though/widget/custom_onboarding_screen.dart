@@ -1,7 +1,5 @@
-import 'package:allpay/src/cores/wolk_though/controller/onboarding_controller.dart';
 import 'package:allpay/src/widget/home/custom_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomBoardingScreen extends StatelessWidget {
   final bool? isFirst;
@@ -16,30 +14,29 @@ class CustomBoardingScreen extends StatelessWidget {
   final double? lTitle;
   final String? title;
   final String? subTitle;
-  final String ? titleButton;
+  final String? titleButton;
   final GestureTapCallback? onTapButton;
 
-  const CustomBoardingScreen(
-      {super.key,
-      this.isFirst = false,
-      this.bgBoarding,
-      this.topImage,
-      this.rightImage,
-      this.picImage,
-      this.heightImage,
-      this.bvector,
-      this.lvector,
-      this.vHeight,
-      this.lTitle,
-      this.subTitle,
-      this.title,
-      this.titleButton,
-      this.onTapButton,
-      });
+  const CustomBoardingScreen({
+    super.key,
+    this.isFirst = false,
+    this.bgBoarding,
+    this.topImage,
+    this.rightImage,
+    this.picImage,
+    this.heightImage,
+    this.bvector,
+    this.lvector,
+    this.vHeight,
+    this.lTitle,
+    this.subTitle,
+    this.title,
+    this.titleButton,
+    this.onTapButton,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final onBoardingController = Get.put(OnBoardingController());
     return Stack(children: [
       Positioned.fill(
         child: Image.asset(
@@ -62,16 +59,25 @@ class CustomBoardingScreen extends StatelessWidget {
       isFirst!
           ? Positioned(
               top: 140,
-              left: 80,right: 80,
+              left: 80,
+              right: 80,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                 color: Colors.transparent,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children:  [
+                  children: [
                     Text(
-                      "WELLCOME TO NIKE",style: Theme.of(context).textTheme.headlineLarge!.copyWith(fontFamily: 'Raleway', fontWeight: FontWeight.w900, fontSize: 30),
+                      "WELLCOME TO NIKE",
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(
+                              fontFamily: 'Raleway',
+                              fontWeight: FontWeight.w900,
+                              fontSize: 30),
                       textAlign: TextAlign.center,
                     )
                   ],
@@ -83,7 +89,6 @@ class CustomBoardingScreen extends StatelessWidget {
               left: lTitle,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * .8,
-               
                 child: Column(
                   children: [
                     Text(
@@ -111,18 +116,16 @@ class CustomBoardingScreen extends StatelessWidget {
                 ),
               ),
             ),
-             Positioned(
-              bottom: 40,
-              left: 20,
-              right: 20,
-              child: CustomButtons(
-                color: Colors.white,
-                textColor: Colors.black,
-                title:isFirst! ?'Get Started': titleButton,
-                onTap: onTapButton
-                    
-              ),
-            )
+      Positioned(
+        bottom: 40,
+        left: 20,
+        right: 20,
+        child: CustomButtons(
+            color: Colors.white,
+            textColor: Colors.black,
+            title: isFirst! ? 'Get Started' : titleButton,
+            onTap: onTapButton),
+      )
     ]);
   }
 }
