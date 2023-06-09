@@ -1,12 +1,106 @@
+import 'package:allpay/src/util/api_base_herper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../models/catagary/catagary_model.dart';
 import '../models/detail_model.dart';
-import '../models/model_home.dart';
+import '../models/product/product_model.dart';
+import '../models/product_details/product_details_model.dart';
 
 class HomeController extends GetxController {
-  //// Select Category
+  ApiBaseHelper api = ApiBaseHelper();
+  TextEditingController searchController = TextEditingController();
+  final searchList = <ProductModel>[].obs;
+
+  //==============================>Get catagary<==============================
+  final categoryList = <CategoryModel>[].obs;
+  final categoryModel = CategoryModel().obs;
+  Future<List<CategoryModel>> getCategory() async {
+    try {
+      await api
+          .onNetworkRequesting(
+              url: "category", methode: METHODE.get, isAuthorize: true)
+          .then((value) {
+        debugPrint("========>CategoryList$value");
+        value.map((e) {
+          categoryModel.value = CategoryModel.fromJson(e);
+          categoryList.add(categoryModel.value);
+        }).toList();
+        debugPrint("========>CategoryList $categoryList");
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint('=======>Error Body :${error.bodyString}');
+      });
+    } catch (e) {
+      debugPrint('======>Error Body catch :${e.toString()}');
+    }
+    return categoryList;
+  }
+
+  //====================================> Get product<=======================
+  final productList = <ProductModel>[].obs;
+  final productModel = ProductModel().obs;
+  final isLoadingPro = false.obs;
+  Future<List<ProductModel>> getProduct({String quary=''}) async {
+    isLoadingPro(true);
+    try {
+      
+      await api
+          .onNetworkRequesting(
+              url: "products?page=0&size=20&name=$quary",
+              methode: METHODE.get,
+              isAuthorize: false)
+          .then((value) {
+        debugPrint('=========> product$value');
+        value['data'].map((e) {
+          productModel.value = ProductModel.fromJson(e);
+          productList.add(productModel.value);
+        //   if(quary!=''){
+        //  searchList.value = productList.where((v) => v.name!.toLowerCase().contains(quary!.toLowerCase()) ).toList();
+        //   }
+        }).toList();
+        debugPrint('==========> get List pro:$productList');
+        isLoadingPro(false);
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint('=======>Error Body :${error.bodyString}');
+      });
+    } catch (e) {
+      debugPrint('======>Error Body catch :${e.toString()}');
+    }
+     isLoadingPro(false);
+    return productList;
+  }
+
+  //=================================> get Product detail<==========================
+   final isLoadingDetails = false.obs;
+  ProductDetailsModel proDetailsModel = ProductDetailsModel();
+  Future<ProductDetailsModel> getProductDetails(
+    int ? id
+  ) async {
+    isLoadingDetails(true);
+    try {
+      await api
+          .onNetworkRequesting(
+              url: "product/$id", methode: METHODE.get, isAuthorize: false)
+          .then((value) {
+          proDetailsModel = ProductDetailsModel.fromJson(value);
+          debugPrint('=========proDetailsModel>$proDetailsModel');
+
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint('=======>Error Body :${error.bodyString}');
+      });
+      isLoadingDetails(false);
+    } catch (e) {
+      debugPrint('======>Error Body catch :${e.toString()}');
+      
+    }
+    isLoadingDetails(false);
+   return proDetailsModel;
+  }
+
+  //// Select Category;
   final indexCategory = 0.obs;
+  final stockValue = 0.obs;
+  final imageStock =''.obs;
   ///// Add card
   final a = 0.obs;
   final totalCard = 1.obs;
@@ -43,22 +137,23 @@ class HomeController extends GetxController {
   var myCartList = <DetailModel>[].obs;
   // var myCartListFromDetails = <ImagesModel>[].obs;
 
-  var categoryList = [
-    CategoryModel(namecategory: 'All Shoes'),
-    CategoryModel(namecategory: 'Ourdoor'),
-    CategoryModel(namecategory: 'Tennis'),
-  ];
-  var popularList = [
-    PopcularModel(image: 'assets/png/red_nike.png', price: 123, title: 'NIKE'),
-    PopcularModel(image: 'assets/png/red_nike.png', price: 123, title: 'NIKE'),
-  ];
+  // var categoryList = [
+  //   CategoryModel(namecategory: 'All Shoes'),
+  //   CategoryModel(namecategory: 'Ourdoor'),
+  //   CategoryModel(namecategory: 'Tennis'),
+  // ];
+
+  // var popularList = [
+  //   PopcularModel(image: 'assets/png/red_nike.png', price: 123, title: 'NIKE'),
+  //   PopcularModel(image: 'assets/png/red_nike.png', price: 123, title: 'NIKE'),
+  // ];
   List<DetailModel> detailsModelList = [
     DetailModel(
         title: 'Nike Jordan',
         recordType: "Women's Shoes",
         price: 100,
         isFav: true,
-        delivery:1.00,
+        delivery: 1.00,
         description:
             'The Max Air 270 unit delivers unrivaled, all-day comfort. The sleek, running-inspired design roots you to everything Nike',
         images: [
@@ -107,7 +202,7 @@ class HomeController extends GetxController {
         recordType: "Men's Shoes",
         isFav: false,
         price: 140,
-         delivery:1.00,
+        delivery: 1.00,
         description:
             'Celebrate every mile with these festive road runners. Whether you prefer an extended route at sunrise or a quick jog at sunset, running is your daily ritual, and you need shoes just as dedicated. A comfortable, intuitive design provides a supportive sensation to help your foot feel contained while responsive Zoom Air cushioning adds a spring to your stride. Plus, colorful confetti-inspired graphic accents add fresh energy to your run. Your trusted workhorse with wings is back. Time to fly.',
         images: [
@@ -128,12 +223,12 @@ class HomeController extends GetxController {
                 SizeModel(sized: '37'),
               ]),
         ]),
-        DetailModel(
+    DetailModel(
         title: 'Nike Air Max 270 Essential',
         recordType: "Men's Shoes",
         isFav: false,
         price: 140,
-         delivery:1.00,
+        delivery: 1.00,
         description:
             'Celebrate every mile with these festive road runners. Whether you prefer an extended route at sunrise or a quick jog at sunset, running is your daily ritual, and you need shoes just as dedicated. A comfortable, intuitive design provides a supportive sensation to help your foot feel contained while responsive Zoom Air cushioning adds a spring to your stride. Plus, colorful confetti-inspired graphic accents add fresh energy to your run. Your trusted workhorse with wings is back. Time to fly.',
         images: [

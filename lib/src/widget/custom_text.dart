@@ -94,7 +94,6 @@ class CustomTextFiled extends StatelessWidget {
               ),
               const SizedBox(height: 8,),
               TextFormField(
-                
                 obscureText: isObscureText!,
                 maxLength: maxlenght,
                 controller: controller,

@@ -11,7 +11,7 @@ class CustomProductCart extends StatelessWidget {
   final double? price;
   final bool? isFav;
   final GestureTapCallback? onAdd;
- 
+
   const CustomProductCart({
     super.key,
     this.onTap,
@@ -19,14 +19,13 @@ class CustomProductCart extends StatelessWidget {
     this.price,
     this.title,
     this.onFav,
-    this.isFav,this.onAdd
-    
+    this.isFav = false,
+    this.onAdd,
   });
 
   @override
   Widget build(BuildContext context) {
-    return
-     Stack(
+    return Stack(
       children: [
         GestureDetector(
           onTap: onTap,
@@ -43,11 +42,17 @@ class CustomProductCart extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.all(8),
                     color: Colors.white,
-                    child: Image.asset(
-                      "$image",
-                      fit: BoxFit.cover,
-                      height: 100,
-                    ),
+                    child: image == null
+                        ? Image.asset(
+                            "assets/png/default image.png",
+                            height: 100,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            image??'',
+                            fit: BoxFit.cover,
+                            height: 100,
+                          ),
                   ),
                 ),
                 const SizedBox(

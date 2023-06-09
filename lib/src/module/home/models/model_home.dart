@@ -1,19 +1,21 @@
-class CategoryModel {
-  String? namecategory;
+// class CategoryModel {
+//   String? namecategory;
 
-  CategoryModel({
-    this.namecategory,
-  });
-}
+//   CategoryModel({
+//     this.namecategory,
+//   });
 
-class PopcularModel {
-  String? title;
-  double? price;
-  String? image;
+//   fromJson(e) {}
+// }
 
-  PopcularModel({
-    this.title,
-    this.image,
-    this.price,
-  });
-}
+// class PopcularModel {
+//   String? title;
+//   double? price;
+//   String? image;
+
+//   PopcularModel({
+//     this.title,
+//     this.image,
+//     this.price,
+//   });
+// }

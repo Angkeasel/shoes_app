@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../config/routers/go_route.dart';
-import '../../../../util/alert_snackbar.dart';
 import '../../../../widget/custom_text.dart';
 import '../../../../widget/home/custom_buttons.dart';
-import '../../local_storage/local_storage.dart';
+
 import '../controller/contoller.dart';
 
 class LoginScreens extends StatelessWidget {
@@ -16,8 +14,8 @@ class LoginScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logController = Get.put(ControllerSignin());
-    var phone = LocalStorage().getStringData(key: "ph");
-    var password = LocalStorage().getStringData(key: "passs");
+    // var phone = LocalStorage().getStringData(key: "ph");
+    // var password = LocalStorage().getStringData(key: "passs");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -66,19 +64,19 @@ class LoginScreens extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     CustomTextFiled(
-                      title: 'Phone',
+                      title: 'Email',
                       height: 60,
-                      keyboardType: TextInputType.number,
-                      controller: logController.conPhone,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      controller: logController.conEmail,
+                      //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       // isSelected:true,
-                      hintText: 'Phone',
-                      isObscureText: false,
-                      labelText: 'Phone',
+                      hintText: 'Email',
+                      //isObscureText: true,
+                      labelText: 'Email',
                       isValidate: false,
-                      onChanges: (phone) {
-                        debugPrint('=======>123$phone');
-                        logController.phone.value = phone;
+                      onChanges: (email) {
+                        debugPrint('=======>email$email');
+                        logController.email.value = email;
+                         debugPrint('=======>email${logController.email.value}');
                       },
                     ),
                     const SizedBox(
@@ -89,7 +87,7 @@ class LoginScreens extends StatelessWidget {
                       height: 60,
                       controller: logController.conPassword,
                       hintText: 'Password',
-                      maxlenght: 8,
+                      maxlenght: 15,
                       isObscureText: !logController.isGreyEye.value,
                       suffixIcon: IconButton(
                           onPressed: () {
@@ -104,8 +102,8 @@ class LoginScreens extends StatelessWidget {
                       labelText: 'Password',
                       isValidate: false,
                       onChanges: (ps) {
-                        logController.isPassWord.value = ps;
-                        debugPrint('=====>ps${logController.isPassWord.value}');
+                        logController.passWord.value = ps;
+                        debugPrint('=====>ps${logController.passWord.value}');
                       },
                     ),
                     SizedBox(
@@ -138,25 +136,28 @@ class LoginScreens extends StatelessWidget {
                     CustomButtons(
                       title: 'Sign In',
                       onTap: () {
-                        if (phone == logController.phone.value &&
-                            password == logController.isPassWord.value) {
-                          Future.delayed(const Duration(milliseconds: 500), () {
-                            alertSuccessSnackbar(
-                                message: 'Login Successful', title: 'Success');
-                          });
+                        logController.onLogin(
+                          email: logController.email.value,
+                          password: logController.passWord.value
+                        );
+                        // if (phone == logController.phone.value &&
+                        //     password == logController.isPassWord.value) {
+                        //   Future.delayed(const Duration(milliseconds: 500), () {
+                        //     alertSuccessSnackbar(
+                        //         message: 'Login Successful', title: 'Success');
+                        //   });
 
-                          context.go('/home-router');
-
-                          // Navigator.push(context,
-                          //     MaterialPageRoute(builder: (context) {
-                          //   return const HomePage();
-                          // }));
-                        } else {
-                          alertErrorSnackbar(
-                            title: "Error",
-                            message: "Account not found",
-                          );
-                        }
+                        //   context.go('/home-router')
+                        //   // Navigator.push(context,
+                        //   //     MaterialPageRoute(builder: (context) {
+                        //   //   return const HomePage();
+                        //   // }));
+                        // } else {
+                        //   alertErrorSnackbar(
+                        //     title: "Error",
+                        //     message: "Account not found",
+                        //   );
+                        // }
                       },
                     ),
                   ],

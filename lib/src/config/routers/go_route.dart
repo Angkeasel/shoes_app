@@ -1,7 +1,6 @@
 import 'package:allpay/src/cores/wolk_though/page/onboarding_screen.dart';
 import 'package:allpay/src/module/auth/sign_in/screen/forget_password.dart';
 import 'package:allpay/src/module/auth/sign_in/screen/register_screen.dart';
-import 'package:allpay/src/module/home/models/detail_model.dart';
 import 'package:allpay/src/module/home/pages/detail_page.dart';
 import 'package:allpay/src/module/home/pages/home_page.dart';
 import 'package:allpay/src/module/home/pages/popular_page.dart';
@@ -49,7 +48,7 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/login',
-      builder: (context, state) => LoginScreens(),
+      builder: (context, state) => const LoginScreens(),
       routes: const [],
     ),
     GoRoute(
@@ -75,13 +74,19 @@ final shellRoutes = <GoRoute>[
     path: '/home-router',
     builder: (BuildContext context, GoRouterState state) => const HomePage(),
     routes: <GoRoute>[
+      // GoRoute(
+      //     parentNavigatorKey: _rootNavigatorKey,
+      //     path: 'detail',
+      //     builder: (BuildContext context, GoRouterState state) {
+      //       final detailModel = state.extra as DetailModel;
+      //       return DetailPage(detailModel: detailModel);
+      //     },
+      //     routes: const <GoRoute>[]),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
-          path: 'detail',
-          builder: (BuildContext context, GoRouterState state) {
-            final detailModel = state.extra as DetailModel;
-            return DetailPage(detailModel: detailModel);
-          },
+          path: 'detail/:id',
+          builder: (BuildContext context, GoRouterState state) =>
+              DetailPage(id: int.tryParse(state.pathParameters['id']!)!),
           routes: const <GoRoute>[]),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,

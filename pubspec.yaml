@@ -41,9 +41,10 @@ dependencies:
   flutter_slidable: ^3.0.0
   google_maps_flutter: ^2.2.5
   shared_preferences: ^2.1.1
-  firebase_core: ^2.13.1
-  firebase_auth: ^4.6.2
-  firebase_database: ^10.2.2
+  flutter_dotenv: ^5.0.2
+  # firebase_core: ^2.13.1
+  # firebase_auth: ^4.6.2
+  # firebase_database: ^10.2.2
 
 dev_dependencies:
   
@@ -64,6 +65,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - .env
     - assets/png/
     - assets/svg/
     - assets/image/

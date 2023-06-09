@@ -1,9 +1,9 @@
-import 'package:allpay/src/module/auth/local_storage/local_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../util/alert_snackbar.dart';
+
 import '../../../../widget/custom_text.dart';
 import '../../../../widget/home/custom_buttons.dart';
 import '../controller/contoller.dart';
@@ -28,12 +28,17 @@ class RegisterScreen extends StatelessWidget {
                 CustomButtons(
                   title: 'Sign Up',
                   onTap: () {
-                    showDialogConfirmation(
-                      context: context,
-                      accept: 'Accept',
-                      cancel: 'Cancel',
-                      txt: 'We have send password recovery code in your email',
+                    logController.onRegister(
+                      userName: logController.regUserName.value,
+                      email: logController.regEmail.value,
+                      passWord: logController.regPass.value
                     );
+                    // showDialogConfirmation(
+                    //   context: context,
+                    //   accept: 'Accept',
+                    //   cancel: 'Cancel',
+                    //   txt: 'We have send password recovery code in your email',
+                    // );
                     // Navigator.push(context, MaterialPageRoute(builder: (context) {
                     //   return const ForgetPassword();
                     // }));
@@ -43,16 +48,17 @@ class RegisterScreen extends StatelessWidget {
                   height: 20,
                 ),
                 GestureDetector(
-                  onTap: () async {
-                    await LocalStorage()
-                        .storeData(key: "ph", value: "096453456");
-                    await LocalStorage()
-                        .storeData(key: "passs", value: "admin123");
+                  onTap: ()  {
+                    // await LocalStorage()
+                    //     .storeData(key: "ph", value: "096453456");
+                    // await LocalStorage()
+                    //     .storeData(key: "passs", value: "admin123");
 
-                    var phone = LocalStorage().getStringData(key: "ph");
-                    var password = LocalStorage().getStringData(key: "passs");
-                    debugPrint('Time to Log In ========>');
-                    debugPrint('phone: $phone Password: $password');
+                    // var phone = LocalStorage().getStringData(key: "ph");
+                    // var password = LocalStorage().getStringData(key: "passs");
+                    // debugPrint('Time to Log In ========>');
+                    // debugPrint('phone: $phone Password: $password');
+
                     context.push("/login");
                   },
                   child: Row(
@@ -133,14 +139,14 @@ class RegisterScreen extends StatelessWidget {
                         height: 15,
                       ),
                       CustomTextFiled(
-                        title: 'Phone',
-                        controller: logController.regPhoneCon,
-                        initialValues: logController.regPhoneCon.text,
-                        hintText: 'Phone',
-                        labelText: 'Phone',
+                        title: 'Email',
+                        controller: logController.regEmailCon,
+                        initialValues: logController.regEmailCon.text,
+                        hintText: 'Email',
+                        labelText: 'Email',
                         isValidate: false,
                         onChanges: (v) {
-                          logController.regPhone.value = v;
+                          logController.regEmail.value = v;
                         },
                       ),
                       const SizedBox(
@@ -150,7 +156,7 @@ class RegisterScreen extends StatelessWidget {
                         title: 'Password',
                         controller: logController.regPassCon,
                         hintText: 'Password',
-                        maxlenght: 4,
+                        maxlenght: 15,
                         isObscureText: !logController.isResPass.value,
                         initialValues: logController.regPassCon.text,
                         suffixIcon: IconButton(

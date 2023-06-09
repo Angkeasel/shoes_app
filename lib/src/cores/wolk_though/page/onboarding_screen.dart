@@ -59,7 +59,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   if(currentIndex==0||currentIndex==1){
                     pageController.nextPage(duration: const Duration(milliseconds: 300),curve: Curves.easeIn );
                   }else {
-                    context.go('/login');
+                    context.go('/home-router');
                   }
 
                   

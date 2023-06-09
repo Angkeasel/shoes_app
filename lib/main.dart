@@ -2,11 +2,14 @@ import 'package:allpay/src/config/routers/go_route.dart';
 import 'package:allpay/src/config/theme/theme.dart';
 import 'package:allpay/src/module/auth/local_storage/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await LocalStorage().initLocalStorage();
+//await LocalStorage().initLocalStorage();
+await LocalStorage.init();
+  await dotenv.load();
   runApp(const MyApp());
 }
 

@@ -164,14 +164,17 @@ Widget customCartCategory(BuildContext context, {String? title, bool? isSelected
 //   return Container(height: 180,width: ,);
 // }
 
+
 Widget customSlide(
   BuildContext context,
 ) {
   return GestureDetector(
     onTap: () {},
     child: Container(
+      height: 120,
+     
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(10),
         color: AppColor.textDarkColor,
       ),
       // height: 95,

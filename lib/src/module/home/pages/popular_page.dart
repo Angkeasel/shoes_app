@@ -26,7 +26,7 @@ final homeController = Get.put(HomeController());
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 10,
                         mainAxisExtent: 230),
-                    itemCount: homeController.detailsModelList.length,
+                    itemCount: homeController.productList.length,
                     itemBuilder: (BuildContext ctx, index) {
                    
                       return Padding(
@@ -34,28 +34,28 @@ final homeController = Get.put(HomeController());
                             const EdgeInsets.only(top: 15, left: 15, right: 15),
                         child: 
                         CustomProductCart(
-                          title: homeController.detailsModelList[index].title,
+                          title: homeController.productList[index].name,
                           image: homeController
-                              .detailsModelList[index].images?[0].gallary,
-                          price: homeController.detailsModelList[index].price,
-                          isFav: homeController.detailsModelList[index].isFav,
+                              .productList[index].thumbnailUrl,
+                          price: homeController.productList[index].price,
+                          //isFav: homeController.productList[index].isFav,
                            
                           onTap: () {
-                            context.push('/home-router/detail',extra: homeController.detailsModelList[index]);
+                            context.push('/home-router/detail/${homeController.productList[index].id}');
                          
                           },
-                          onFav: () {
-                            homeController.detailsModelList[index].isFav =
-                                !homeController.detailsModelList[index].isFav!;
-                            if (homeController.detailsModelList[index].isFav!) {
-                              homeController.favCartList
-                                  .add(homeController.detailsModelList[index]);
-                            } else {
-                              homeController.favCartList.removeAt(index);
-                              homeController.update();
-                            }
-                            homeController.update();
-                          },
+                          // onFav: () {
+                          //   homeController.detailsModelList[index].isFav =
+                          //       !homeController.detailsModelList[index].isFav!;
+                          //   if (homeController.detailsModelList[index].isFav!) {
+                          //     homeController.favCartList
+                          //         .add(homeController.detailsModelList[index]);
+                          //   } else {
+                          //     homeController.favCartList.removeAt(index);
+                          //     homeController.update();
+                          //   }
+                          //   homeController.update();
+                          // },
                         ),
                       );
                     }),
