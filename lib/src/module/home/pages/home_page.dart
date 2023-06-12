@@ -63,8 +63,9 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return  const SearchScreen();
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const SearchScreen();
                     }));
                   },
                   icon: const Icon(
@@ -119,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //=======================================>Search Products<===============================================
-                    
+
                     //=======================================>Select Category<===============================================
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
@@ -175,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisSpacing: 5,
                                 mainAxisSpacing: 10,
                                 mainAxisExtent: 230),
-                        itemCount:2,
+                        itemCount: homeController.productList.length,
                         itemBuilder: (BuildContext ctx, index) {
                           return Padding(
                             padding: const EdgeInsets.only(

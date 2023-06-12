@@ -1,3 +1,4 @@
+import 'package:allpay/src/module/home/models/product/big_product_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +11,14 @@ import '../models/product_details/product_details_model.dart';
 class HomeController extends GetxController {
   ApiBaseHelper api = ApiBaseHelper();
   TextEditingController searchController = TextEditingController();
-  final searchList = <ProductModel>[].obs;
+  var searchList = <ProductModel>[].obs;
+  var currentPage = 0.obs;
+  var totalPage = 1.obs;
+  var bigProductModel = BigProductModel().obs;
 
   //==============================>Get catagary<==============================
-  final categoryList = <CategoryModel>[].obs;
-  final categoryModel = CategoryModel().obs;
+  var categoryList = <CategoryModel>[].obs;
+  var categoryModel = CategoryModel().obs;
   Future<List<CategoryModel>> getCategory() async {
     try {
       await api
@@ -40,23 +44,22 @@ class HomeController extends GetxController {
   final productList = <ProductModel>[].obs;
   final productModel = ProductModel().obs;
   final isLoadingPro = false.obs;
-  Future<List<ProductModel>> getProduct({String quary=''}) async {
+  Future<BigProductModel> getProduct({String quary = '', int page = 0}) async {
     isLoadingPro(true);
     try {
-      
       await api
           .onNetworkRequesting(
-              url: "products?page=0&size=20&name=$quary",
+              url: "products?page=$page&size=10&name=$quary",
               methode: METHODE.get,
               isAuthorize: false)
           .then((value) {
+        bigProductModel.value = BigProductModel.fromJson(value);
         debugPrint('=========> product$value');
         value['data'].map((e) {
           productModel.value = ProductModel.fromJson(e);
           productList.add(productModel.value);
-        //   if(quary!=''){
-        //  searchList.value = productList.where((v) => v.name!.toLowerCase().contains(quary!.toLowerCase()) ).toList();
-        //   }
+          // currentPage.value++;
+          //totalPage.value = value.totalPages;
         }).toList();
         debugPrint('==========> get List pro:$productList');
         isLoadingPro(false);
@@ -64,43 +67,39 @@ class HomeController extends GetxController {
         debugPrint('=======>Error Body :${error.bodyString}');
       });
     } catch (e) {
-      debugPrint('======>Error Body catch :${e.toString()}');
+      debugPrint('======>123Error Body catch :${e.toString()}');
     }
-     isLoadingPro(false);
-    return productList;
+    isLoadingPro(false);
+    return bigProductModel.value;
   }
 
   //=================================> get Product detail<==========================
-   final isLoadingDetails = false.obs;
+  final isLoadingDetails = false.obs;
   ProductDetailsModel proDetailsModel = ProductDetailsModel();
-  Future<ProductDetailsModel> getProductDetails(
-    int ? id
-  ) async {
+  Future<ProductDetailsModel> getProductDetails(int? id) async {
     isLoadingDetails(true);
     try {
       await api
           .onNetworkRequesting(
               url: "product/$id", methode: METHODE.get, isAuthorize: false)
           .then((value) {
-          proDetailsModel = ProductDetailsModel.fromJson(value);
-          debugPrint('=========proDetailsModel>$proDetailsModel');
-
+        proDetailsModel = ProductDetailsModel.fromJson(value);
+        debugPrint('=========proDetailsModel>$proDetailsModel');
       }).onError((ErrorModel error, stackTrace) {
         debugPrint('=======>Error Body :${error.bodyString}');
       });
       isLoadingDetails(false);
     } catch (e) {
       debugPrint('======>Error Body catch :${e.toString()}');
-      
     }
     isLoadingDetails(false);
-   return proDetailsModel;
+    return proDetailsModel;
   }
 
   //// Select Category;
   final indexCategory = 0.obs;
   final stockValue = 0.obs;
-  final imageStock =''.obs;
+  final imageStock = ''.obs;
   ///// Add card
   final a = 0.obs;
   final totalCard = 1.obs;

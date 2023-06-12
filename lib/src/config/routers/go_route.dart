@@ -4,6 +4,7 @@ import 'package:allpay/src/module/auth/sign_in/screen/register_screen.dart';
 import 'package:allpay/src/module/home/pages/detail_page.dart';
 import 'package:allpay/src/module/home/pages/home_page.dart';
 import 'package:allpay/src/module/home/pages/popular_page.dart';
+import 'package:allpay/src/module/home/pages/search_result_screen.dart';
 import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
@@ -14,6 +15,7 @@ import '../../module/auth/sign_in/screen/logins_screens.dart';
 import '../../module/auth/sign_in/screen/vertify_otp_screen.dart';
 import '../../module/buttomnavigationbar/bottomnavigationbar.dart';
 import '../../module/favourite/favourite_page.dart';
+import '../../module/my_card/screen/invoice_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -89,6 +91,14 @@ final shellRoutes = <GoRoute>[
               DetailPage(id: int.tryParse(state.pathParameters['id']!)!),
           routes: const <GoRoute>[]),
       GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          path: 'search/:id',
+          builder: (BuildContext context, GoRouterState state) =>
+              SearchResultScreen(
+                  id: int.tryParse(state.pathParameters['id']!)!),
+          routes: const <GoRoute>[]),
+
+      GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: 'popular-router',
         builder: (context, state) => PopularPage(),
@@ -111,7 +121,8 @@ final shellRoutes = <GoRoute>[
   ),
   GoRoute(
     path: '/mycart/-rourter',
-    builder: (BuildContext context, GoRouterState state) => const MyCardPage(),
+    builder: (BuildContext context, GoRouterState state) =>
+        const InvoiceScreen(),
     routes: const <GoRoute>[],
   ),
   GoRoute(
