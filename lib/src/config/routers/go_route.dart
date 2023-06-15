@@ -109,8 +109,7 @@ final shellRoutes = <GoRoute>[
 
   GoRoute(
     path: '/favorite-router',
-    builder: (BuildContext context, GoRouterState state) =>
-        const StatisticPage(),
+    builder: (BuildContext context, GoRouterState state) => StatisticPage(),
     routes: const <GoRoute>[],
   ),
   //GoRoute(path: '/boarding',builder: (context, state)=>const OnBoardingScreen()),

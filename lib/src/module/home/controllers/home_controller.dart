@@ -44,7 +44,7 @@ class HomeController extends GetxController {
   final productList = <ProductModel>[].obs;
   final productModel = ProductModel().obs;
   final isLoadingPro = false.obs;
-  Future<BigProductModel> getProduct({String quary = '', int page = 0}) async {
+  Future<BigProductModel> getProduct({String? quary, int? page}) async {
     isLoadingPro(true);
     try {
       await api
@@ -55,12 +55,23 @@ class HomeController extends GetxController {
           .then((value) {
         bigProductModel.value = BigProductModel.fromJson(value);
         debugPrint('=========> product$value');
+        if (currentPage.value == 0) {
+          productList.clear();
+        }
+// clear list before we add
+        debugPrint("val: $value");
         value['data'].map((e) {
           productModel.value = ProductModel.fromJson(e);
-          productList.add(productModel.value);
-          // currentPage.value++;
-          //totalPage.value = value.totalPages;
+            if(!productList.contains(productModel.value)){
+
+            productList.add(productModel.value);
+            }
+          
+          print("length ${productList.length}");
         }).toList();
+        currentPage.value++;
+        totalPage.value = bigProductModel.value.totalPages!;
+
         debugPrint('==========> get List pro:$productList');
         isLoadingPro(false);
       }).onError((ErrorModel error, stackTrace) {
@@ -96,6 +107,20 @@ class HomeController extends GetxController {
     return proDetailsModel;
   }
 
+  //=================================> post Favorited <==========================
+  Future<void> addFavorite(int? productId) async {
+    await api.onNetworkRequesting(
+        url: 'favorite',
+        methode: METHODE.post,
+        isAuthorize: true,
+        body: {'product_id': productId}).then((value) {
+      debugPrint('=================> post favorited$value');
+    }).onError((ErrorModel error, stackTrace) {
+      debugPrint(
+          "==========================> Error Body catch : ${error.bodyString}");
+    });
+  }
+
   //// Select Category;
   final indexCategory = 0.obs;
   final stockValue = 0.obs;
@@ -125,27 +150,16 @@ class HomeController extends GetxController {
   }
 
   // final servicesList = [];
-  final currentIndex = 0.obs;
+  var currentIndex = 0.obs;
   final currentIndexfav = 0.obs;
   final isSelectedIndex = 0.obs;
   final isOverFlow = true.obs;
   final imagesModel = ImagesModel().obs;
   final eachPrice = 0.0.obs;
   final isfav = false.obs;
-  var favCartList = <DetailModel>[].obs;
+  var favCartList = <ProductDetailsModel>[].obs;
   var myCartList = <DetailModel>[].obs;
-  // var myCartListFromDetails = <ImagesModel>[].obs;
 
-  // var categoryList = [
-  //   CategoryModel(namecategory: 'All Shoes'),
-  //   CategoryModel(namecategory: 'Ourdoor'),
-  //   CategoryModel(namecategory: 'Tennis'),
-  // ];
-
-  // var popularList = [
-  //   PopcularModel(image: 'assets/png/red_nike.png', price: 123, title: 'NIKE'),
-  //   PopcularModel(image: 'assets/png/red_nike.png', price: 123, title: 'NIKE'),
-  // ];
   List<DetailModel> detailsModelList = [
     DetailModel(
         title: 'Nike Jordan',

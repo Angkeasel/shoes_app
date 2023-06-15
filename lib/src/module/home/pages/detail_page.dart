@@ -28,6 +28,7 @@ class _DetailPageState extends State<DetailPage>
   int maxLines = 2;
   double height = 0;
   double heightFull = 0;
+  bool isFav = false;
   final textFullkey = GlobalKey();
   final textkey = GlobalKey();
   late AnimationController myAnimationController;
@@ -60,7 +61,7 @@ class _DetailPageState extends State<DetailPage>
             RenderBox renderbox1 =
                 textkey.currentContext!.findRenderObject() as RenderBox;
             detailCon.stockValue.value = value.variants![0].quantity!;
-             detailCon.currentIndex.value=0;
+            detailCon.currentIndex.value = 0;
             detailCon.eachPrice.value = value.variants![0].price!;
             detailCon.imageStock.value = value.variants![0].imageUrl!;
             setState(() {
@@ -460,32 +461,34 @@ class _DetailPageState extends State<DetailPage>
                                 //    scale: 2,
                                 //     image: AssetImage('assets/png/unlike.png',)),
                               ),
-                              child: GetBuilder(
-                                init: detailCon,
-                                builder: (_) => GestureDetector(
-                                  onTap: () {
-                                    //widget.detailModel!.isFav = !widget.detailModel!.isFav!;
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    isFav = !isFav;
+                                  });
+                                  debugPrint('isFav====>$isFav');
+                                  if (isFav == true) {
+                                    detailCon
+                                        .addFavorite(productDetailsModel.id);
+                                  }{
+                                    
+                                  }
 
-                                    // int index = detailCon.detailsModelList.indexWhere(
-                                    //     (element) =>
-                                    //         element.title == widget.detailModel!.title);
-                                    // debugPrint('details fav.............$index');
-                                    // if (widget.detailModel!.isFav!) {
-                                    //   detailCon.favCartList
-                                    //       .add(detailCon.detailsModelList[index]);
-                                    // } else {
-                                    //   detailCon.favCartList.removeAt(index);
-                                    // }
-                                    // detailCon.update();
-                                  },
-                                  child: CustomFavitore(
-                                    isWithOpacity: false,
-                                    isFavorite:
-                                        productDetailsModel.isFavorite ?? false,
-                                    selectIcon: 'assets/png/like.png',
-                                    unSelectIcon: 'assets/png/unlike.png',
-                                    backGroundColor: Colors.transparent,
-                                  ),
+                                  // if (productDetailsModel.isFavorite!) {
+                                  //   detailCon.favCartList
+                                  //       .add(productDetailsModel);
+                                  // } else {
+                                  //   detailCon.favCartList
+                                  //       .removeAt(productDetailsModel.id!);
+                                  // }
+                                  // detailCon.update();
+                                },
+                                child: CustomFavitore(
+                                  isWithOpacity: false,
+                                  isFavorite: isFav,
+                                  selectIcon: 'assets/png/like.png',
+                                  unSelectIcon: 'assets/png/unlike.png',
+                                  backGroundColor: Colors.transparent,
                                 ),
                               ),
                             ),

@@ -15,7 +15,7 @@ class ProductDetailsModel with _$ProductDetailsModel {
     final double? price,
     @JsonKey(name: 'thumbnail_url')final String ? thumbnailUrl,
     final double? discount,
-    @JsonKey(name:'is_favorite' )final bool? isFavorite,
+    @JsonKey(name:'is_favorite' ) bool? isFavorite,
     final List<VariantsModel>? variants
   }) = _ProductDetailsModel;
 

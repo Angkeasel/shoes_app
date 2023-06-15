@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:allpay/src/config/routers/go_route.dart';
@@ -10,8 +9,9 @@ import 'package:get/get.dart';
 import '../../../constant/app_setting.dart';
 
 class SplashScreen extends StatefulWidget {
-  
-  const SplashScreen({Key? key,}) : super(key: key);
+  const SplashScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -19,21 +19,22 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final homeController = Get.put(HomeController());
-   String ?token;
+  String? token;
   onNavigate(context) async {
-     WidgetsFlutterBinding.ensureInitialized();
+    WidgetsFlutterBinding.ensureInitialized();
     // var token = await LocalStorage.getStringValue(key: 'access_token');
-    await LocalStorage.storeData(key: 'access_token', value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg2MDI4MTU0LCJleHAiOjE2OTQ2NjgxNTR9.38JZMdfPKZGVfKtunvnJhshfnZfNenvSRNB5_Sbhzv8');
+    await LocalStorage.storeData(
+        key: 'access_token',
+        value:
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg2MDI4MTU0LCJleHAiOjE2OTQ2NjgxNTR9.38JZMdfPKZGVfKtunvnJhshfnZfNenvSRNB5_Sbhzv8');
     fetches();
-    try{
-       if(token != ''|| token!.isEmpty){
-       Timer(const Duration(seconds: 3), () => router.go('/boarding'));
-       }else{
+    try {
+      if (token != '' || token!.isEmpty) {
+        Timer(const Duration(seconds: 3), () => router.go('/boarding'));
+      } else {
         router.go('home-router');
-       }
-    }catch(e){
-     
-    }
+      }
+    } catch (e) {}
     // Future.delayed(
     //   const Duration(seconds: 2),
     //   () {
@@ -48,14 +49,12 @@ class _SplashScreenState extends State<SplashScreen> {
     // );
     //Timer(const Duration(seconds: 3), () => router.go('/boarding'));
     //await LocalStorage.init();
-   
   }
 
   @override
   void initState() {
     onNavigate(context);
     super.initState();
-   
   }
 
   fetches() {
@@ -65,7 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
       debugPrint('=============> fetch fev${e.value.isFav!}');
       if (e.value.isFav!) {
         debugPrint('=============> fetch fev');
-        homeController.favCartList.add(e.value);
+        // homeController.favCartList.add(e.value);
       }
       return homeController.favCartList;
     }).toList();
