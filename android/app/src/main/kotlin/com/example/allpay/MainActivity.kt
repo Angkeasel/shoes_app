@@ -1,4 +1,4 @@
-package com.example.allpay
+package com.shoeapp.thesis
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -55,14 +55,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 title: onBoardCon.boardingList[index].title,
                 subTitle: onBoardCon.boardingList[index].subTitle,
                 titleButton: onBoardCon.boardingList[index].titleButton,
-                onTapButton: (){
-                  if(currentIndex==0||currentIndex==1){
-                    pageController.nextPage(duration: const Duration(milliseconds: 300),curve: Curves.easeIn );
-                  }else {
+                onTapButton: () async {
+                  if (currentIndex == 0 || currentIndex == 1) {
+                    pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeIn);
+                  } else {
                     context.go('/home-router');
                   }
-
-                  
                 },
               );
             }),
@@ -75,9 +75,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 dotWidth: 12.0,
                 dotHeight: 5.0,
                 dotColor: Colors.amber,
-                activeDotColor: Colors.white
-
-                ),
+                activeDotColor: Colors.white),
           ),
         ),
       ],
