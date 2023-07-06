@@ -1,7 +1,54 @@
+import 'package:allpay/src/module/my_card/model/mycard/my_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../util/api_base_herper.dart';
+
 class MyCardController extends GetxController {
+  /// for used present
+
+  ApiBaseHelper api = ApiBaseHelper();
+  var myCardList = <MyCardModel>[].obs;
+  var myCardModel = MyCardModel().obs;
+  final ValueNotifier<int> counter = ValueNotifier<int>(1);
+  Future<List<MyCardModel>> getMyCard() async {
+    try {
+      await api
+          .onNetworkRequesting(
+              url: "cart", methode: METHODE.get, isAuthorize: true)
+          .then((value) {
+        myCardList.clear();
+        value.map((e) {
+          myCardModel.value = MyCardModel.fromJson(e);
+          myCardList.add(myCardModel.value);
+        }).toList();
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint(' =======>Error Body :${error.bodyString}');
+      });
+    } catch (e) {
+      debugPrint(' =======>Error Body :${e.toString()}');
+    }
+    return myCardList;
+  }
+
+  ///// Add card
+  final qty = 1.obs;
+  final totalCard = 1.obs;
+  final subTotal = 0.0.obs;
+  final totalCost = 0.0.obs;
+////fun add
+  void addToCard() {
+    qty.value++;
+  }
+
+  void removeCard() {
+    qty.value--;
+    if(qty<=1){
+   
+    }
+  }
+
+  /////old team
   var slide = 0.obs;
   var visaCardList = [
     VisaCardModel(

@@ -34,7 +34,10 @@ class CustomCartDetails extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             color: Colors.white,
             image: DecorationImage(
-                image: NetworkImage("$image"), fit: BoxFit.cover)),
+                image: NetworkImage(image == 'image'
+                    ? 'https://www.maxairsoft.com/getimage/products/default.png'
+                    : "$image"),
+                fit: BoxFit.cover)),
       ),
     );
   }

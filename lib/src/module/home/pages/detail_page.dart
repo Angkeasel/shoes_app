@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../constant/app_setting.dart';
 import '../../../widget/home/custom_buttons.dart';
@@ -33,6 +34,7 @@ class _DetailPageState extends State<DetailPage>
   final textkey = GlobalKey();
   late AnimationController myAnimationController;
   ProductDetailsModel productDetailsModel = ProductDetailsModel();
+  VariantsModel variantsModel = VariantsModel();
   PageController pageController = PageController(
     initialPage: 0,
     keepPage: true,
@@ -152,6 +154,7 @@ class _DetailPageState extends State<DetailPage>
                           GestureDetector(
                             onTap: () {
                               debugPrint('cart');
+                              context.push('/mycard-router');
                             },
                             child: Container(
                               height: 35,
@@ -188,10 +191,11 @@ class _DetailPageState extends State<DetailPage>
                               child: Container(
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
-                                image: NetworkImage(
-                                    detailCon.imageStock.value == ''
-                                        ? ''
-                                        : detailCon.imageStock.value),
+                                image: NetworkImage(detailCon
+                                            .imageStock.value ==
+                                        'image'
+                                    ? 'https://www.maxairsoft.com/getimage/products/default.png'
+                                    : detailCon.imageStock.value),
                               ))),
                             )
 
@@ -457,9 +461,6 @@ class _DetailPageState extends State<DetailPage>
                               decoration: BoxDecoration(
                                 color: Colors.grey.shade200,
                                 shape: BoxShape.circle,
-                                // image: const DecorationImage(
-                                //    scale: 2,
-                                //     image: AssetImage('assets/png/unlike.png',)),
                               ),
                               child: GestureDetector(
                                 onTap: () {
@@ -468,10 +469,12 @@ class _DetailPageState extends State<DetailPage>
                                   });
                                   debugPrint('isFav====>$isFav');
                                   if (isFav == true) {
+                                    // detailCon.addFavorite(
+                                    //     productDetailsModel.id,
+                                    //     productDetailsModel.variants![0].id);
+                                  } else {
                                     detailCon
-                                        .addFavorite(productDetailsModel.id);
-                                  }{
-                                    
+                                        .delFavorite(productDetailsModel.id!);
                                   }
 
                                   // if (productDetailsModel.isFavorite!) {
@@ -512,21 +515,8 @@ class _DetailPageState extends State<DetailPage>
                               width: MediaQuery.of(context).size.width * 0.45,
                               image: 'assets/png/bag-2.png',
                               title: 'Add to Cart',
-                              onTap: () {
-                                // int index =
-                                //     detailCon.detailsModelList.indexWhere((element) {
-                                //   return element.title == widget.detailModel!.title;
-                                // });
-                                // if (index > 0) {
-                                //   detailCon.AddToCard();
-                                //   debugPrint(
-                                //       '======> add cart from details when contains title..........');
-                                // } else {
-                                //   detailCon.myCartList
-                                //       .add(detailCon.detailsModelList[index]);
-                                //   debugPrint('======> add cart from details..........');
-                                // }
-
+                              onTap: () {                           
+ 
                                 //  homeController.myCartList
                                 //     .add(homeController.detailsModelList[index]);
                                 // homeController.update();

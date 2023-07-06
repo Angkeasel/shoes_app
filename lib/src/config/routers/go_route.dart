@@ -15,6 +15,8 @@ import '../../module/auth/sign_in/screen/logins_screens.dart';
 import '../../module/auth/sign_in/screen/vertify_otp_screen.dart';
 import '../../module/buttomnavigationbar/bottomnavigationbar.dart';
 import '../../module/favourite/favourite_page.dart';
+import '../../module/home/pages/search_screen.dart';
+import '../../module/home/pages/select_category.dart';
 import '../../module/my_card/screen/invoice_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -91,17 +93,37 @@ final shellRoutes = <GoRoute>[
               DetailPage(id: int.tryParse(state.pathParameters['id']!)!),
           routes: const <GoRoute>[]),
       GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: 'popular-router',
+        builder: (context, state) => PopularPage(),
+        routes: const [],
+      ),
+      GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: 'search/:id',
           builder: (BuildContext context, GoRouterState state) =>
               SearchResultScreen(
                   id: int.tryParse(state.pathParameters['id']!)!),
           routes: const <GoRoute>[]),
-
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
-        path: 'popular-router',
-        builder: (context, state) => PopularPage(),
+        path: 'search-router',
+        builder: (context, state) => const SearchScreen(),
+        routes: const [],
+      ),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          path: 'category/:id',
+          builder: (BuildContext context, GoRouterState state) =>
+              SelectCategoryPage(
+                id: int.tryParse(state.pathParameters['id']!),
+                // name: state.queryParameters['name'] ?? '',
+              ),
+          routes: const <GoRoute>[]),
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: 'mycard-router',
+        builder: (context, state) => const MyCardPage(),
         routes: const [],
       ),
     ],

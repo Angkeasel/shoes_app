@@ -33,20 +33,24 @@ Widget customTitle(
   );
 }
 
-Widget customCartCategory(BuildContext context, {String? title, bool? isSelected = false, GestureTapCallback? onTap}) {
+Widget customCartCategory(BuildContext context,
+    {String? title, bool? isSelected = false, GestureTapCallback? onTap}) {
   return GestureDetector(
-    onTap:onTap,
+    onTap: onTap,
     child: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color:isSelected!? Colors.amber: AppColor.textDarkColor,
+        color: AppColor.primaryColor,
       ),
       height: 40,
       width: 108,
       child: Center(
         child: Text(
           title!,
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(),
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(color: Colors.white),
         ),
       ),
     ),
@@ -164,7 +168,6 @@ Widget customCartCategory(BuildContext context, {String? title, bool? isSelected
 //   return Container(height: 180,width: ,);
 // }
 
-
 Widget customSlide(
   BuildContext context,
 ) {
@@ -172,7 +175,7 @@ Widget customSlide(
     onTap: () {},
     child: Container(
       height: 120,
-     
+
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: AppColor.textDarkColor,

@@ -7,6 +7,7 @@ import '../models/catagary/catagary_model.dart';
 import '../models/detail_model.dart';
 import '../models/product/product_model.dart';
 import '../models/product_details/product_details_model.dart';
+import '../models/slide/slide_model.dart';
 
 class HomeController extends GetxController {
   ApiBaseHelper api = ApiBaseHelper();
@@ -44,8 +45,12 @@ class HomeController extends GetxController {
   final productList = <ProductModel>[].obs;
   final productModel = ProductModel().obs;
   final isLoadingPro = false.obs;
-  Future<BigProductModel> getProduct({String? quary, int? page}) async {
+  Future<BigProductModel> getProduct({
+    String? quary,
+    int? page,
+  }) async {
     isLoadingPro(true);
+
     try {
       await api
           .onNetworkRequesting(
@@ -57,16 +62,16 @@ class HomeController extends GetxController {
         debugPrint('=========> product$value');
         if (currentPage.value == 0) {
           productList.clear();
+          // clear list before we add
         }
-// clear list before we add
+
         debugPrint("val: $value");
         value['data'].map((e) {
           productModel.value = ProductModel.fromJson(e);
-            if(!productList.contains(productModel.value)){
-
+          if (!productList.contains(productModel.value)) {
             productList.add(productModel.value);
-            }
-          
+          }
+
           print("length ${productList.length}");
         }).toList();
         currentPage.value++;
@@ -92,7 +97,7 @@ class HomeController extends GetxController {
     try {
       await api
           .onNetworkRequesting(
-              url: "product/$id", methode: METHODE.get, isAuthorize: false)
+              url: "product/$id", methode: METHODE.get, isAuthorize: true)
           .then((value) {
         proDetailsModel = ProductDetailsModel.fromJson(value);
         debugPrint('=========proDetailsModel>$proDetailsModel');
@@ -108,17 +113,139 @@ class HomeController extends GetxController {
   }
 
   //=================================> post Favorited <==========================
-  Future<void> addFavorite(int? productId) async {
-    await api.onNetworkRequesting(
-        url: 'favorite',
-        methode: METHODE.post,
-        isAuthorize: true,
-        body: {'product_id': productId}).then((value) {
-      debugPrint('=================> post favorited$value');
-    }).onError((ErrorModel error, stackTrace) {
+  Future<void> addFavorite(int? productId, int? variantId) async {
+    try {
+      await api.onNetworkRequesting(
+          url: 'favorite',
+          methode: METHODE.post,
+          isAuthorize: true,
+          body: {
+            'product_id': productId,
+            'variant_id': variantId
+          }).then((value) {
+        debugPrint('=================> post favorited$value');
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint(
+            "==========================> Error Body catch : ${error.bodyString}");
+      });
+    } catch (e) {
       debugPrint(
-          "==========================> Error Body catch : ${error.bodyString}");
-    });
+          "==========================> catch post fav : ${e.toString()}");
+    }
+  }
+
+  //=================================> get Favorited <==========================
+  final favList = <ProductModel>[].obs;
+  final favBigProductModel = BigProductModel().obs;
+  final favProductModel = ProductModel().obs;
+  Future<BigProductModel> getFavorite(int? productId, int? variantId) async {
+    try {
+      await api
+          .onNetworkRequesting(
+        url: 'favorite',
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
+          .then((value) {
+        favBigProductModel.value = BigProductModel.fromJson(value);
+        debugPrint('=================> get favorited$value');
+        value['data'].map((e) {
+          favProductModel.value = ProductModel.fromJson(e);
+          favList.add(favProductModel.value);
+        }).toList();
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint(
+            "==========================> Error Body catch : ${error.bodyString}");
+      });
+    } catch (e) {
+      debugPrint("==========================> catch get fav : ${e.toString()}");
+    }
+    return favBigProductModel.value;
+  }
+
+  //=================================> Deleted Favorited <==========================
+  Future<void> delFavorite(int id) async {
+    try {
+      await api
+          .onNetworkRequesting(
+              url: "favorite/$id", methode: METHODE.delete, isAuthorize: true)
+          .then((value) {
+        debugPrint('=================> detele favorited$value');
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint(
+            "==========================> Error Body catch : ${error.bodyString}");
+      });
+    } catch (e) {
+      debugPrint(
+          "==========================> catch delete fav : ${e.toString()}");
+    }
+  }
+
+  // =================================> get category by id <==========================
+  final categoryProductModel = BigProductModel().obs;
+  final categoryProductList = <ProductModel>[].obs;
+  final categoryDataModel = ProductModel().obs;
+  final isLoadingCategory = false.obs;
+  final pageCategory = 0.obs;
+  Future<BigProductModel> getCategoryById({int? id, int? page}) async {
+    isLoadingCategory(true);
+    try {
+      await api
+          .onNetworkRequesting(
+              url: "product-by-category-id/$id?page=$page&size=10",
+              methode: METHODE.get,
+              isAuthorize: true)
+          .then((value) {
+        categoryProductModel.value = BigProductModel.fromJson(value);
+        debugPrint('=================> product by category$value');
+        categoryProductList.clear();
+        value['data'].map((e) {
+          categoryDataModel.value = ProductModel.fromJson(e);
+          categoryProductList.add(categoryDataModel.value);
+        }).toList();
+        debugPrint(
+            '=================> categoryProductList $categoryProductList');
+        pageCategory.value++;
+        //  totalPage.value = bigProductModel.value.totalPages!;
+        isLoadingCategory(false);
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint(
+            "==========================> Error Body catch category : ${error.bodyString}");
+      });
+    } catch (e) {
+      debugPrint(
+          "==========================> catch category by id : ${e.toString()}");
+    }
+    isLoadingCategory(false);
+    return categoryProductModel.value;
+  }
+
+  //================================> Slide card<======================================
+  final slideList = <SlideModel>[].obs;
+  final slideModel = SlideModel().obs;
+
+  Future<List<SlideModel>> getSlide() async {
+    isLoadingPro(true);
+    try {
+      await api
+          .onNetworkRequesting(
+              url: "slide", methode: METHODE.get, isAuthorize: false)
+          .then((value) {
+        slideList.clear();
+        value.map((e) {
+          slideModel.value = SlideModel.fromJson(e);
+          slideList.add(slideModel.value);
+        }).toList();
+        debugPrint('=================> slideList${slideList.length}');
+      }).onError((ErrorModel error, stackTrace) {
+        debugPrint('============> catch error slide :${error.bodyString}');
+      });
+      isLoadingPro(false);
+    } catch (e) {
+      debugPrint('============> catch error ${e.toString()}');
+    }
+    isLoadingPro(false);
+    return slideList;
   }
 
   //// Select Category;
@@ -133,21 +260,21 @@ class HomeController extends GetxController {
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
 
   ///fun add
-  void AddToCard() {
-    a.value = counter.value++;
-    totalCard.value = a.value + 1;
-    subTotal.value = myCartList[0].price! * totalCard.value;
-    totalCost.value = subTotal.value + 1.00;
-  }
+  // void AddToCard() {
+  //   a.value = counter.value++;
+  //   totalCard.value = a.value + 1;
+  //   subTotal.value = myCartList[0].price! * totalCard.value;
+  //   totalCost.value = subTotal.value + 1.00;
+  // }
 
-  void RemoveCard() {
-    if (totalCard > 1) {
-      a.value = counter.value--;
-      totalCard.value = a.value - 1;
-      subTotal.value = subTotal.value - myCartList[0].price!;
-      totalCost.value = totalCost.value - myCartList[0].price!;
-    }
-  }
+  // void RemoveCard() {
+  //   if (totalCard > 1) {
+  //     a.value = counter.value--;
+  //     totalCard.value = a.value - 1;
+  //     subTotal.value = subTotal.value - myCartList[0].price!;
+  //     totalCost.value = totalCost.value - myCartList[0].price!;
+  //   }
+  // }
 
   // final servicesList = [];
   var currentIndex = 0.obs;
@@ -158,7 +285,7 @@ class HomeController extends GetxController {
   final eachPrice = 0.0.obs;
   final isfav = false.obs;
   var favCartList = <ProductDetailsModel>[].obs;
-  var myCartList = <DetailModel>[].obs;
+  //var myCartList = <DetailModel>[].obs;
 
   List<DetailModel> detailsModelList = [
     DetailModel(

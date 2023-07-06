@@ -38,9 +38,9 @@ class PopularPage extends StatelessWidget {
                     if (homeController.currentPage.value <=
                         homeController.totalPage.value) {
                       homeController.getProduct(
-                          page: homeController.currentPage.value, quary: '');
-                      // getIt<PropertyListingController>().getDataListingProperty(
-                      //     getIt<PropertyListingController>().currentPage.value);
+                        page: homeController.currentPage.value,
+                        quary: '',
+                      );
                     } else {
                       // debugPrint(
                       //     "========>>>> not page : Emport${getIt<PropertyListingController>().totalProperty.value}");
@@ -53,27 +53,29 @@ class PopularPage extends StatelessWidget {
                     homeController.currentPage.value = 0;
                     homeController.totalPage.value = 1;
                     await homeController.getProduct(
-                        page: homeController.currentPage.value, quary: '');
+                      page: homeController.currentPage.value,
+                      quary: '',
+                    );
                   },
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 210,
-                                    childAspectRatio: 1,
-                                    crossAxisSpacing: 5,
-                                    mainAxisSpacing: 10,
-                                    mainAxisExtent: 230),
-                            itemCount: homeController.productList.length,
-                            itemBuilder: (BuildContext ctx, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 15, left: 15, right: 15),
-                                child: CustomProductCart(
+                    child: Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, right: 16, top: 20),
+                      child: Column(
+                        children: [
+                          GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 240,
+                                      childAspectRatio: 0.75,
+                                      mainAxisSpacing: 20,
+                                      crossAxisSpacing: 20),
+                              itemCount: homeController.productList.length,
+                              itemBuilder: (BuildContext ctx, index) {
+                                return CustomProductCart(
+                                 
                                   title: homeController.productList[index].name,
                                   image: homeController
                                       .productList[index].thumbnailUrl,
@@ -97,19 +99,19 @@ class PopularPage extends StatelessWidget {
                                   //   }
                                   //   homeController.update();
                                   // },
-                                ),
-                              );
-                            }),
-                        if (homeController.isLoadingPro.value &&
-                            homeController.currentPage.value > 0)
-                          const Center(
-                            child: CupertinoActivityIndicator(
-                                color: Colors.red,
-                                animating: true,
-                                radius: 9.5),
-                          ),
-                        const SizedBox(height: 50.0),
-                      ],
+                                );
+                              }),
+                          if (homeController.isLoadingPro.value &&
+                              homeController.currentPage.value > 0)
+                            const Center(
+                              child: CupertinoActivityIndicator(
+                                  color: Colors.red,
+                                  animating: true,
+                                  radius: 9.5),
+                            ),
+                          const SizedBox(height: 50.0),
+                        ],
+                      ),
                     ),
                   ),
                 ),

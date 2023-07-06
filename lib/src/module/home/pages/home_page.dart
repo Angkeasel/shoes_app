@@ -1,11 +1,13 @@
+import 'dart:async';
+
 import 'package:allpay/src/constant/app_setting.dart';
-import 'package:allpay/src/module/home/pages/search_screen.dart';
 
 import 'package:allpay/src/module/home/widgets/custom_button_category.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../profile/page/notification_page.dart';
 import '../controllers/home_controller.dart';
@@ -23,14 +25,33 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-  
     homeController.getCategory();
     homeController.getProduct(
-        page: homeController.currentPage.value, quary: '');
+      page: homeController.currentPage.value,
+      quary: '',
+    );
+    homeController.getSlide();
+    homeController.getFavorite(12, 6);
+    timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      if (index < homeController.slideList.length) {
+        index++;
+      } else {
+        index = 0;
+      }
+
+      pageControllers.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeInSine,
+      );
+    });
     super.initState();
   }
 
-  var homeController = Get.put(HomeController());
+  final homeController = Get.put(HomeController());
+  PageController pageControllers = PageController(initialPage: 0);
+  int index = 0;
+  Timer? timer;
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +86,7 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const SearchScreen();
-                    }));
+                    context.push('/home-router/search-router');
                   },
                   icon: const Icon(
                     Icons.search,
@@ -121,7 +139,9 @@ class _HomePageState extends State<HomePage> {
                 onRefresh: () async {
                   homeController.currentPage.value = 0;
                   await homeController.getProduct(
-                      page: homeController.currentPage.value, quary: '');
+                    page: homeController.currentPage.value,
+                    quary: '',
+                  );
                 },
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.only(top: 20),
@@ -136,6 +156,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         height: 20,
                       ),
+
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Padding(
@@ -151,8 +172,16 @@ class _HomePageState extends State<HomePage> {
                                           title: e.value.name, onTap: () {
                                         homeController.indexCategory.value =
                                             e.key;
-
-                                        homeController.update();
+                                        debugPrint(
+                                            '==========>${e.value.id}&${e.value.name}');
+                                        homeController.pageCategory.value = 0;
+                                        homeController.getCategoryById(
+                                            page: homeController
+                                                .pageCategory.value,
+                                            id: e.value.id);
+                                        context.push(
+                                          '/home-router/category/${e.value.id}',
+                                        );
                                       },
                                           isSelected: homeController
                                                   .indexCategory.value ==
@@ -162,6 +191,7 @@ class _HomePageState extends State<HomePage> {
                                   .toList()),
                         ),
                       ),
+
                       //=======================================>Popular Shoes<===============================================
                       const SizedBox(
                         height: 20,
@@ -170,34 +200,34 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.only(left: 20),
                         child: customTitle(context,
                             title: 'Popular Shoes', isSeeAll: true, onTap: () {
+                          homeController.currentPage.value = 0;
+                          homeController.getProduct(
+                            page: homeController.currentPage.value,
+                            quary: '',
+                          );
                           context.push('/home-router/popular-router');
                         }),
                       ),
-                      GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 210,
-                                  childAspectRatio: 1,
-                                  crossAxisSpacing: 5,
-                                  mainAxisSpacing: 10,
-                                  mainAxisExtent: 230),
-                          itemCount: homeController.productList.length >= 2
-                              ? 2
-                              : homeController.productList.length,
-                          itemBuilder: (BuildContext ctx, index) {
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: homeController.productList
+                              .asMap()
+                              .entries
+                              .map((e) {
                             return Padding(
                               padding: const EdgeInsets.only(
-                                  top: 15, left: 15, right: 15),
+                                left: 20,
+                                right: 5,
+                                top: 15,
+                              ),
                               child: CustomProductCart(
-                                title: homeController.productList[index].name,
-                                image: homeController
-                                    .productList[index].thumbnailUrl,
-                                price: homeController.productList[index].price,
+                                title: e.value.name,
+                                image: e.value.thumbnailUrl,
+                                price: e.value.price,
                                 onTap: () {
                                   context.push(
-                                    '/home-router/detail/${homeController.productList[index].id}',
+                                    '/home-router/detail/${e.value.id}',
                                   );
                                 },
                                 // onFav: () {
@@ -220,7 +250,9 @@ class _HomePageState extends State<HomePage> {
                                 // },
                               ),
                             );
-                          }),
+                          }).toList(),
+                        ),
+                      ),
 
                       //=======================================> New Arrivals Slide<===============================================
                       Padding(
@@ -237,10 +269,58 @@ class _HomePageState extends State<HomePage> {
                           },
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-                      //   child: customSlide(context),
-                      // ),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            height: 170,
+                            child: PageView.builder(
+                              controller: pageControllers,
+                              onPageChanged: (e) {
+                                setState(() {
+                                  index = e;
+                                });
+                              },
+                              itemCount: homeController.slideList.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Container(
+                                      height: 130,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.amber,
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(homeController
+                                                  .slideList[index].imageUrl!
+                                                  .contains('iamge')
+                                              ? 'https://img.freepik.com/free-vector/sale-banner-with-product-description_1361-1333.jpg?w=996&t=st=1687254162~exp=1687254762~hmac=d883bcc295299e3609a748fd730e012e4dbe17225486f4947839f2da0526bcf7'
+                                              : homeController
+                                                  .slideList[index].imageUrl!),
+                                        ),
+                                      )),
+                                );
+                              },
+                            ),
+                          ),
+                          homeController.slideList.length <= 1
+                              ? Container()
+                              : Positioned(
+                                  bottom: 30,
+                                  child: SmoothPageIndicator(
+                                    controller: pageControllers,
+                                    count: homeController.slideList.length,
+                                    effect: const ExpandingDotsEffect(
+                                        dotWidth: 8,
+                                        dotHeight: 8,
+                                        dotColor: Colors.amber,
+                                        activeDotColor: Colors.white),
+                                  ),
+                                ),
+                        ],
+                      )
                     ],
                   ),
                 ),

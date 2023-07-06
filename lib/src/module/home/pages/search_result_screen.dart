@@ -46,12 +46,13 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                 color: Colors.red,
               ))
             : GridView.builder(
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 20, bottom: 20),
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 210,
-                    childAspectRatio: 1,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 10,
-                    mainAxisExtent: 230),
+                    maxCrossAxisExtent: 240,
+                    childAspectRatio: 0.75,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20),
                 itemCount: detailsModel.variants!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CustomProductCart(
