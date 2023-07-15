@@ -1,12 +1,11 @@
 import 'package:allpay/src/module/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 import '../../constant/app_setting.dart';
 
-class StatisticPage extends StatelessWidget {
-  StatisticPage({Key? key}) : super(key: key);
+class FavouritePage extends StatelessWidget {
+  FavouritePage({Key? key}) : super(key: key);
   final homeController = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
@@ -20,23 +19,6 @@ class StatisticPage extends StatelessWidget {
                 ),
           ),
           elevation: 0,
-          actions: [
-            GestureDetector(
-              child: Container(
-                height: 24,
-                width: 24,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColor.textDarkColor,
-                ),
-                child: SvgPicture.asset(
-                  'assets/svg/Vector.svg',
-                  // color: AppColor.darkColor,
-                ),
-              ),
-            ),
-            const SizedBox(width: 15),
-          ],
         ),
         body: Container()
         // GridView.builder(

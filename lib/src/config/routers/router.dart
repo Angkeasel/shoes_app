@@ -9,6 +9,7 @@ import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import '../../cores/wolk_though/page/splash_screen.dart';
 import '../../module/auth/sign_in/screen/logins_screens.dart';
@@ -19,14 +20,17 @@ import '../../module/home/pages/search_screen.dart';
 import '../../module/home/pages/select_category.dart';
 import '../../module/my_card/screen/invoice_screen.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _rootNavigatorKey = Get.key;
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>();
+
+// const _initialLocation = '/home-router';
+const _initialLocation = '/sso';
 
 final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   debugLogDiagnostics: true,
-  initialLocation: '/sso',
+  initialLocation: _initialLocation,
   redirect: (context, state) {
     return null;
   },
@@ -38,7 +42,24 @@ final GoRouter router = GoRouter(
           child: child,
         );
       },
-      routes: shellRoutes,
+      routes: _shellRoutes,
+    ),
+    GoRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+      path: '/testing-rourter',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const MyCardPage(),
+        transitionsBuilder: (_, animation, secondaryAnimation, child) =>
+            SlideTransition(
+          position: Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: const Offset(0, 0),
+          ).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
+          child: child,
+        ),
+      ),
     ),
     GoRoute(
       path: '/sso',
@@ -73,10 +94,10 @@ final GoRouter router = GoRouter(
   ],
 );
 
-final shellRoutes = <GoRoute>[
+final _shellRoutes = <GoRoute>[
   GoRoute(
     path: '/home-router',
-    builder: (BuildContext context, GoRouterState state) => const HomePage(),
+    pageBuilder: (_, state) => const NoTransitionPage(child: HomePage()),
     routes: <GoRoute>[
       // GoRoute(
       //     parentNavigatorKey: _rootNavigatorKey,
@@ -113,10 +134,10 @@ final shellRoutes = <GoRoute>[
       ),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
-          path: 'category/:id',
-          builder: (BuildContext context, GoRouterState state) =>
-              SelectCategoryPage(
-                id: int.tryParse(state.pathParameters['id']!),
+          path: 'category',
+          builder: (_, GoRouterState state) => SelectCategoryPage(
+                id: int.tryParse(state.queryParameters['id'] ?? ''),
+                name: state.queryParameters['name'],
                 // name: state.queryParameters['name'] ?? '',
               ),
           routes: const <GoRoute>[]),
@@ -131,31 +152,25 @@ final shellRoutes = <GoRoute>[
 
   GoRoute(
     path: '/favorite-router',
-    builder: (BuildContext context, GoRouterState state) => StatisticPage(),
-    routes: const <GoRoute>[],
+    pageBuilder: (_, state) => NoTransitionPage(child: FavouritePage()),
   ),
   //GoRoute(path: '/boarding',builder: (context, state)=>const OnBoardingScreen()),
-  GoRoute(
-    path: '/testing-rourter',
-    builder: (BuildContext context, GoRouterState state) => const MyCardPage(),
-    routes: const <GoRoute>[],
-  ),
+
   GoRoute(
     path: '/mycart/-rourter',
-    builder: (BuildContext context, GoRouterState state) =>
-        const InvoiceScreen(),
-    routes: const <GoRoute>[],
+    pageBuilder: (BuildContext context, GoRouterState state) =>
+        const NoTransitionPage(child: InvoiceScreen()),
   ),
   GoRoute(
     path: '/profile/-rourter',
-    builder: (BuildContext context, GoRouterState state) => const ProfilePage(),
+    pageBuilder: (BuildContext context, GoRouterState state) =>
+        const NoTransitionPage(child: ProfilePage()),
     routes: <GoRoute>[
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: 'edit-profile',
         builder: (BuildContext context, GoRouterState state) =>
             const EditProfilePage(),
-        routes: const <GoRoute>[],
       )
     ],
   ),

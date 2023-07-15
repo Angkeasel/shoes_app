@@ -1,6 +1,7 @@
 import 'package:allpay/src/constant/app_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../widget/home/custom_buttons.dart';
 import '../../home/widgets/custom_cart_add.dart';
@@ -9,9 +10,9 @@ import '../controller/mycard_controller.dart';
 import 'check_out_mycart.dart';
 
 class MyCardPage extends StatefulWidget {
-  final int? proId;
-  final int? varId;
-  const MyCardPage({Key? key, this.proId, this.varId}) : super(key: key);
+  const MyCardPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<MyCardPage> createState() => _MyCardPageState();
@@ -23,7 +24,7 @@ class _MyCardPageState extends State<MyCardPage> {
   @override
   void initState() {
     myCardController.getMyCard();
-    myCardController.qty.value = myCardController.myCardModel.value.quantity!;
+    // myCardController.qty.value = myCardController.myCardModel.value.quantity!;
     super.initState();
   }
 
@@ -36,6 +37,11 @@ class _MyCardPageState extends State<MyCardPage> {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              context.pop();
+            },
+            icon: const Icon(Icons.keyboard_arrow_down_rounded)),
         title: const Text("My Cart"),
         elevation: 0,
       ),
@@ -106,9 +112,9 @@ class _MyCardPageState extends State<MyCardPage> {
                     ValueListenableBuilder(
                       builder:
                           (BuildContext context, int value, Widget? child) {
-                        return const CustomTextLable(
+                        return CustomTextLable(
                           text: 'Subtotal',
-                          //  lablePrice: double.parse(""),
+                          lablePrice: double.parse("0"),
                         );
                       },
                       valueListenable: myCardController.counter,
@@ -116,9 +122,9 @@ class _MyCardPageState extends State<MyCardPage> {
                     const SizedBox(
                       height: 8,
                     ),
-                    const CustomTextLable(
+                    CustomTextLable(
                       text: 'Delivery',
-                      //lablePrice: widget.detailModel!.delivery!,
+                      lablePrice: double.parse("0"),
                     ),
                     const SizedBox(
                       height: 5,

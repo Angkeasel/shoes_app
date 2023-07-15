@@ -1,9 +1,11 @@
 import 'package:allpay/src/cores/wolk_though/controller/onboarding_controller.dart';
+import 'package:allpay/src/widget/home/custom_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../module/auth/local_storage/local_storage.dart';
 import '../widget/custom_onboarding_screen.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -61,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeIn);
                   } else {
-                    context.go('/home-router');
+                    context.go('/login');
                   }
                 },
               );
@@ -78,6 +80,26 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 activeDotColor: Colors.white),
           ),
         ),
+        Positioned(
+          bottom: 30,
+          left: 20,
+          right: 20,
+          child: CustomButtons(
+            color: Colors.white,
+            textColor: Colors.black,
+            title: currentIndex == 0 ? 'Get Started' : 'Next',
+            onTap: () {
+              if (onBoardCon.boardingList.length - 1 == currentIndex) {
+                LocalStorage.storeData(key: 'first_time_open', value: true);
+                context.go('/login');
+              } else {
+                pageController.nextPage(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeIn);
+              }
+            },
+          ),
+        )
       ],
     )
         //  CarouselSlider(

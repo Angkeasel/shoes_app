@@ -70,9 +70,9 @@ class RecipientScreen extends StatelessWidget {
                   Radius.circular(8),
                 ),
               ),
-              child: Row(
+              child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text("Bank"),
                     Icon(
                       Icons.arrow_drop_down,
@@ -93,9 +93,8 @@ class RecipientScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            CustomTextFiled(
+            const CustomTextFiled(
               hintText: "Account Number",
-              initialValues: _controller.accountNum.value,
             ),
             const SizedBox(
               height: 100,

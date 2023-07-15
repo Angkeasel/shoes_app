@@ -2,6 +2,38 @@ import 'package:allpay/src/constant/app_setting.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+class CustomCategoryCard extends StatelessWidget {
+  final String? title;
+  final GestureTapCallback? onTap;
+  const CustomCategoryCard({
+    super.key,
+    required this.title,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: AppColor.primaryColor,
+        ),
+        padding: const EdgeInsets.symmetric(vertical: 11.0, horizontal: 20),
+        alignment: Alignment.center,
+        child: Text(
+          title ?? "",
+          style: Theme.of(context)
+              .textTheme
+              .titleSmall
+              ?.copyWith(color: Colors.white),
+        ),
+      ),
+    );
+  }
+}
+
 Widget customTitle(
   BuildContext context, {
   String? title,
@@ -35,9 +67,10 @@ Widget customTitle(
 
 Widget customCartCategory(BuildContext context,
     {String? title, bool? isSelected = false, GestureTapCallback? onTap}) {
-  return GestureDetector(
+  return InkWell(
     onTap: onTap,
-    child: Container(
+    borderRadius: BorderRadius.circular(8),
+    child: Ink(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         color: AppColor.primaryColor,

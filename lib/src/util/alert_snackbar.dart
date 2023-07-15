@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../main.dart';
 
-
- const txt12 = TextStyle(
-    fontSize: 12,
-    fontFamily: "DMSans",
-    fontWeight: FontWeight.w500,
-    color: Colors.grey,
-  );
+const txt12 = TextStyle(
+  fontSize: 12,
+  fontFamily: "DMSans",
+  fontWeight: FontWeight.w500,
+  color: Colors.grey,
+);
 const txt14 = TextStyle(
-    fontSize: 14,
-    fontFamily: "DMSans",
-    fontWeight: FontWeight.w500,
-    color: Colors.grey,
-  );
+  fontSize: 14,
+  fontFamily: "DMSans",
+  fontWeight: FontWeight.w500,
+  color: Colors.grey,
+);
+
 void alertErrorSnackbar({
   required title,
   required message,
@@ -83,7 +83,7 @@ void alertSuccessSnackbar({
               children: [
                 Text(
                   title,
-                  style:txt14.copyWith(color: Colors.white),
+                  style: txt14.copyWith(color: Colors.white),
                 ),
                 Text(
                   message,
@@ -127,8 +127,8 @@ void alertSnackbarCustom({
           const SizedBox(width: 10),
           Text(
             message,
-            style: txt14
-                .copyWith(color: Colors.white, fontWeight: FontWeight.w400),
+            style: txt14.copyWith(
+                color: Colors.white, fontWeight: FontWeight.w400),
             overflow: TextOverflow.ellipsis,
           ),
         ],
@@ -150,8 +150,7 @@ showDialogConfirmation({
 }) async {
   showDialog(
     context: context,
-    builder: (context) {
-      dialogContext = context;
+    builder: (dialogContext) {
       return AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -178,7 +177,10 @@ showDialogConfirmation({
         ),
         actions: [
           GestureDetector(
-            onTap: onTapCancel,
+            onTap: () {
+              Navigator.pop(dialogContext);
+              onTapCancel?.call();
+            },
             child: Text(
               cancel,
               style: const TextStyle(

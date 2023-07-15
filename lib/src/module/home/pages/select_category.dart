@@ -1,3 +1,4 @@
+import 'package:allpay/src/constant/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -38,17 +39,16 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
               ))
             : homeController.categoryProductList.isNotEmpty
                 ? GridView.builder(
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(
-                        left: 16, right: 16, top: 20, bottom: 20),
+                    padding: EdgeInsets.all(Sizes.defaultPadding),
                     gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 240,
-                            childAspectRatio: 0.75,
-                            mainAxisSpacing: 20,
-                            crossAxisSpacing: 20),
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 157 / 201,
+                      mainAxisSpacing: 20,
+                      crossAxisSpacing: 20,
+                    ),
                     itemCount: homeController.categoryProductList.length,
-                    itemBuilder: (BuildContext ctx, index) {
+                    itemBuilder: (_, index) {
                       return CustomProductCart(
                         title: homeController.categoryProductList[index].name,
                         image: homeController

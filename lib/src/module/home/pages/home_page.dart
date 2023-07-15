@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:allpay/src/constant/app_setting.dart';
 
 import 'package:allpay/src/module/home/widgets/custom_button_category.dart';
+import 'package:allpay/src/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../profile/page/notification_page.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/custom_product_cart.dart';
 
@@ -57,74 +57,33 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
+
+      // floatingActionButton: FloatingActionButton(onPressed: () {
+      //   LocalStorage.storeData(key: 'access_token', value: '');
+      //   LocalStorage.storeData(key: 'first_time_open', value: false);
+      // }),
       appBar: AppBar(
         centerTitle: true,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 90),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.asset('assets/svg/Highlight_05.svg'),
-                  const SizedBox(
-                    height: 30,
-                  )
-                ],
-              ),
-              Expanded(
-                child: Text(
-                  'Explore',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displayLarge!
-                      .copyWith(color: Colors.black, fontSize: 32),
-                ),
-              ),
-              IconButton(
-                  onPressed: () {
-                    context.push('/home-router/search-router');
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    size: 24,
-                    weight: 24,
-                  )),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //       return const MyCardPage();
-              //     }));
-              //   },
-              //   child: Container(
-              //     height: 24,
-              //     width: 24,
-              //     decoration: const BoxDecoration(
-              //       shape: BoxShape.circle,
-              //       color: AppColor.textDarkColor,
-              //     ),
-              //     child: Image.asset(
-              //       'assets/png/bag-2.png',
-              //       color: AppColor.darkColor,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(width: 15),
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const NotificationPage();
-                    }));
-                  },
-                  child: SvgPicture.asset("assets/svg/Notif_Black.svg")),
-              const SizedBox(width: 15),
-            ],
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.push('/home-router/search-router');
+            },
+            icon: const Icon(
+              Icons.search,
+              size: 24,
+            ),
           ),
-        ),
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+          //       return const NotificationPage();
+          //     }));
+          //   },
+          //   icon: SvgPicture.asset("assets/svg/Notif_Black.svg"),
+          // ),
+        ],
+        title: SvgPicture.asset('assets/svg/homepage-logo.svg'),
         elevation: 0,
       ),
       //====================================> Body <==================================================
@@ -144,72 +103,89 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
                 child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.only(top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      //=======================================>Select Category<===============================================
                       Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: customTitle(context, title: 'Select Category'),
+                        padding: const EdgeInsets.only(left: 20, right: 10),
+                        child: Row(
+                          children: [
+                            const Expanded(
+                              child: CustomTextFiled(
+                                hintText: 'Women, kid, style . . .',
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.tune_rounded))
+                          ],
+                        ),
                       ),
+                      //=======================================>Select Category<===============================================
+                      if (homeController.categoryList.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: customTitle(context, title: 'Select Category'),
+                        ),
                       const SizedBox(
                         height: 20,
                       ),
 
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Row(
-                              children: homeController.categoryList
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (e) => Padding(
-                                      padding: const EdgeInsets.only(right: 16),
-                                      child: customCartCategory(context,
-                                          title: e.value.name, onTap: () {
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Row(
+                            children: homeController.categoryList
+                                .asMap()
+                                .entries
+                                .map(
+                                  (e) => Padding(
+                                    padding: const EdgeInsets.only(right: 16),
+                                    child: CustomCategoryCard(
+                                      title: e.value.name,
+                                      onTap: () {
                                         homeController.indexCategory.value =
                                             e.key;
-                                        debugPrint(
-                                            '==========>${e.value.id}&${e.value.name}');
+
                                         homeController.pageCategory.value = 0;
                                         homeController.getCategoryById(
                                             page: homeController
                                                 .pageCategory.value,
                                             id: e.value.id);
                                         context.push(
-                                          '/home-router/category/${e.value.id}',
+                                          '/home-router/category?id=${e.value.id}&name=${e.value.name}',
                                         );
                                       },
-                                          isSelected: homeController
-                                                  .indexCategory.value ==
-                                              e.key),
                                     ),
-                                  )
-                                  .toList()),
-                        ),
+                                  ),
+                                )
+                                .toList()),
                       ),
 
                       //=======================================>Popular Shoes<===============================================
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: customTitle(context,
-                            title: 'Popular Shoes', isSeeAll: true, onTap: () {
-                          homeController.currentPage.value = 0;
-                          homeController.getProduct(
-                            page: homeController.currentPage.value,
-                            quary: '',
-                          );
-                          context.push('/home-router/popular-router');
-                        }),
-                      ),
+                      if (homeController.productList.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: customTitle(context,
+                              title: 'Popular Shoes',
+                              isSeeAll: true, onTap: () {
+                            homeController.currentPage.value = 0;
+                            homeController.getProduct(
+                              page: homeController.currentPage.value,
+                              quary: '',
+                            );
+                            context.push('/home-router/popular-router');
+                          }),
+                        ),
+
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.only(right: 20),
                         child: Row(
                           children: homeController.productList
                               .asMap()
@@ -225,6 +201,7 @@ class _HomePageState extends State<HomePage> {
                                 title: e.value.name,
                                 image: e.value.thumbnailUrl,
                                 price: e.value.price,
+                                // isFav: e.value.,
                                 onTap: () {
                                   context.push(
                                     '/home-router/detail/${e.value.id}',
@@ -255,20 +232,21 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                       //=======================================> New Arrivals Slide<===============================================
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, top: 20),
-                        child: customTitle(
-                          context,
-                          title: 'New Arrivals',
-                          isSeeAll: true,
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Container();
-                            }));
-                          },
+                      if (homeController.slideList.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, top: 20),
+                          child: customTitle(
+                            context,
+                            title: 'New Arrivals',
+                            isSeeAll: true,
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return Container();
+                              }));
+                            },
+                          ),
                         ),
-                      ),
                       Stack(
                         alignment: Alignment.center,
                         children: [

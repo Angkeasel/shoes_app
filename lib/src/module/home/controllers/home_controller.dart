@@ -18,9 +18,12 @@ class HomeController extends GetxController {
   var bigProductModel = BigProductModel().obs;
 
   //==============================>Get catagary<==============================
-  var categoryList = <CategoryModel>[].obs;
-  var categoryModel = CategoryModel().obs;
+  final categoryList = <CategoryModel>[].obs;
+
+  final selectedCategory = 'all shoes'.obs;
+
   Future<List<CategoryModel>> getCategory() async {
+    List<CategoryModel> categoryTempList = [];
     try {
       await api
           .onNetworkRequesting(
@@ -28,9 +31,10 @@ class HomeController extends GetxController {
           .then((value) {
         debugPrint("========>CategoryList$value");
         value.map((e) {
-          categoryModel.value = CategoryModel.fromJson(e);
-          categoryList.add(categoryModel.value);
+          categoryTempList.add(CategoryModel.fromJson(e));
         }).toList();
+
+        categoryList.assignAll(categoryTempList);
         debugPrint("========>CategoryList $categoryList");
       }).onError((ErrorModel error, stackTrace) {
         debugPrint('=======>Error Body :${error.bodyString}');

@@ -46,7 +46,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: CustomTextFiled(
                   controller: homeController.searchController,
                   hintText: 'Search by product name',
-                  labelText: 'Search',
                   labelStyle: Theme.of(context).textTheme.bodyMedium,
                   suffixIcon: const Icon(Icons.search),
                   height: 60,

@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 
 import '../module/auth/local_storage/local_storage.dart';
 
-
 class ErrorModel {
   final int? statusCode;
   final dynamic bodyString;
@@ -19,7 +18,6 @@ enum METHODE {
   update,
 }
 
-
 class ApiBaseHelper {
   String? baseurl = dotenv.env['base_url'];
   // String? baseurl = 'https://pre-myproperty.z1platform.com/api/';
@@ -32,7 +30,7 @@ class ApiBaseHelper {
     String baseUrl = '',
   }) async {
     if (baseUrl != '') baseurl = baseUrl;
-    var token = await LocalStorage.getStringValue(key: 'access_token', );
+    var token = await LocalStorage.getStringValue(key: 'access_token');
     final fullUrl = baseurl! + url;
     Map<String, String> headerDefault = {
       'Content-Type': 'application/json',

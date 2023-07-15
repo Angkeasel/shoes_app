@@ -1,3 +1,5 @@
+import 'package:allpay/src/module/auth/sign_in/controller/contoller.dart';
+import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:allpay/src/widget/home/custom_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final profileCon = Get.put(ProfileController());
+    final authController = Get.put(ControllerSignin());
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
@@ -26,8 +29,8 @@ class ProfilePage extends StatelessWidget {
         // title: const Text("My Profile"),
       ),
       body: SafeArea(
-        child: Obx(()=>
-         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: Obx(
+          () => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               padding: const EdgeInsets.only(left: 20, bottom: 10, right: 20),
               color: Colors.white,
@@ -60,7 +63,8 @@ class ProfilePage extends StatelessWidget {
                                   .textTheme
                                   .titleSmall!
                                   .copyWith(
-                                      fontWeight: FontWeight.w600, fontSize: 20),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20),
                             ),
                             const SizedBox(
                               height: 5,
@@ -84,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                             //context.push('/profile/-rourter/edit-profile');
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return LoginScreens();
+                              return const LoginScreens();
                             }));
                           },
                           icon: const Icon(
@@ -105,10 +109,10 @@ class ProfilePage extends StatelessWidget {
                   //     children: [
                   //       Text(
                   //         "Order",
-        
+
                   //         style: Theme.of(context).textTheme.titleSmall,
                   //       ),
-        
+
                   //       Container(width: 1, height: 40, color: Colors.grey,),
                   //       Text(
                   //         "Leave Feedback",
@@ -160,21 +164,25 @@ class ProfilePage extends StatelessWidget {
                     CustomSettingRow(
                       title: 'Gender',
                       isMoreText: true,
-                      moreText:  profileCon.titleGen.value,
+                      moreText: profileCon.titleGen.value,
                       onTap: () {
                         onShowBottomSheetGender(
                           height: MediaQuery.of(context).size.height * 0.2,
                           context: context,
                           child: Column(
-                              children:
-                                  profileCon.genderList.asMap().entries.map((e) {
+                              children: profileCon.genderList
+                                  .asMap()
+                                  .entries
+                                  .map((e) {
                             return CustomLabelIcon(
                               title: e.value,
-                              ontap: (){
+                              ontap: () {
                                 profileCon.indexGen.value = e.key;
                                 profileCon.titleGen.value = e.value;
-                                debugPrint("======>${ profileCon.indexGen.value}");
-                                debugPrint("======>Gender${ profileCon.titleGen.value}");
+                                debugPrint(
+                                    "======>${profileCon.indexGen.value}");
+                                debugPrint(
+                                    "======>Gender${profileCon.titleGen.value}");
                                 context.pop();
                               },
                             );
@@ -232,10 +240,21 @@ class ProfilePage extends StatelessWidget {
             //     ],
             //   ),
             // ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
               child: CustomButtons(
                 title: 'Log Out',
+                onTap: () async {
+                  showDialogConfirmation(
+                    context: context,
+                    txt: 'Log out',
+                    accept: 'Yes',
+                    cancel: 'Cancel',
+                    onTap: () async {
+                      await authController.onlogout();
+                    },
+                  );
+                },
               ),
             )
           ]),

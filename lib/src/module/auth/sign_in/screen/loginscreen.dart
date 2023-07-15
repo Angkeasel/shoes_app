@@ -61,9 +61,7 @@ class LoginScreen extends StatelessWidget {
                     prifixIcon: controller.isInputEmailLog.value == ""
                         ? Image.asset("assets/png/email_grey.png")
                         : Image.asset("assets/png/black_email.png"),
-                    initialValues: controllerEmail.text,
                     isValidate: false,
-                    labelText: 'Email',
                     onChanges: (e) {
                       controller.isInputEmailLog.value = e;
                     },
@@ -91,7 +89,6 @@ class LoginScreen extends StatelessWidget {
                             : controller.isPasswordLog.value == "1111"
                                 ? Image.asset("assets/png/fill_eye_red.png")
                                 : Image.asset("assets/png/fill_eye_blue.png"),
-                    initialValues: controllerPassword.text,
                     isValidate: controller.isvalidateLog.value,
                     onTap: () {},
                     onChanges: (ps) {

@@ -62,7 +62,6 @@ class CreateAccoutn extends StatelessWidget {
                     prifixIcon: controller.isInputEmail.value == ""
                         ? Image.asset("assets/png/email_grey.png")
                         : Image.asset("assets/png/black_email.png"),
-                    initialValues: controllerEmail.text,
                     style: const TextStyle(
                         fontSize: 14,
                         color: Colors.black,
@@ -82,8 +81,6 @@ class CreateAccoutn extends StatelessWidget {
                     suffixIcon: controller.isPassword.value == ""
                         ? Image.asset("assets/png/eye_grey.png")
                         : Image.asset("assets/png/fill_eye_blue.png"),
-                    initialValues: controllerPassword.text,
-                    labelText: 'Password',
                     isValidate: false,
                     onChanges: (ps) {
                       controller.isPassword.value = ps;

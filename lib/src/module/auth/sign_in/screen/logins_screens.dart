@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../config/routers/go_route.dart';
+import '../../../../config/routers/router.dart';
 import '../../../../widget/custom_text.dart';
 import '../../../../widget/home/custom_buttons.dart';
 
@@ -65,46 +65,38 @@ class LoginScreens extends StatelessWidget {
                   children: [
                     CustomTextFiled(
                       title: 'Email',
-                      height: 60,
-                      controller: logController.conEmail,
-                      //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      // isSelected:true,
                       hintText: 'Email',
-                      //isObscureText: true,
-                      labelText: 'Email',
+                      height: 60,
+                      controller: logController.emailTxtController,
                       isValidate: false,
-                      onChanges: (email) {
-                        debugPrint('=======>email$email');
-                        logController.email.value = email;
-                         debugPrint('=======>email${logController.email.value}');
-                      },
+                      onChanges: (email) {},
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     CustomTextFiled(
                       title: 'Password',
-                      height: 60,
-                      controller: logController.conPassword,
                       hintText: 'Password',
+                      height: 60,
+                      controller: logController.passwordTxtController,
                       maxlenght: 15,
                       isObscureText: !logController.isGreyEye.value,
                       suffixIcon: IconButton(
-                          onPressed: () {
-                            logController.isGreyEye.value =
-                                !logController.isGreyEye.value;
-                          },
-                          icon: Icon(logController.isGreyEye.value
-                              ? Icons.visibility
-                              : Icons.visibility_off)),
+                        onPressed: () {
+                          logController.isGreyEye.value =
+                              !logController.isGreyEye.value;
+                        },
+                        icon: Icon(
+                          logController.isGreyEye.value
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                          size: 18,
+                        ),
+                      ),
 
                       //initialValues: controllerPassword.text,
-                      labelText: 'Password',
+
                       isValidate: false,
-                      onChanges: (ps) {
-                        logController.passWord.value = ps;
-                        debugPrint('=====>ps${logController.passWord.value}');
-                      },
                     ),
                     SizedBox(
                       height: 20,
@@ -133,40 +125,20 @@ class LoginScreens extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    CustomButtons(
-                      title: 'Sign In',
-                      onTap: () {
-                        logController.onLogin(
-                          email: logController.email.value,
-                          password: logController.passWord.value
-                        );
-                        // if (phone == logController.phone.value &&
-                        //     password == logController.isPassWord.value) {
-                        //   Future.delayed(const Duration(milliseconds: 500), () {
-                        //     alertSuccessSnackbar(
-                        //         message: 'Login Successful', title: 'Success');
-                        //   });
-
-                        //   context.go('/home-router')
-                        //   // Navigator.push(context,
-                        //   //     MaterialPageRoute(builder: (context) {
-                        //   //   return const HomePage();
-                        //   // }));
-                        // } else {
-                        //   alertErrorSnackbar(
-                        //     title: "Error",
-                        //     message: "Account not found",
-                        //   );
-                        // }
-                      },
-                    ),
+                    logController.loginLoading.value
+                        ? const CircularProgressIndicator.adaptive()
+                        : CustomButtons(
+                            title: 'Sign In',
+                            onTap: () async {
+                              await logController.onLogin();
+                            }),
                   ],
                 ),
               ),
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    router.push('/register');
+                    router.go('/register');
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

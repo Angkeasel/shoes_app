@@ -52,7 +52,6 @@ dependencies:
   # firebase_database: ^10.2.2
 
 dev_dependencies:
-  
   auto_route_generator: ^7.1.1
   build_runner: ^2.1.7
   flutter_gen_runner:
@@ -98,9 +97,6 @@ flutter:
     - family: Raleway-Bold
       fonts:
         - asset: assets/fonts/Raleway-Bold.ttf
-    - family: Inter
-      fonts:
-        - asset: assets/fonts/Inter-Regular.ttf
 
   #   - family: Trajan Pro
   #     fonts:

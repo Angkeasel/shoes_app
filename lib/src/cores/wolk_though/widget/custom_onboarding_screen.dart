@@ -1,4 +1,3 @@
-import 'package:allpay/src/widget/home/custom_buttons.dart';
 import 'package:flutter/material.dart';
 
 class CustomBoardingScreen extends StatelessWidget {
@@ -85,7 +84,7 @@ class CustomBoardingScreen extends StatelessWidget {
               ),
             )
           : Positioned(
-              bottom: 280,
+              bottom: 200,
               left: lTitle,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * .8,
@@ -116,16 +115,6 @@ class CustomBoardingScreen extends StatelessWidget {
                 ),
               ),
             ),
-      Positioned(
-        bottom: 40,
-        left: 20,
-        right: 20,
-        child: CustomButtons(
-            color: Colors.white,
-            textColor: Colors.black,
-            title: isFirst! ? 'Get Started' : titleButton,
-            onTap: onTapButton),
-      )
     ]);
   }
 }
