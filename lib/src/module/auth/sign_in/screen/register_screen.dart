@@ -45,51 +45,57 @@ class RegisterScreen extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    Column(
-                      children: [
-                        CustomTextFiled(
-                          title: 'FirstName',
-                          controller:
-                              logController.registerFirstNameTxtController,
-                          hintText: 'FirstName',
-                          isValidate: false,
-                        ),
-                        const SizedBox(height: 15),
-                        CustomTextFiled(
-                          title: 'LastName',
-                          controller:
-                              logController.registerLastNameTxtController,
-                          hintText: 'LastName',
-                          isValidate: false,
-                        ),
-                        const SizedBox(height: 15),
-                        CustomTextFiled(
-                          title: 'Email',
-                          controller: logController.registerEmailTxtController,
-                          hintText: 'Email',
-                          isValidate: false,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        CustomTextFiled(
-                          title: 'Password',
-                          controller:
-                              logController.registerPasswordTxtController,
-                          hintText: 'Password',
-                          maxlenght: 15,
-                          isObscureText: !logController.isResPass.value,
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                logController.isResPass.value =
-                                    !logController.isResPass.value;
-                              },
-                              icon: Icon(logController.isResPass.value
-                                  ? Icons.visibility
-                                  : Icons.visibility_off)),
-                          isValidate: false,
-                        ),
-                      ],
+                    Obx(
+                      () => Column(
+                        children: [
+                          CustomTextFiled(
+                            title: 'FirstName',
+                            controller:
+                                logController.registerFirstNameTxtController,
+                            hintText: 'FirstName',
+                            isValidate: false,
+                          ),
+                          const SizedBox(height: 15),
+                          CustomTextFiled(
+                            title: 'LastName',
+                            controller:
+                                logController.registerLastNameTxtController,
+                            hintText: 'LastName',
+                            isValidate: false,
+                          ),
+                          const SizedBox(height: 15),
+                          CustomTextFiled(
+                            title: 'Email',
+                            controller:
+                                logController.registerEmailTxtController,
+                            hintText: 'Email',
+                            isValidate: false,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 15.0, bottom: 30.0),
+                            child: CustomTextFiled(
+                              title: 'Password',
+                              controller:
+                                  logController.registerPasswordTxtController,
+                              hintText: 'Password',
+                              maxlenght: 15,
+                              isObscureText: !logController.isResPass.value,
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    debugPrint(
+                                        'isVisibility Pass: ${logController.isResPass.value}');
+                                    logController.isResPass.value =
+                                        !logController.isResPass.value;
+                                  },
+                                  icon: Icon(logController.isResPass.value
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
+                              isValidate: false,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
