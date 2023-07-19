@@ -1,6 +1,7 @@
 import 'package:allpay/src/module/auth/sign_in/controller/contoller.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:allpay/src/widget/home/custom_buttons.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -12,15 +13,21 @@ import '../../auth/sign_in/screen/logins_screens.dart';
 import '../controller/profile_controller.dart';
 import '../widget/custom_setting_row.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  @override
   Widget build(BuildContext context) {
     final profileCon = Get.put(ProfileController());
     final authController = Get.put(ControllerSignin());
+
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
@@ -58,7 +65,8 @@ class ProfilePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "093339596".replaceRange(3, 6, "***"),
+                              "tinutchan@gmail.com".replaceAll(
+                                  RegExp('(?<=.)[^@](?=[^@]*?[^@]@)'), '*'),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
@@ -128,85 +136,178 @@ class ProfilePage extends StatelessWidget {
               height: 20,
             ),
             Container(
-                padding: const EdgeInsets.only(
-                    left: 20, top: 15, right: 15, bottom: 15),
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    const CustomSettingRow(
-                      title: 'Name',
-                      lastText: 'Add',
-                      isLastText: true,
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CustomSettingRow(
-                      title: 'Phone Number',
-                      lastText: '093339596',
-                      isLastText: true,
-                      onTap: () {},
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const CustomSettingRow(
-                      title: 'Email Address',
-                      lastText: 'Add',
-                      isLastText: true,
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CustomSettingRow(
-                      title: 'Gender',
-                      isMoreText: true,
-                      moreText: profileCon.titleGen.value,
-                      onTap: () {
-                        onShowBottomSheetGender(
-                          height: MediaQuery.of(context).size.height * 0.2,
+              padding: const EdgeInsets.only(
+                  left: 20, top: 15, right: 15, bottom: 15),
+              color: Colors.white,
+              child: Column(
+                children: [
+                  CustomSettingRow(
+                    title: 'Name',
+                    lastText: '${profileCon.userProfileModel.value.firstName}\t'
+                        '${profileCon.userProfileModel.value.lastName}',
+                    isLastText: true,
+                    onTap: () {
+                      profileCon.fecthUserProfile();
+                    },
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CustomSettingRow(
+                    title: 'Phone Number',
+                    lastText:
+                        profileCon.userProfileModel.value.phoneNumber ?? '',
+                    isLastText: true,
+                    onTap: () {},
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CustomSettingRow(
+                    title: 'Email Address',
+                    lastText: '${profileCon.userProfileModel.value.email}',
+                    isLastText: true,
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CustomSettingRow(
+                    title: 'Gender',
+                    isMoreText: true,
+                    moreText: profileCon.titleGen.value,
+                    onTap: () {
+                      onShowBottomSheetGender(
+                        height: MediaQuery.of(context).size.height * 0.2,
+                        context: context,
+                        child: Column(
+                            children:
+                                profileCon.genderList.asMap().entries.map((e) {
+                          return CustomLabelIcon(
+                            title: e.value,
+                            ontap: () {
+                              profileCon.indexGen.value = e.key;
+                              profileCon.titleGen.value = e.value;
+                              debugPrint("======>${profileCon.indexGen.value}");
+                              debugPrint(
+                                  "======>Gender${profileCon.titleGen.value}");
+                              context.pop();
+                            },
+                          );
+                        }).toList()),
+                      );
+                    },
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CustomSettingRow(
+                    title: 'Birthday',
+                    isMoreText: true,
+                    moreText: '${profileCon.dateTime.value.month}\t/'
+                        '${profileCon.dateTime.value.day}\t/'
+                        '${profileCon.dateTime.value.year}',
+                    onTap: () {
+                      debugPrint('Tapped:');
+                      showCupertinoModalPopup(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            padding: EdgeInsets.zero,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            width: double.infinity,
+                            height: 250.0,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      TextButton(
+                                        child: const Text('Cancel'),
+                                        onPressed: () {},
+                                      ),
+                                      Container(
+                                        width: 60.0,
+                                        height: 5,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          color: Colors.grey.withOpacity(0.4),
+                                        ),
+                                      ),
+                                      TextButton(
+                                        child: const Text('Done'),
+                                        onPressed: () {
+                                          context.pop();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CupertinoDatePicker(
+                                    backgroundColor: Colors.white,
+                                    initialDateTime: profileCon.dateTime.value,
+                                    onDateTimeChanged: (newDate) {
+                                      profileCon.dateTime.value = newDate;
+                                      debugPrint(
+                                          'OldData: ${profileCon.dateTime.value}');
+                                    },
+                                    use24hFormat: true,
+                                    mode: CupertinoDatePickerMode.date,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  const Divider(),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  CustomSettingRow(
+                    title: 'Change Password',
+                    onTap: () {
+                      showDialog(
                           context: context,
-                          child: Column(
-                              children: profileCon.genderList
-                                  .asMap()
-                                  .entries
-                                  .map((e) {
-                            return CustomLabelIcon(
-                              title: e.value,
-                              ontap: () {
-                                profileCon.indexGen.value = e.key;
-                                profileCon.titleGen.value = e.value;
-                                debugPrint(
-                                    "======>${profileCon.indexGen.value}");
-                                debugPrint(
-                                    "======>Gender${profileCon.titleGen.value}");
-                                context.pop();
-                              },
+                          builder: (context) {
+                            return CupertinoAlertDialog(
+                              title: const Text('Change Password?'),
+                              content: const Text(
+                                  'Do you really want to change your password?'),
+                              actions: <Widget>[
+                                TextButton(
+                                    onPressed: () {
+                                      //action code for "Yes" button
+                                    },
+                                    child: const Text('Yes')),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context); //close Dialog
+                                  },
+                                  child: const Text('Close'),
+                                )
+                              ],
                             );
-                          }).toList()),
-                        );
-                      },
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const CustomSettingRow(
-                      title: 'Birthday',
-                    ),
-                    const Divider(),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    CustomSettingRow(
-                      title: 'Change Password',
-                      onTap: () {},
-                    )
-                  ],
-                )),
+                          });
+                    },
+                  )
+                ],
+              ),
+            ),
             // Padding(
             //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             //   child: Text(
