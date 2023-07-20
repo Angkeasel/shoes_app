@@ -47,6 +47,9 @@ dependencies:
   firebase_core: ^2.14.0
   firebase_messaging: ^14.6.3
   flutter_native_splash: ^2.3.1
+  dotted_decoration: ^2.0.0
+  geocoding: ^2.1.0
+  geolocator: ^9.0.2
   # firebase_core: ^2.13.1
   # firebase_auth: ^4.6.2
   # firebase_database: ^10.2.2
