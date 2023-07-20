@@ -65,8 +65,9 @@ class _ProfilePageState extends State<ProfilePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "tinutchan@gmail.com".replaceAll(
-                                  RegExp('(?<=.)[^@](?=[^@]*?[^@]@)'), '*'),
+                              "${profileCon.userProfileModel.value.email}"
+                                  .replaceAll(
+                                      RegExp('(?<=.)[^@](?=[^@]*?[^@]@)'), '*'),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
@@ -105,6 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           ))
                     ],
                   ),
+
                   const SizedBox(
                     height: 20,
                   ),
@@ -177,7 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   CustomSettingRow(
                     title: 'Gender',
                     isMoreText: true,
-                    moreText: profileCon.titleGen.value,
+                    moreText:
+                        '${profileCon.userGendermodel.value.value}', //profileCon.titleGen.value,
                     onTap: () {
                       onShowBottomSheetGender(
                         height: MediaQuery.of(context).size.height * 0.2,
@@ -193,6 +196,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               debugPrint("======>${profileCon.indexGen.value}");
                               debugPrint(
                                   "======>Gender${profileCon.titleGen.value}");
+                              profileCon.onSubmitUserGender(
+                                  id: profileCon.userGendermodel.value.id);
+                              profileCon.fecthUserGender();
                               context.pop();
                             },
                           );
@@ -234,7 +240,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                     children: [
                                       TextButton(
                                         child: const Text('Cancel'),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          context.pop();
+                                        },
                                       ),
                                       Container(
                                         width: 60.0,

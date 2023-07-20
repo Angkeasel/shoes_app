@@ -28,8 +28,11 @@ mixin _$UserProfileModel {
   @JsonKey(name: 'phone_number')
   String? get phoneNumber => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
   String? get bio => throw _privateConstructorUsedError;
-  List<dynamic>? get profiles => throw _privateConstructorUsedError;
+  @JsonKey(name: "date_of_birth")
+  String? get dateOfBirth => throw _privateConstructorUsedError;
+  List<ProfilePictureModel>? get profiles => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,14 +46,17 @@ abstract class $UserProfileModelCopyWith<$Res> {
           UserProfileModel value, $Res Function(UserProfileModel) then) =
       _$UserProfileModelCopyWithImpl<$Res, UserProfileModel>;
   @useResult
-  $Res call(
-      {int? id,
-      @JsonKey(name: "first_name") String? firstName,
-      @JsonKey(name: 'last_name') String? lastName,
-      @JsonKey(name: 'phone_number') String? phoneNumber,
-      String? email,
-      String? bio,
-      List<dynamic>? profiles});
+  $Res call({
+    int? id,
+    @JsonKey(name: "first_name") String? firstName,
+    @JsonKey(name: 'last_name') String? lastName,
+    @JsonKey(name: 'phone_number') String? phoneNumber,
+    String? email,
+    String? gender,
+    String? bio,
+    @JsonKey(name: "date_of_birth") String? dateOfBirth,
+    final List<ProfilePictureModel>? profiles,
+  });
 }
 
 /// @nodoc
@@ -71,7 +77,9 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
     Object? lastName = freezed,
     Object? phoneNumber = freezed,
     Object? email = freezed,
+    Object? gender = freezed,
     Object? bio = freezed,
+    Object? dateOfBirth = freezed,
     Object? profiles = freezed,
   }) {
     return _then(_value.copyWith(
@@ -95,14 +103,22 @@ class _$UserProfileModelCopyWithImpl<$Res, $Val extends UserProfileModel>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      dateOfBirth: freezed == dateOfBirth
+          ? _value.dateOfBirth
+          : dateOfBirth // ignore: cast_nullable_to_non_nullable
+              as String?,
       profiles: freezed == profiles
           ? _value.profiles
           : profiles // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<ProfilePictureModel>?,
     ) as $Val);
   }
 }
@@ -121,8 +137,10 @@ abstract class _$$_UserProfileModelCopyWith<$Res>
       @JsonKey(name: 'last_name') String? lastName,
       @JsonKey(name: 'phone_number') String? phoneNumber,
       String? email,
+      String? gender,
       String? bio,
-      List<dynamic>? profiles});
+      @JsonKey(name: "date_of_birth") String? dateOfBirth,
+      List<ProfilePictureModel>? profiles});
 }
 
 /// @nodoc
@@ -141,7 +159,9 @@ class __$$_UserProfileModelCopyWithImpl<$Res>
     Object? lastName = freezed,
     Object? phoneNumber = freezed,
     Object? email = freezed,
+    Object? gender = freezed,
     Object? bio = freezed,
+    Object? dateOfBirth = freezed,
     Object? profiles = freezed,
   }) {
     return _then(_$_UserProfileModel(
@@ -165,14 +185,22 @@ class __$$_UserProfileModelCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       bio: freezed == bio
           ? _value.bio
           : bio // ignore: cast_nullable_to_non_nullable
               as String?,
+      dateOfBirth: freezed == dateOfBirth
+          ? _value.dateOfBirth
+          : dateOfBirth // ignore: cast_nullable_to_non_nullable
+              as String?,
       profiles: freezed == profiles
           ? _value._profiles
           : profiles // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>?,
+              as List<ProfilePictureModel>?,
     ));
   }
 }
@@ -186,8 +214,10 @@ class _$_UserProfileModel implements _UserProfileModel {
       @JsonKey(name: 'last_name') this.lastName,
       @JsonKey(name: 'phone_number') this.phoneNumber,
       this.email,
+      this.gender,
       this.bio,
-      final List<dynamic>? profiles})
+      @JsonKey(name: "date_of_birth") this.dateOfBirth,
+      final List<ProfilePictureModel>? profiles})
       : _profiles = profiles;
 
   factory _$_UserProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -207,10 +237,15 @@ class _$_UserProfileModel implements _UserProfileModel {
   @override
   final String? email;
   @override
-  final String? bio;
-  final List<dynamic>? _profiles;
+  final String? gender;
   @override
-  List<dynamic>? get profiles {
+  final String? bio;
+  @override
+  @JsonKey(name: "date_of_birth")
+  final String? dateOfBirth;
+  final List<ProfilePictureModel>? _profiles;
+  @override
+  List<ProfilePictureModel>? get profiles {
     final value = _profiles;
     if (value == null) return null;
     if (_profiles is EqualUnmodifiableListView) return _profiles;
@@ -220,7 +255,7 @@ class _$_UserProfileModel implements _UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, email: $email, bio: $bio, profiles: $profiles)';
+    return 'UserProfileModel(id: $id, firstName: $firstName, lastName: $lastName, phoneNumber: $phoneNumber, email: $email, gender: $gender, bio: $bio, dateOfBirth: $dateOfBirth, profiles: $profiles)';
   }
 
   @override
@@ -236,14 +271,26 @@ class _$_UserProfileModel implements _UserProfileModel {
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.bio, bio) || other.bio == bio) &&
+            (identical(other.dateOfBirth, dateOfBirth) ||
+                other.dateOfBirth == dateOfBirth) &&
             const DeepCollectionEquality().equals(other._profiles, _profiles));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, firstName, lastName,
-      phoneNumber, email, bio, const DeepCollectionEquality().hash(_profiles));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      gender,
+      bio,
+      dateOfBirth,
+      const DeepCollectionEquality().hash(_profiles));
 
   @JsonKey(ignore: true)
   @override
@@ -266,8 +313,10 @@ abstract class _UserProfileModel implements UserProfileModel {
       @JsonKey(name: 'last_name') final String? lastName,
       @JsonKey(name: 'phone_number') final String? phoneNumber,
       final String? email,
+      final String? gender,
       final String? bio,
-      final List<dynamic>? profiles}) = _$_UserProfileModel;
+      @JsonKey(name: "date_of_birth") final String? dateOfBirth,
+      final List<ProfilePictureModel>? profiles}) = _$_UserProfileModel;
 
   factory _UserProfileModel.fromJson(Map<String, dynamic> json) =
       _$_UserProfileModel.fromJson;
@@ -286,9 +335,14 @@ abstract class _UserProfileModel implements UserProfileModel {
   @override
   String? get email;
   @override
+  String? get gender;
+  @override
   String? get bio;
   @override
-  List<dynamic>? get profiles;
+  @JsonKey(name: "date_of_birth")
+  String? get dateOfBirth;
+  @override
+  List<ProfilePictureModel>? get profiles;
   @override
   @JsonKey(ignore: true)
   _$$_UserProfileModelCopyWith<_$_UserProfileModel> get copyWith =>

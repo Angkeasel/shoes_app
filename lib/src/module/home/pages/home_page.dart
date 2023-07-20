@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:allpay/src/constant/app_setting.dart';
 
 import 'package:allpay/src/module/home/widgets/custom_button_category.dart';
+import 'package:allpay/src/module/profile/controller/profile_controller.dart';
 import 'package:allpay/src/widget/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
       quary: '',
     );
     homeController.getSlide();
+    profileCon.onInit();
     homeController.getFavorite(12, 6);
     timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (index < homeController.slideList.length) {
@@ -48,6 +50,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  final profileCon = Get.put(ProfileController());
   final homeController = Get.put(HomeController());
   PageController pageControllers = PageController(initialPage: 0);
   int index = 0;
