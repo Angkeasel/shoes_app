@@ -3,6 +3,7 @@ import 'package:allpay/src/module/profile/model/user_profile_model/user_profile_
 import 'package:allpay/src/util/api_base_herper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class ProfileController extends GetxController {
   final _apiBaseHelper = ApiBaseHelper();
@@ -13,7 +14,8 @@ class ProfileController extends GetxController {
     'Female',
   ];
 
-  final dateTime = DateTime(2023, 2, 1).obs;
+  final formattedDate = ''.obs;
+  final dateOfBirth = DateTime(2023, 2, 1).obs;
   final userProfileModel = UserProfileModel().obs;
 
   final isLoadingProfile = false.obs;
@@ -27,7 +29,14 @@ class ProfileController extends GetxController {
         isAuthorize: true,
       )
           .then((response) {
+        debugPrint('response: $response');
         userProfileModel.value = UserProfileModel.fromJson(response);
+
+        // format Date
+        final dateTime = userProfileModel.value.dateOfBirth;
+        final date = DateTime.parse(dateTime!);
+        formattedDate.value = DateFormat('MM/dd/yyyy').format(date);
+        debugPrint('hi: $formattedDate');
       });
     } catch (e) {
       debugPrint('------- fecthUserProfile Error: $e');
@@ -85,5 +94,27 @@ class ProfileController extends GetxController {
     } catch (e) {
       debugPrint('------- onSubmitUserGender Error: ${e.toString()}');
     }
+  }
+
+  final isLoadingOnSubmittedDOB = false.obs;
+  Future<void> onSubmitUserDOB() async {
+    isLoadingOnSubmittedDOB(true);
+    try {
+      await _apiBaseHelper.onNetworkRequesting(
+          url: 'profile',
+          methode: METHODE.update,
+          isAuthorize: true,
+          body: {
+            "date_of_birth": "${dateOfBirth.value}",
+          }).then((response) {
+        debugPrint('zzzz$response');
+        // var message = response;
+        // debugPrint('onSubmit: $message');
+      });
+      isLoadingOnSubmittedDOB(false);
+    } catch (e) {
+      debugPrint('------- onSubmitUserDOB Error: ${e.toString()}');
+    }
+    isLoadingOnSubmittedDOB(false);
   }
 }

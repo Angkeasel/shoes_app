@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
       quary: '',
     );
     homeController.getSlide();
-    profileCon.onInit();
     homeController.getFavorite(12, 6);
     timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (index < homeController.slideList.length) {
