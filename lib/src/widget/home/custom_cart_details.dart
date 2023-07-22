@@ -18,26 +18,29 @@ class CustomCartDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
         height: 60,
         width: 60,
         decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 4,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 2),
-                  color: Colors.grey.withOpacity(0.2))
-            ],
-            border: Border.all(
-                color: selected ? Colors.blue : Colors.transparent, width: 1),
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.white,
-            image: DecorationImage(
-                image: NetworkImage(image == 'image'
-                    ? 'https://www.maxairsoft.com/getimage/products/default.png'
-                    : "$image"),
-                fit: BoxFit.cover)),
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 4,
+                spreadRadius: 0,
+                offset: const Offset(0, 4),
+                color: Colors.grey.withOpacity(0.2))
+          ],
+          border: Border.all(
+              color: selected ? Colors.blue : Colors.transparent, width: 1),
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          image: DecorationImage(
+            image: NetworkImage(image ??
+                'https://www.maxairsoft.com/getimage/products/default.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

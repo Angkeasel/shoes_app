@@ -1,5 +1,6 @@
 import 'dart:convert';
 // import 'package:get/get_connect.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -37,6 +38,9 @@ class ApiBaseHelper {
       'Accept': 'application/json',
       'Authorization': isAuthorize ? 'Bearer $token' : '',
     };
+
+    debugPrint('Full Url > $fullUrl');
+    debugPrint('Access Token > $token');
     try {
       switch (methode) {
         case METHODE.get:

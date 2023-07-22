@@ -15,6 +15,24 @@ const txt14 = TextStyle(
   color: Colors.grey,
 );
 
+void showInfoSnackBar(String message) {
+  final SnackBar snackBarError = SnackBar(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+    margin: const EdgeInsets.all(20),
+    duration: const Duration(milliseconds: 1600),
+    behavior: SnackBarBehavior.floating,
+    content: Text(
+      message,
+      overflow: TextOverflow.ellipsis,
+      style: txt14.copyWith(color: Colors.white, fontWeight: FontWeight.w400),
+    ),
+    backgroundColor: Colors.black87,
+  );
+  snackBarKey.currentState?.showSnackBar(snackBarError);
+}
+
 void alertErrorSnackbar({
   required title,
   required message,

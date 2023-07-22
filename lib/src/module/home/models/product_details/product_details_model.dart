@@ -7,35 +7,30 @@ part 'product_details_model.g.dart';
 
 @freezed
 class ProductDetailsModel with _$ProductDetailsModel {
+  factory ProductDetailsModel(
+      {final int? id,
+      final String? name,
+      final String? description,
+      final double? price,
+      @JsonKey(name: 'thumbnail_url') final String? thumbnailUrl,
+      final double? discount,
+      @JsonKey(name: 'is_favorite') bool? isFavorite, //is_favorite
+      final List<VariantsModel>? variants}) = _ProductDetailsModel;
 
-  factory ProductDetailsModel({
-    final int ? id,
-    final String ? name,
-    final String ? description,
-    final double? price,
-    @JsonKey(name: 'thumbnail_url')final String ? thumbnailUrl,
-    final double? discount,
-    @JsonKey(name:'is_favorite' ) bool? isFavorite,
-    final List<VariantsModel>? variants
-  }) = _ProductDetailsModel;
-
-  factory ProductDetailsModel.fromJson(Map<String, dynamic> json) => _$ProductDetailsModelFromJson(json);
+  factory ProductDetailsModel.fromJson(Map<String, dynamic> json) =>
+      _$ProductDetailsModelFromJson(json);
 }
-
-
 
 @freezed
 class VariantsModel with _$VariantsModel {
+  factory VariantsModel(
+      {final int? id,
+      final String? name,
+      @JsonKey(name: 'image_url') final String? imageUrl,
+      final double? price,
+      final int? quantity,
+      final List<String>? colors}) = _VariantsModel;
 
-  factory VariantsModel({
-      final int? id,
-      final String ? name,
-      @JsonKey(name: 'image_url')final String ? imageUrl,
-      final double ? price,
-      final int ? quantity,
-      final List<String>? colors
-  }) = _VariantsModel;
-
-  factory VariantsModel.fromJson(Map<String, dynamic> json) => _$VariantsModelFromJson(json);
+  factory VariantsModel.fromJson(Map<String, dynamic> json) =>
+      _$VariantsModelFromJson(json);
 }
-

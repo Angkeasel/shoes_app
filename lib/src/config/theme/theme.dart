@@ -85,13 +85,13 @@ ThemeData theme() {
         fontFamily: 'Raleway',
         fontSize: 14,
         fontWeight: FontWeight.normal,
-        color: Colors.white,
+        color: AppColor.darkColor,
       ),
       bodyMedium: TextStyle(
         fontFamily: 'Raleway',
         fontSize: 12,
         fontWeight: FontWeight.normal,
-        color: Colors.white,
+        color: AppColor.darkColor,
       ),
       bodySmall: TextStyle(
         fontFamily: 'Raleway',
@@ -100,9 +100,9 @@ ThemeData theme() {
         color: Color(0xff000000),
       ),
       labelLarge: TextStyle(
-        fontFamily: 'Raleway',
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
+        fontFamily: 'Raleway-Bold',
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
         color: AppColor.primaryColor,
       ),
     ),

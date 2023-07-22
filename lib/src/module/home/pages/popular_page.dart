@@ -24,7 +24,7 @@ class PopularPage extends StatelessWidget {
             child: const Icon(Icons.arrow_back_ios_new)),
       ),
       body: Obx(
-        () => homeController.isLoadingPro.value &&
+        () => homeController.loadingFetchAllProduct.value &&
                 homeController.currentPage.value == 0
             ? const Center(
                 child: CircularProgressIndicator(
@@ -39,7 +39,7 @@ class PopularPage extends StatelessWidget {
                         homeController.totalPage.value) {
                       homeController.getProduct(
                         page: homeController.currentPage.value,
-                        quary: '',
+                        query: '',
                       );
                     } else {
                       // debugPrint(
@@ -54,7 +54,7 @@ class PopularPage extends StatelessWidget {
                     homeController.totalPage.value = 1;
                     await homeController.getProduct(
                       page: homeController.currentPage.value,
-                      quary: '',
+                      query: '',
                     );
                   },
                   child: SingleChildScrollView(
@@ -75,7 +75,6 @@ class PopularPage extends StatelessWidget {
                               itemCount: homeController.productList.length,
                               itemBuilder: (BuildContext ctx, index) {
                                 return CustomProductCart(
-                                 
                                   title: homeController.productList[index].name,
                                   image: homeController
                                       .productList[index].thumbnailUrl,
@@ -101,7 +100,7 @@ class PopularPage extends StatelessWidget {
                                   // },
                                 );
                               }),
-                          if (homeController.isLoadingPro.value &&
+                          if (homeController.loadingFetchAllProduct.value &&
                               homeController.currentPage.value > 0)
                             const Center(
                               child: CupertinoActivityIndicator(

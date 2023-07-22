@@ -48,17 +48,17 @@ class HomeController extends GetxController {
   //====================================> Get product<=======================
   final productList = <ProductModel>[].obs;
   final productModel = ProductModel().obs;
-  final isLoadingPro = false.obs;
+  final loadingFetchAllProduct = false.obs;
   Future<BigProductModel> getProduct({
-    String? quary,
+    String? query,
     int? page,
   }) async {
-    isLoadingPro(true);
+    loadingFetchAllProduct(true);
 
     try {
       await api
           .onNetworkRequesting(
-              url: "products?page=$page&size=10&name=$quary",
+              url: "products?page=$page&size=10&name=$query",
               methode: METHODE.get,
               isAuthorize: false)
           .then((value) {
@@ -82,14 +82,14 @@ class HomeController extends GetxController {
         totalPage.value = bigProductModel.value.totalPages!;
 
         debugPrint('==========> get List pro:$productList');
-        isLoadingPro(false);
+        loadingFetchAllProduct(false);
       }).onError((ErrorModel error, stackTrace) {
         debugPrint('=======>Error Body :${error.bodyString}');
       });
     } catch (e) {
       debugPrint('======>123Error Body catch :${e.toString()}');
     }
-    isLoadingPro(false);
+    loadingFetchAllProduct(false);
     return bigProductModel.value;
   }
 
@@ -116,82 +116,16 @@ class HomeController extends GetxController {
     return proDetailsModel;
   }
 
-  //=================================> post Favorited <==========================
-  Future<void> addFavorite(int? productId, int? variantId) async {
-    try {
-      await api.onNetworkRequesting(
-          url: 'favorite',
-          methode: METHODE.post,
-          isAuthorize: true,
-          body: {
-            'product_id': productId,
-            'variant_id': variantId
-          }).then((value) {
-        debugPrint('=================> post favorited$value');
-      }).onError((ErrorModel error, stackTrace) {
-        debugPrint(
-            "==========================> Error Body catch : ${error.bodyString}");
-      });
-    } catch (e) {
-      debugPrint(
-          "==========================> catch post fav : ${e.toString()}");
-    }
-  }
-
-  //=================================> get Favorited <==========================
-  final favList = <ProductModel>[].obs;
-  final favBigProductModel = BigProductModel().obs;
-  final favProductModel = ProductModel().obs;
-  Future<BigProductModel> getFavorite(int? productId, int? variantId) async {
-    try {
-      await api
-          .onNetworkRequesting(
-        url: 'favorite',
-        methode: METHODE.get,
-        isAuthorize: true,
-      )
-          .then((value) {
-        favBigProductModel.value = BigProductModel.fromJson(value);
-        debugPrint('=================> get favorited$value');
-        value['data'].map((e) {
-          favProductModel.value = ProductModel.fromJson(e);
-          favList.add(favProductModel.value);
-        }).toList();
-      }).onError((ErrorModel error, stackTrace) {
-        debugPrint(
-            "==========================> Error Body catch : ${error.bodyString}");
-      });
-    } catch (e) {
-      debugPrint("==========================> catch get fav : ${e.toString()}");
-    }
-    return favBigProductModel.value;
-  }
-
-  //=================================> Deleted Favorited <==========================
-  Future<void> delFavorite(int id) async {
-    try {
-      await api
-          .onNetworkRequesting(
-              url: "favorite/$id", methode: METHODE.delete, isAuthorize: true)
-          .then((value) {
-        debugPrint('=================> detele favorited$value');
-      }).onError((ErrorModel error, stackTrace) {
-        debugPrint(
-            "==========================> Error Body catch : ${error.bodyString}");
-      });
-    } catch (e) {
-      debugPrint(
-          "==========================> catch delete fav : ${e.toString()}");
-    }
-  }
-
   // =================================> get category by id <==========================
   final categoryProductModel = BigProductModel().obs;
   final categoryProductList = <ProductModel>[].obs;
   final categoryDataModel = ProductModel().obs;
   final isLoadingCategory = false.obs;
-  final pageCategory = 0.obs;
-  Future<BigProductModel> getCategoryById({int? id, int? page}) async {
+  final productListByCategoryIdPage = 0.obs;
+  Future<BigProductModel> getProductsListByCategoryId({
+    required int? id,
+    required int? page,
+  }) async {
     isLoadingCategory(true);
     try {
       await api
@@ -209,7 +143,7 @@ class HomeController extends GetxController {
         }).toList();
         debugPrint(
             '=================> categoryProductList $categoryProductList');
-        pageCategory.value++;
+        productListByCategoryIdPage.value++;
         //  totalPage.value = bigProductModel.value.totalPages!;
         isLoadingCategory(false);
       }).onError((ErrorModel error, stackTrace) {
@@ -226,30 +160,26 @@ class HomeController extends GetxController {
 
   //================================> Slide card<======================================
   final slideList = <SlideModel>[].obs;
-  final slideModel = SlideModel().obs;
+  final loadingSlide = false.obs;
 
   Future<List<SlideModel>> getSlide() async {
-    isLoadingPro(true);
-    try {
-      await api
-          .onNetworkRequesting(
-              url: "slide", methode: METHODE.get, isAuthorize: false)
-          .then((value) {
-        slideList.clear();
-        value.map((e) {
-          slideModel.value = SlideModel.fromJson(e);
-          slideList.add(slideModel.value);
-        }).toList();
-        debugPrint('=================> slideList${slideList.length}');
-      }).onError((ErrorModel error, stackTrace) {
-        debugPrint('============> catch error slide :${error.bodyString}');
-      });
-      isLoadingPro(false);
-    } catch (e) {
-      debugPrint('============> catch error ${e.toString()}');
-    }
-    isLoadingPro(false);
-    return slideList;
+    List<SlideModel> slidesLi = [];
+    loadingSlide(true);
+
+    await api
+        .onNetworkRequesting(
+            url: "slide", methode: METHODE.get, isAuthorize: true)
+        .then((value) {
+      value.map((e) {
+        slidesLi.add(SlideModel.fromJson(e));
+      }).toList();
+      slideList.assignAll(slidesLi);
+      loadingSlide(false);
+    }).onError((ErrorModel error, _) {
+      loadingSlide(false);
+    });
+
+    return slidesLi;
   }
 
   //// Select Category;
@@ -290,108 +220,4 @@ class HomeController extends GetxController {
   final isfav = false.obs;
   var favCartList = <ProductDetailsModel>[].obs;
   //var myCartList = <DetailModel>[].obs;
-
-  List<DetailModel> detailsModelList = [
-    DetailModel(
-        title: 'Nike Jordan',
-        recordType: "Women's Shoes",
-        price: 100,
-        isFav: true,
-        delivery: 1.00,
-        description:
-            'The Max Air 270 unit delivers unrivaled, all-day comfort. The sleek, running-inspired design roots you to everything Nike',
-        images: [
-          ImagesModel(
-            title: 'Nike Jordan',
-            eachPrice: 100,
-            gallary:
-                'assets/image/1646394313-zoomx-streakfly-road-racing-shoes-lrCMPz.png',
-            sized: [
-              SizeModel(
-                sized: '36',
-              ),
-              SizeModel(
-                sized: '37',
-              ),
-            ],
-          ),
-          ImagesModel(
-              title: 'Nike Jordan',
-              eachPrice: 120,
-              gallary: 'assets/image/Nike-Shoes-Air-Max-PNG-Images.png',
-              sized: [
-                SizeModel(sized: '37'),
-                SizeModel(sized: '39'),
-                SizeModel(sized: '42'),
-              ]),
-          ImagesModel(
-              title: 'Nike Jordan',
-              eachPrice: 120,
-              gallary: 'assets/image/Aire Jordan Nike.png',
-              sized: [
-                SizeModel(sized: '38'),
-                SizeModel(sized: '39'),
-              ]),
-          ImagesModel(
-              title: 'Nike Jordan',
-              eachPrice: 130,
-              gallary: 'assets/image/luis.png',
-              sized: [
-                SizeModel(sized: '36'),
-                SizeModel(sized: '37'),
-              ]),
-        ]),
-    DetailModel(
-        title: 'Nike Air Max 270 Essential',
-        recordType: "Men's Shoes",
-        isFav: false,
-        price: 140,
-        delivery: 1.00,
-        description:
-            'Celebrate every mile with these festive road runners. Whether you prefer an extended route at sunrise or a quick jog at sunset, running is your daily ritual, and you need shoes just as dedicated. A comfortable, intuitive design provides a supportive sensation to help your foot feel contained while responsive Zoom Air cushioning adds a spring to your stride. Plus, colorful confetti-inspired graphic accents add fresh energy to your run. Your trusted workhorse with wings is back. Time to fly.',
-        images: [
-          ImagesModel(
-              title: 'Nike Air Max 270 Essential',
-              eachPrice: 140,
-              gallary: 'assets/image/luis.png',
-              sized: [
-                SizeModel(sized: '37'),
-                SizeModel(sized: '40'),
-              ]),
-          ImagesModel(
-              title: 'Nike Air Max 270 Essential',
-              eachPrice: 130,
-              gallary: 'assets/image/Nike-Shoes-Air-Max-PNG-Images.png',
-              sized: [
-                SizeModel(sized: '36'),
-                SizeModel(sized: '37'),
-              ]),
-        ]),
-    DetailModel(
-        title: 'Nike Air Max 270 Essential',
-        recordType: "Men's Shoes",
-        isFav: false,
-        price: 140,
-        delivery: 1.00,
-        description:
-            'Celebrate every mile with these festive road runners. Whether you prefer an extended route at sunrise or a quick jog at sunset, running is your daily ritual, and you need shoes just as dedicated. A comfortable, intuitive design provides a supportive sensation to help your foot feel contained while responsive Zoom Air cushioning adds a spring to your stride. Plus, colorful confetti-inspired graphic accents add fresh energy to your run. Your trusted workhorse with wings is back. Time to fly.',
-        images: [
-          ImagesModel(
-              title: 'Nike Air Max 270 Essential',
-              eachPrice: 140,
-              gallary: 'assets/image/luis.png',
-              sized: [
-                SizeModel(sized: '37'),
-                SizeModel(sized: '40'),
-              ]),
-          ImagesModel(
-              title: 'Nike Air Max 270 Essential',
-              eachPrice: 130,
-              gallary: 'assets/image/Nike-Shoes-Air-Max-PNG-Images.png',
-              sized: [
-                SizeModel(sized: '36'),
-                SizeModel(sized: '37'),
-              ]),
-        ]),
-  ];
 }

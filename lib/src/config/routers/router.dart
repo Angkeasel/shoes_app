@@ -17,7 +17,7 @@ import '../../module/auth/sign_in/screen/vertify_otp_screen.dart';
 import '../../module/buttomnavigationbar/bottomnavigationbar.dart';
 import '../../module/favourite/favourite_page.dart';
 import '../../module/home/pages/search_screen.dart';
-import '../../module/home/pages/select_category.dart';
+import '../../module/home/pages/product_by_category.dart';
 import '../../module/my_card/screen/invoice_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = Get.key;
@@ -110,8 +110,9 @@ final _shellRoutes = <GoRoute>[
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: 'detail/:id',
-          builder: (BuildContext context, GoRouterState state) =>
-              DetailPage(id: int.tryParse(state.pathParameters['id']!)!),
+          builder: (_, GoRouterState state) => DetailPage(
+                id: int.tryParse(state.pathParameters['id'] ?? '')!,
+              ),
           routes: const <GoRoute>[]),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
@@ -135,7 +136,7 @@ final _shellRoutes = <GoRoute>[
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: 'category',
-          builder: (_, GoRouterState state) => SelectCategoryPage(
+          builder: (_, GoRouterState state) => ProductsByCategoryPage(
                 id: int.tryParse(state.queryParameters['id'] ?? ''),
                 name: state.queryParameters['name'],
                 // name: state.queryParameters['name'] ?? '',

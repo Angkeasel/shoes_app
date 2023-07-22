@@ -28,23 +28,10 @@ class _HomePageState extends State<HomePage> {
     homeController.getCategory();
     homeController.getProduct(
       page: homeController.currentPage.value,
-      quary: '',
+      query: '',
     );
     homeController.getSlide();
-    homeController.getFavorite(12, 6);
-    timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
-      if (index < homeController.slideList.length) {
-        index++;
-      } else {
-        index = 0;
-      }
 
-      pageControllers.animateToPage(
-        index,
-        duration: const Duration(milliseconds: 350),
-        curve: Curves.easeInSine,
-      );
-    });
     super.initState();
   }
 
@@ -64,16 +51,16 @@ class _HomePageState extends State<HomePage> {
       // }),
       appBar: AppBar(
         centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {
-              context.push('/home-router/search-router');
-            },
-            icon: const Icon(
-              Icons.search,
-              size: 24,
-            ),
-          ),
+        actions: const [
+          // IconButton(
+          //   onPressed: () {
+          //     context.push('/home-router/search-router');
+          //   },
+          //   icon: const Icon(
+          //     Icons.search,
+          //     size: 24,
+          //   ),
+          // ),
           // IconButton(
           //   onPressed: () {
           //     Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -88,7 +75,7 @@ class _HomePageState extends State<HomePage> {
       ),
       //====================================> Body <==================================================
       body: Obx(
-        () => homeController.isLoadingPro.value &&
+        () => homeController.loadingFetchAllProduct.value &&
                 homeController.currentPage.value == 0
             ? const Center(
                 child: CircularProgressIndicator(
@@ -99,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   homeController.currentPage.value = 0;
                   await homeController.getProduct(
                     page: homeController.currentPage.value,
-                    quary: '',
+                    query: '',
                   );
                 },
                 child: SingleChildScrollView(
@@ -108,8 +95,10 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      ///Search
                       Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 10),
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 10, bottom: 0),
                         child: Row(
                           children: [
                             const Expanded(
@@ -123,15 +112,15 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       ),
-                      //=======================================>Select Category<===============================================
+
+                      ///=======================================>Select Category<===============================================
+                      const SizedBox(height: 20),
                       if (homeController.categoryList.isNotEmpty)
                         Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: customTitle(context, title: 'Select Category'),
                         ),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                      const SizedBox(height: 20),
 
                       SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -146,14 +135,6 @@ class _HomePageState extends State<HomePage> {
                                     child: CustomCategoryCard(
                                       title: e.value.name,
                                       onTap: () {
-                                        homeController.indexCategory.value =
-                                            e.key;
-
-                                        homeController.pageCategory.value = 0;
-                                        homeController.getCategoryById(
-                                            page: homeController
-                                                .pageCategory.value,
-                                            id: e.value.id);
                                         context.push(
                                           '/home-router/category?id=${e.value.id}&name=${e.value.name}',
                                         );
@@ -177,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                             homeController.currentPage.value = 0;
                             homeController.getProduct(
                               page: homeController.currentPage.value,
-                              quary: '',
+                              query: '',
                             );
                             context.push('/home-router/popular-router');
                           }),
@@ -240,13 +221,12 @@ class _HomePageState extends State<HomePage> {
                             title: 'New Arrivals',
                             isSeeAll: true,
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return Container();
-                              }));
+                              //TODO : goto New Arrival Page
                             },
                           ),
                         ),
+
+                      ///Slides
                       Stack(
                         alignment: Alignment.center,
                         children: [
@@ -260,45 +240,43 @@ class _HomePageState extends State<HomePage> {
                                 });
                               },
                               itemCount: homeController.slideList.length,
-                              itemBuilder: (context, index) {
+                              itemBuilder: (_, index) {
+                                final image =
+                                    homeController.slideList[index].imageUrl;
                                 return Padding(
                                   padding: const EdgeInsets.all(16),
                                   child: Container(
-                                      height: 130,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.amber,
-                                        image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(homeController
-                                                  .slideList[index].imageUrl!
-                                                  .contains('iamge')
-                                              ? 'https://img.freepik.com/free-vector/sale-banner-with-product-description_1361-1333.jpg?w=996&t=st=1687254162~exp=1687254762~hmac=d883bcc295299e3609a748fd730e012e4dbe17225486f4947839f2da0526bcf7'
-                                              : homeController
-                                                  .slideList[index].imageUrl!),
-                                        ),
-                                      )),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.amber,
+                                      image: image != null
+                                          ? DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: NetworkImage(image),
+                                            )
+                                          : null,
+                                    ),
+                                  ),
                                 );
                               },
                             ),
                           ),
-                          homeController.slideList.length <= 1
-                              ? Container()
-                              : Positioned(
-                                  bottom: 30,
-                                  child: SmoothPageIndicator(
-                                    controller: pageControllers,
-                                    count: homeController.slideList.length,
-                                    effect: const ExpandingDotsEffect(
-                                        dotWidth: 8,
-                                        dotHeight: 8,
-                                        dotColor: Colors.amber,
-                                        activeDotColor: Colors.white),
-                                  ),
-                                ),
+                          if (homeController.slideList.length > 1)
+                            Positioned(
+                              bottom: 30,
+                              child: SmoothPageIndicator(
+                                controller: pageControllers,
+                                count: homeController.slideList.length,
+                                effect: const ExpandingDotsEffect(
+                                    dotWidth: 8,
+                                    dotHeight: 8,
+                                    dotColor: Colors.amber,
+                                    activeDotColor: Colors.white),
+                              ),
+                            ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
