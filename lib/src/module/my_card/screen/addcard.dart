@@ -65,7 +65,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const AdvertisingBanner(),
+                  // const AdvertisingBanner(),
                   const Divider(
                     thickness: 1,
                     height: 1,
@@ -164,7 +164,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  MyCardPage(),
+                        builder: (context) => const MyCardPage(),
                       ));
                 },
               ),

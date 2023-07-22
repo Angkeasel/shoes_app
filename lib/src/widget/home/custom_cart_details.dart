@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CustomCartDetails extends StatelessWidget {
@@ -36,7 +37,7 @@ class CustomCartDetails extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: Colors.white,
           image: DecorationImage(
-            image: NetworkImage(image ??
+            image: CachedNetworkImageProvider(image ??
                 'https://www.maxairsoft.com/getimage/products/default.png'),
             fit: BoxFit.cover,
           ),

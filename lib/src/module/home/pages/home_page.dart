@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:allpay/src/constant/app_setting.dart';
 
 import 'package:allpay/src/module/home/widgets/custom_button_category.dart';
+import 'package:allpay/src/module/profile/controller/profile_controller.dart';
 import 'package:allpay/src/widget/custom_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -35,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  final profileCon = Get.put(ProfileController());
   final homeController = Get.put(HomeController());
   PageController pageControllers = PageController(initialPage: 0);
   int index = 0;
@@ -126,23 +129,24 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: Row(
-                            children: homeController.categoryList
-                                .asMap()
-                                .entries
-                                .map(
-                                  (e) => Padding(
-                                    padding: const EdgeInsets.only(right: 16),
-                                    child: CustomCategoryCard(
-                                      title: e.value.name,
-                                      onTap: () {
-                                        context.push(
-                                          '/home-router/category?id=${e.value.id}&name=${e.value.name}',
-                                        );
-                                      },
-                                    ),
+                          children: homeController.categoryList
+                              .asMap()
+                              .entries
+                              .map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: CustomCategoryCard(
+                                    title: e.value.name,
+                                    onTap: () {
+                                      context.push(
+                                        '/home-router/category?id=${e.value.id}&name=${e.value.name}',
+                                      );
+                                    },
                                   ),
-                                )
-                                .toList()),
+                                ),
+                              )
+                              .toList(),
+                        ),
                       ),
 
                       //=======================================>Popular Shoes<===============================================
@@ -253,7 +257,8 @@ class _HomePageState extends State<HomePage> {
                                       image: image != null
                                           ? DecorationImage(
                                               fit: BoxFit.cover,
-                                              image: NetworkImage(image),
+                                              image: CachedNetworkImageProvider(
+                                                  image),
                                             )
                                           : null,
                                     ),

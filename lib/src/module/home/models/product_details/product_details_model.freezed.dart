@@ -20,16 +20,22 @@ ProductDetailsModel _$ProductDetailsModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductDetailsModel {
+  @JsonKey(name: 'id')
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name')
   String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'description')
   String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
   double? get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'thumbnail_url')
   String? get thumbnailUrl => throw _privateConstructorUsedError;
-  double? get discount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'discount')
+  int? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_favorite')
   bool? get isFavorite => throw _privateConstructorUsedError;
-  List<VariantsModel>? get variants => throw _privateConstructorUsedError;
+  @JsonKey(name: 'variants')
+  List<Variants>? get variants => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,14 +50,14 @@ abstract class $ProductDetailsModelCopyWith<$Res> {
       _$ProductDetailsModelCopyWithImpl<$Res, ProductDetailsModel>;
   @useResult
   $Res call(
-      {int? id,
-      String? name,
-      String? description,
-      double? price,
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'description') String? description,
+      @JsonKey(name: 'price') double? price,
       @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
-      double? discount,
+      @JsonKey(name: 'discount') int? discount,
       @JsonKey(name: 'is_favorite') bool? isFavorite,
-      List<VariantsModel>? variants});
+      @JsonKey(name: 'variants') List<Variants>? variants});
 }
 
 /// @nodoc
@@ -100,7 +106,7 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as int?,
       isFavorite: freezed == isFavorite
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -108,7 +114,7 @@ class _$ProductDetailsModelCopyWithImpl<$Res, $Val extends ProductDetailsModel>
       variants: freezed == variants
           ? _value.variants
           : variants // ignore: cast_nullable_to_non_nullable
-              as List<VariantsModel>?,
+              as List<Variants>?,
     ) as $Val);
   }
 }
@@ -122,14 +128,14 @@ abstract class _$$_ProductDetailsModelCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? id,
-      String? name,
-      String? description,
-      double? price,
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'description') String? description,
+      @JsonKey(name: 'price') double? price,
       @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
-      double? discount,
+      @JsonKey(name: 'discount') int? discount,
       @JsonKey(name: 'is_favorite') bool? isFavorite,
-      List<VariantsModel>? variants});
+      @JsonKey(name: 'variants') List<Variants>? variants});
 }
 
 /// @nodoc
@@ -176,7 +182,7 @@ class __$$_ProductDetailsModelCopyWithImpl<$Res>
       discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as int?,
       isFavorite: freezed == isFavorite
           ? _value.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -184,7 +190,7 @@ class __$$_ProductDetailsModelCopyWithImpl<$Res>
       variants: freezed == variants
           ? _value._variants
           : variants // ignore: cast_nullable_to_non_nullable
-              as List<VariantsModel>?,
+              as List<Variants>?,
     ));
   }
 }
@@ -193,38 +199,44 @@ class __$$_ProductDetailsModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_ProductDetailsModel implements _ProductDetailsModel {
   _$_ProductDetailsModel(
-      {this.id,
-      this.name,
-      this.description,
-      this.price,
+      {@JsonKey(name: 'id') this.id,
+      @JsonKey(name: 'name') this.name,
+      @JsonKey(name: 'description') this.description,
+      @JsonKey(name: 'price') this.price,
       @JsonKey(name: 'thumbnail_url') this.thumbnailUrl,
-      this.discount,
+      @JsonKey(name: 'discount') this.discount,
       @JsonKey(name: 'is_favorite') this.isFavorite,
-      final List<VariantsModel>? variants})
+      @JsonKey(name: 'variants') final List<Variants>? variants})
       : _variants = variants;
 
   factory _$_ProductDetailsModel.fromJson(Map<String, dynamic> json) =>
       _$$_ProductDetailsModelFromJson(json);
 
   @override
+  @JsonKey(name: 'id')
   final int? id;
   @override
+  @JsonKey(name: 'name')
   final String? name;
   @override
+  @JsonKey(name: 'description')
   final String? description;
   @override
+  @JsonKey(name: 'price')
   final double? price;
   @override
   @JsonKey(name: 'thumbnail_url')
   final String? thumbnailUrl;
   @override
-  final double? discount;
+  @JsonKey(name: 'discount')
+  final int? discount;
   @override
   @JsonKey(name: 'is_favorite')
   final bool? isFavorite;
-  final List<VariantsModel>? _variants;
+  final List<Variants>? _variants;
   @override
-  List<VariantsModel>? get variants {
+  @JsonKey(name: 'variants')
+  List<Variants>? get variants {
     final value = _variants;
     if (value == null) return null;
     if (_variants is EqualUnmodifiableListView) return _variants;
@@ -286,81 +298,330 @@ class _$_ProductDetailsModel implements _ProductDetailsModel {
 
 abstract class _ProductDetailsModel implements ProductDetailsModel {
   factory _ProductDetailsModel(
-      {final int? id,
-      final String? name,
-      final String? description,
-      final double? price,
-      @JsonKey(name: 'thumbnail_url') final String? thumbnailUrl,
-      final double? discount,
-      @JsonKey(name: 'is_favorite') final bool? isFavorite,
-      final List<VariantsModel>? variants}) = _$_ProductDetailsModel;
+          {@JsonKey(name: 'id') final int? id,
+          @JsonKey(name: 'name') final String? name,
+          @JsonKey(name: 'description') final String? description,
+          @JsonKey(name: 'price') final double? price,
+          @JsonKey(name: 'thumbnail_url') final String? thumbnailUrl,
+          @JsonKey(name: 'discount') final int? discount,
+          @JsonKey(name: 'is_favorite') final bool? isFavorite,
+          @JsonKey(name: 'variants') final List<Variants>? variants}) =
+      _$_ProductDetailsModel;
 
   factory _ProductDetailsModel.fromJson(Map<String, dynamic> json) =
       _$_ProductDetailsModel.fromJson;
 
   @override
+  @JsonKey(name: 'id')
   int? get id;
   @override
+  @JsonKey(name: 'name')
   String? get name;
   @override
+  @JsonKey(name: 'description')
   String? get description;
   @override
+  @JsonKey(name: 'price')
   double? get price;
   @override
   @JsonKey(name: 'thumbnail_url')
   String? get thumbnailUrl;
   @override
-  double? get discount;
+  @JsonKey(name: 'discount')
+  int? get discount;
   @override
   @JsonKey(name: 'is_favorite')
   bool? get isFavorite;
   @override
-  List<VariantsModel>? get variants;
+  @JsonKey(name: 'variants')
+  List<Variants>? get variants;
   @override
   @JsonKey(ignore: true)
   _$$_ProductDetailsModelCopyWith<_$_ProductDetailsModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
-VariantsModel _$VariantsModelFromJson(Map<String, dynamic> json) {
-  return _VariantsModel.fromJson(json);
+VariantSizes _$VariantSizesFromJson(Map<String, dynamic> json) {
+  return _VariantSizes.fromJson(json);
 }
 
 /// @nodoc
-mixin _$VariantsModel {
+mixin _$VariantSizes {
+  @JsonKey(name: 'id')
   int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_url')
-  String? get imageUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'size_text')
+  String? get sizeText => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
   double? get price => throw _privateConstructorUsedError;
-  int? get quantity => throw _privateConstructorUsedError;
-  List<String>? get colors => throw _privateConstructorUsedError;
+  @JsonKey(name: 'qty')
+  int? get qty => throw _privateConstructorUsedError;
+  @JsonKey(name: 'variant_id')
+  int? get variantId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $VariantsModelCopyWith<VariantsModel> get copyWith =>
+  $VariantSizesCopyWith<VariantSizes> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $VariantsModelCopyWith<$Res> {
-  factory $VariantsModelCopyWith(
-          VariantsModel value, $Res Function(VariantsModel) then) =
-      _$VariantsModelCopyWithImpl<$Res, VariantsModel>;
+abstract class $VariantSizesCopyWith<$Res> {
+  factory $VariantSizesCopyWith(
+          VariantSizes value, $Res Function(VariantSizes) then) =
+      _$VariantSizesCopyWithImpl<$Res, VariantSizes>;
   @useResult
   $Res call(
-      {int? id,
-      String? name,
-      @JsonKey(name: 'image_url') String? imageUrl,
-      double? price,
-      int? quantity,
-      List<String>? colors});
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'size_text') String? sizeText,
+      @JsonKey(name: 'price') double? price,
+      @JsonKey(name: 'qty') int? qty,
+      @JsonKey(name: 'variant_id') int? variantId});
 }
 
 /// @nodoc
-class _$VariantsModelCopyWithImpl<$Res, $Val extends VariantsModel>
-    implements $VariantsModelCopyWith<$Res> {
-  _$VariantsModelCopyWithImpl(this._value, this._then);
+class _$VariantSizesCopyWithImpl<$Res, $Val extends VariantSizes>
+    implements $VariantSizesCopyWith<$Res> {
+  _$VariantSizesCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? sizeText = freezed,
+    Object? price = freezed,
+    Object? qty = freezed,
+    Object? variantId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sizeText: freezed == sizeText
+          ? _value.sizeText
+          : sizeText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      qty: freezed == qty
+          ? _value.qty
+          : qty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      variantId: freezed == variantId
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_VariantSizesCopyWith<$Res>
+    implements $VariantSizesCopyWith<$Res> {
+  factory _$$_VariantSizesCopyWith(
+          _$_VariantSizes value, $Res Function(_$_VariantSizes) then) =
+      __$$_VariantSizesCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'size_text') String? sizeText,
+      @JsonKey(name: 'price') double? price,
+      @JsonKey(name: 'qty') int? qty,
+      @JsonKey(name: 'variant_id') int? variantId});
+}
+
+/// @nodoc
+class __$$_VariantSizesCopyWithImpl<$Res>
+    extends _$VariantSizesCopyWithImpl<$Res, _$_VariantSizes>
+    implements _$$_VariantSizesCopyWith<$Res> {
+  __$$_VariantSizesCopyWithImpl(
+      _$_VariantSizes _value, $Res Function(_$_VariantSizes) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? sizeText = freezed,
+    Object? price = freezed,
+    Object? qty = freezed,
+    Object? variantId = freezed,
+  }) {
+    return _then(_$_VariantSizes(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sizeText: freezed == sizeText
+          ? _value.sizeText
+          : sizeText // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
+      qty: freezed == qty
+          ? _value.qty
+          : qty // ignore: cast_nullable_to_non_nullable
+              as int?,
+      variantId: freezed == variantId
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_VariantSizes implements _VariantSizes {
+  _$_VariantSizes(
+      {@JsonKey(name: 'id') this.id,
+      @JsonKey(name: 'size_text') this.sizeText,
+      @JsonKey(name: 'price') this.price,
+      @JsonKey(name: 'qty') this.qty,
+      @JsonKey(name: 'variant_id') this.variantId});
+
+  factory _$_VariantSizes.fromJson(Map<String, dynamic> json) =>
+      _$$_VariantSizesFromJson(json);
+
+  @override
+  @JsonKey(name: 'id')
+  final int? id;
+  @override
+  @JsonKey(name: 'size_text')
+  final String? sizeText;
+  @override
+  @JsonKey(name: 'price')
+  final double? price;
+  @override
+  @JsonKey(name: 'qty')
+  final int? qty;
+  @override
+  @JsonKey(name: 'variant_id')
+  final int? variantId;
+
+  @override
+  String toString() {
+    return 'VariantSizes(id: $id, sizeText: $sizeText, price: $price, qty: $qty, variantId: $variantId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_VariantSizes &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.sizeText, sizeText) ||
+                other.sizeText == sizeText) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.qty, qty) || other.qty == qty) &&
+            (identical(other.variantId, variantId) ||
+                other.variantId == variantId));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, id, sizeText, price, qty, variantId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VariantSizesCopyWith<_$_VariantSizes> get copyWith =>
+      __$$_VariantSizesCopyWithImpl<_$_VariantSizes>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_VariantSizesToJson(
+      this,
+    );
+  }
+}
+
+abstract class _VariantSizes implements VariantSizes {
+  factory _VariantSizes(
+      {@JsonKey(name: 'id') final int? id,
+      @JsonKey(name: 'size_text') final String? sizeText,
+      @JsonKey(name: 'price') final double? price,
+      @JsonKey(name: 'qty') final int? qty,
+      @JsonKey(name: 'variant_id') final int? variantId}) = _$_VariantSizes;
+
+  factory _VariantSizes.fromJson(Map<String, dynamic> json) =
+      _$_VariantSizes.fromJson;
+
+  @override
+  @JsonKey(name: 'id')
+  int? get id;
+  @override
+  @JsonKey(name: 'size_text')
+  String? get sizeText;
+  @override
+  @JsonKey(name: 'price')
+  double? get price;
+  @override
+  @JsonKey(name: 'qty')
+  int? get qty;
+  @override
+  @JsonKey(name: 'variant_id')
+  int? get variantId;
+  @override
+  @JsonKey(ignore: true)
+  _$$_VariantSizesCopyWith<_$_VariantSizes> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Variants _$VariantsFromJson(Map<String, dynamic> json) {
+  return _Variants.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Variants {
+  @JsonKey(name: 'id')
+  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name')
+  String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'value')
+  String? get value => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_name')
+  String? get productName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_url')
+  String? get imageUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sizes')
+  List<VariantSizes>? get sizes => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $VariantsCopyWith<Variants> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VariantsCopyWith<$Res> {
+  factory $VariantsCopyWith(Variants value, $Res Function(Variants) then) =
+      _$VariantsCopyWithImpl<$Res, Variants>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'value') String? value,
+      @JsonKey(name: 'product_name') String? productName,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'sizes') List<VariantSizes>? sizes});
+}
+
+/// @nodoc
+class _$VariantsCopyWithImpl<$Res, $Val extends Variants>
+    implements $VariantsCopyWith<$Res> {
+  _$VariantsCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -372,10 +633,10 @@ class _$VariantsModelCopyWithImpl<$Res, $Val extends VariantsModel>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? value = freezed,
+    Object? productName = freezed,
     Object? imageUrl = freezed,
-    Object? price = freezed,
-    Object? quantity = freezed,
-    Object? colors = freezed,
+    Object? sizes = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -386,49 +647,48 @@ class _$VariantsModelCopyWithImpl<$Res, $Val extends VariantsModel>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      value: freezed == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String?,
+      productName: freezed == productName
+          ? _value.productName
+          : productName // ignore: cast_nullable_to_non_nullable
+              as String?,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
-      quantity: freezed == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int?,
-      colors: freezed == colors
-          ? _value.colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      sizes: freezed == sizes
+          ? _value.sizes
+          : sizes // ignore: cast_nullable_to_non_nullable
+              as List<VariantSizes>?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_VariantsModelCopyWith<$Res>
-    implements $VariantsModelCopyWith<$Res> {
-  factory _$$_VariantsModelCopyWith(
-          _$_VariantsModel value, $Res Function(_$_VariantsModel) then) =
-      __$$_VariantsModelCopyWithImpl<$Res>;
+abstract class _$$_VariantsCopyWith<$Res> implements $VariantsCopyWith<$Res> {
+  factory _$$_VariantsCopyWith(
+          _$_Variants value, $Res Function(_$_Variants) then) =
+      __$$_VariantsCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {int? id,
-      String? name,
+      {@JsonKey(name: 'id') int? id,
+      @JsonKey(name: 'name') String? name,
+      @JsonKey(name: 'value') String? value,
+      @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'image_url') String? imageUrl,
-      double? price,
-      int? quantity,
-      List<String>? colors});
+      @JsonKey(name: 'sizes') List<VariantSizes>? sizes});
 }
 
 /// @nodoc
-class __$$_VariantsModelCopyWithImpl<$Res>
-    extends _$VariantsModelCopyWithImpl<$Res, _$_VariantsModel>
-    implements _$$_VariantsModelCopyWith<$Res> {
-  __$$_VariantsModelCopyWithImpl(
-      _$_VariantsModel _value, $Res Function(_$_VariantsModel) _then)
+class __$$_VariantsCopyWithImpl<$Res>
+    extends _$VariantsCopyWithImpl<$Res, _$_Variants>
+    implements _$$_VariantsCopyWith<$Res> {
+  __$$_VariantsCopyWithImpl(
+      _$_Variants _value, $Res Function(_$_Variants) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -436,12 +696,12 @@ class __$$_VariantsModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
+    Object? value = freezed,
+    Object? productName = freezed,
     Object? imageUrl = freezed,
-    Object? price = freezed,
-    Object? quantity = freezed,
-    Object? colors = freezed,
+    Object? sizes = freezed,
   }) {
-    return _then(_$_VariantsModel(
+    return _then(_$_Variants(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -450,128 +710,137 @@ class __$$_VariantsModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      value: freezed == value
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String?,
+      productName: freezed == productName
+          ? _value.productName
+          : productName // ignore: cast_nullable_to_non_nullable
+              as String?,
       imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
-      quantity: freezed == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int?,
-      colors: freezed == colors
-          ? _value._colors
-          : colors // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      sizes: freezed == sizes
+          ? _value._sizes
+          : sizes // ignore: cast_nullable_to_non_nullable
+              as List<VariantSizes>?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$_VariantsModel implements _VariantsModel {
-  _$_VariantsModel(
-      {this.id,
-      this.name,
+class _$_Variants implements _Variants {
+  _$_Variants(
+      {@JsonKey(name: 'id') this.id,
+      @JsonKey(name: 'name') this.name,
+      @JsonKey(name: 'value') this.value,
+      @JsonKey(name: 'product_name') this.productName,
       @JsonKey(name: 'image_url') this.imageUrl,
-      this.price,
-      this.quantity,
-      final List<String>? colors})
-      : _colors = colors;
+      @JsonKey(name: 'sizes') final List<VariantSizes>? sizes})
+      : _sizes = sizes;
 
-  factory _$_VariantsModel.fromJson(Map<String, dynamic> json) =>
-      _$$_VariantsModelFromJson(json);
+  factory _$_Variants.fromJson(Map<String, dynamic> json) =>
+      _$$_VariantsFromJson(json);
 
   @override
+  @JsonKey(name: 'id')
   final int? id;
   @override
+  @JsonKey(name: 'name')
   final String? name;
+  @override
+  @JsonKey(name: 'value')
+  final String? value;
+  @override
+  @JsonKey(name: 'product_name')
+  final String? productName;
   @override
   @JsonKey(name: 'image_url')
   final String? imageUrl;
+  final List<VariantSizes>? _sizes;
   @override
-  final double? price;
-  @override
-  final int? quantity;
-  final List<String>? _colors;
-  @override
-  List<String>? get colors {
-    final value = _colors;
+  @JsonKey(name: 'sizes')
+  List<VariantSizes>? get sizes {
+    final value = _sizes;
     if (value == null) return null;
-    if (_colors is EqualUnmodifiableListView) return _colors;
+    if (_sizes is EqualUnmodifiableListView) return _sizes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'VariantsModel(id: $id, name: $name, imageUrl: $imageUrl, price: $price, quantity: $quantity, colors: $colors)';
+    return 'Variants(id: $id, name: $name, value: $value, productName: $productName, imageUrl: $imageUrl, sizes: $sizes)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_VariantsModel &&
+            other is _$_Variants &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.productName, productName) ||
+                other.productName == productName) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            (identical(other.price, price) || other.price == price) &&
-            (identical(other.quantity, quantity) ||
-                other.quantity == quantity) &&
-            const DeepCollectionEquality().equals(other._colors, _colors));
+            const DeepCollectionEquality().equals(other._sizes, _sizes));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, imageUrl, price,
-      quantity, const DeepCollectionEquality().hash(_colors));
+  int get hashCode => Object.hash(runtimeType, id, name, value, productName,
+      imageUrl, const DeepCollectionEquality().hash(_sizes));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_VariantsModelCopyWith<_$_VariantsModel> get copyWith =>
-      __$$_VariantsModelCopyWithImpl<_$_VariantsModel>(this, _$identity);
+  _$$_VariantsCopyWith<_$_Variants> get copyWith =>
+      __$$_VariantsCopyWithImpl<_$_Variants>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VariantsModelToJson(
+    return _$$_VariantsToJson(
       this,
     );
   }
 }
 
-abstract class _VariantsModel implements VariantsModel {
-  factory _VariantsModel(
-      {final int? id,
-      final String? name,
+abstract class _Variants implements Variants {
+  factory _Variants(
+      {@JsonKey(name: 'id') final int? id,
+      @JsonKey(name: 'name') final String? name,
+      @JsonKey(name: 'value') final String? value,
+      @JsonKey(name: 'product_name') final String? productName,
       @JsonKey(name: 'image_url') final String? imageUrl,
-      final double? price,
-      final int? quantity,
-      final List<String>? colors}) = _$_VariantsModel;
+      @JsonKey(name: 'sizes') final List<VariantSizes>? sizes}) = _$_Variants;
 
-  factory _VariantsModel.fromJson(Map<String, dynamic> json) =
-      _$_VariantsModel.fromJson;
+  factory _Variants.fromJson(Map<String, dynamic> json) = _$_Variants.fromJson;
 
   @override
+  @JsonKey(name: 'id')
   int? get id;
   @override
+  @JsonKey(name: 'name')
   String? get name;
+  @override
+  @JsonKey(name: 'value')
+  String? get value;
+  @override
+  @JsonKey(name: 'product_name')
+  String? get productName;
   @override
   @JsonKey(name: 'image_url')
   String? get imageUrl;
   @override
-  double? get price;
-  @override
-  int? get quantity;
-  @override
-  List<String>? get colors;
+  @JsonKey(name: 'sizes')
+  List<VariantSizes>? get sizes;
   @override
   @JsonKey(ignore: true)
-  _$$_VariantsModelCopyWith<_$_VariantsModel> get copyWith =>
+  _$$_VariantsCopyWith<_$_Variants> get copyWith =>
       throw _privateConstructorUsedError;
 }

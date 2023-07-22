@@ -1,5 +1,4 @@
 import 'package:allpay/src/module/auth/forgot_password/controller/controller.dart';
-import 'package:allpay/src/module/my_card/controller/mycard_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -73,9 +72,9 @@ class CustomFillContact extends StatelessWidget {
 }
 
 class CustomRowSetting extends StatelessWidget {
-  final SettingModel? settingModel;
+  // final SettingModel? settingModel;
   final GestureTapCallback? onTap;
-  const CustomRowSetting({super.key, this.settingModel, this.onTap});
+  const CustomRowSetting({super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -86,22 +85,22 @@ class CustomRowSetting extends StatelessWidget {
         color: Colors.transparent,
         child: Row(
           children: [
-            SvgPicture.asset(
-              settingModel!.svg!,
-              height: 20,
-              width: 20,
-              fit: BoxFit.cover,
-            ),
+            // SvgPicture.asset(
+            //   settingModel!.svg!,
+            //   height: 20,
+            //   width: 20,
+            //   fit: BoxFit.cover,
+            // ),
             const SizedBox(
               width: 20,
             ),
-            Text(
-              settingModel!.title!,
-              style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: const Color(0xff5A4F4F)),
-            ),
+            // Text(
+            //   settingModel!.title!,
+            //   style: GoogleFonts.poppins(
+            //       fontSize: 16,
+            //       fontWeight: FontWeight.w500,
+            //       color: const Color(0xff5A4F4F)),
+            // ),
             const Spacer(),
             SvgPicture.asset('assets/svg/arrow_right.svg')
           ],

@@ -127,26 +127,34 @@ class HomeController extends GetxController {
     required int? page,
   }) async {
     isLoadingCategory(true);
+    final url = id == null
+        ? 'products?page=$page'
+        : "product-by-category-id/$id?page=$page&size=10";
     try {
       await api
           .onNetworkRequesting(
-              url: "product-by-category-id/$id?page=$page&size=10",
-              methode: METHODE.get,
-              isAuthorize: true)
-          .then((value) {
-        categoryProductModel.value = BigProductModel.fromJson(value);
-        debugPrint('=================> product by category$value');
-        categoryProductList.clear();
-        value['data'].map((e) {
-          categoryDataModel.value = ProductModel.fromJson(e);
-          categoryProductList.add(categoryDataModel.value);
-        }).toList();
-        debugPrint(
-            '=================> categoryProductList $categoryProductList');
-        productListByCategoryIdPage.value++;
-        //  totalPage.value = bigProductModel.value.totalPages!;
-        isLoadingCategory(false);
-      }).onError((ErrorModel error, stackTrace) {
+        url: url,
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
+          .then(
+        (value) {
+          categoryProductModel.value = BigProductModel.fromJson(value);
+          debugPrint('=================> product by category$value');
+          categoryProductList.clear();
+          value['data'].map(
+            (e) {
+              categoryDataModel.value = ProductModel.fromJson(e);
+              categoryProductList.add(categoryDataModel.value);
+            },
+          ).toList();
+          debugPrint(
+              '=================> categoryProductList $categoryProductList');
+          productListByCategoryIdPage.value++;
+          //  totalPage.value = bigProductModel.value.totalPages!;
+          isLoadingCategory(false);
+        },
+      ).onError((ErrorModel error, stackTrace) {
         debugPrint(
             "==========================> Error Body catch category : ${error.bodyString}");
       });

@@ -101,7 +101,7 @@ ThemeData theme() {
       ),
       labelLarge: TextStyle(
         fontFamily: 'Raleway-Bold',
-        fontSize: 20,
+        fontSize: 12,
         fontWeight: FontWeight.w700,
         color: AppColor.primaryColor,
       ),

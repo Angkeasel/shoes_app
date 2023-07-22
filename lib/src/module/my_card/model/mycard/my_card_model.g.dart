@@ -14,10 +14,10 @@ _$_MyCardModel _$$_MyCardModelFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as String?,
       variant: json['variant'] == null
           ? null
-          : VaiantMyCardModel.fromJson(json['variant'] as Map<String, dynamic>),
+          : Variants.fromJson(json['variant'] as Map<String, dynamic>),
       product: json['product'] == null
           ? null
-          : ProMyCardModel.fromJson(json['product'] as Map<String, dynamic>),
+          : VariantSizes.fromJson(json['product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_MyCardModelToJson(_$_MyCardModel instance) =>

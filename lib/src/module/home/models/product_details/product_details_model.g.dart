@@ -14,10 +14,10 @@ _$_ProductDetailsModel _$$_ProductDetailsModelFromJson(
       description: json['description'] as String?,
       price: (json['price'] as num?)?.toDouble(),
       thumbnailUrl: json['thumbnail_url'] as String?,
-      discount: (json['discount'] as num?)?.toDouble(),
+      discount: json['discount'] as int?,
       isFavorite: json['is_favorite'] as bool?,
       variants: (json['variants'] as List<dynamic>?)
-          ?.map((e) => VariantsModel.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Variants.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -34,23 +34,41 @@ Map<String, dynamic> _$$_ProductDetailsModelToJson(
       'variants': instance.variants,
     };
 
-_$_VariantsModel _$$_VariantsModelFromJson(Map<String, dynamic> json) =>
-    _$_VariantsModel(
+_$_VariantSizes _$$_VariantSizesFromJson(Map<String, dynamic> json) =>
+    _$_VariantSizes(
       id: json['id'] as int?,
-      name: json['name'] as String?,
-      imageUrl: json['image_url'] as String?,
+      sizeText: json['size_text'] as String?,
       price: (json['price'] as num?)?.toDouble(),
-      quantity: json['quantity'] as int?,
-      colors:
-          (json['colors'] as List<dynamic>?)?.map((e) => e as String).toList(),
+      qty: json['qty'] as int?,
+      variantId: json['variant_id'] as int?,
     );
 
-Map<String, dynamic> _$$_VariantsModelToJson(_$_VariantsModel instance) =>
+Map<String, dynamic> _$$_VariantSizesToJson(_$_VariantSizes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'size_text': instance.sizeText,
+      'price': instance.price,
+      'qty': instance.qty,
+      'variant_id': instance.variantId,
+    };
+
+_$_Variants _$$_VariantsFromJson(Map<String, dynamic> json) => _$_Variants(
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      value: json['value'] as String?,
+      productName: json['product_name'] as String?,
+      imageUrl: json['image_url'] as String?,
+      sizes: (json['sizes'] as List<dynamic>?)
+          ?.map((e) => VariantSizes.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_VariantsToJson(_$_Variants instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'value': instance.value,
+      'product_name': instance.productName,
       'image_url': instance.imageUrl,
-      'price': instance.price,
-      'quantity': instance.quantity,
-      'colors': instance.colors,
+      'sizes': instance.sizes,
     };

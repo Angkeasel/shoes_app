@@ -17,7 +17,7 @@ import '../../module/auth/sign_in/screen/vertify_otp_screen.dart';
 import '../../module/buttomnavigationbar/bottomnavigationbar.dart';
 import '../../module/favourite/favourite_page.dart';
 import '../../module/home/pages/search_screen.dart';
-import '../../module/home/pages/product_by_category.dart';
+import '../../module/home/pages/products_by_category.dart';
 import '../../module/my_card/screen/invoice_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = Get.key;
@@ -153,7 +153,18 @@ final _shellRoutes = <GoRoute>[
 
   GoRoute(
     path: '/favorite-router',
-    pageBuilder: (_, state) => NoTransitionPage(child: FavouritePage()),
+    pageBuilder: (_, state) => const NoTransitionPage(
+      child: FavouritePage(),
+    ),
+    routes: [
+      GoRoute(
+        parentNavigatorKey: _rootNavigatorKey,
+        path: 'detail/:id',
+        builder: (_, GoRouterState state) => DetailPage(
+          id: int.tryParse(state.pathParameters['id'] ?? '')!,
+        ),
+      ),
+    ],
   ),
   //GoRoute(path: '/boarding',builder: (context, state)=>const OnBoardingScreen()),
 

@@ -24,8 +24,8 @@ mixin _$MyCardModel {
   double? get price => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
-  VaiantMyCardModel? get variant => throw _privateConstructorUsedError;
-  ProMyCardModel? get product => throw _privateConstructorUsedError;
+  Variants? get variant => throw _privateConstructorUsedError;
+  VariantSizes? get product => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,11 +44,11 @@ abstract class $MyCardModelCopyWith<$Res> {
       double? price,
       int? quantity,
       String? createdAt,
-      VaiantMyCardModel? variant,
-      ProMyCardModel? product});
+      Variants? variant,
+      VariantSizes? product});
 
-  $VaiantMyCardModelCopyWith<$Res>? get variant;
-  $ProMyCardModelCopyWith<$Res>? get product;
+  $VariantsCopyWith<$Res>? get variant;
+  $VariantSizesCopyWith<$Res>? get product;
 }
 
 /// @nodoc
@@ -91,34 +91,34 @@ class _$MyCardModelCopyWithImpl<$Res, $Val extends MyCardModel>
       variant: freezed == variant
           ? _value.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as VaiantMyCardModel?,
+              as Variants?,
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ProMyCardModel?,
+              as VariantSizes?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $VaiantMyCardModelCopyWith<$Res>? get variant {
+  $VariantsCopyWith<$Res>? get variant {
     if (_value.variant == null) {
       return null;
     }
 
-    return $VaiantMyCardModelCopyWith<$Res>(_value.variant!, (value) {
+    return $VariantsCopyWith<$Res>(_value.variant!, (value) {
       return _then(_value.copyWith(variant: value) as $Val);
     });
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ProMyCardModelCopyWith<$Res>? get product {
+  $VariantSizesCopyWith<$Res>? get product {
     if (_value.product == null) {
       return null;
     }
 
-    return $ProMyCardModelCopyWith<$Res>(_value.product!, (value) {
+    return $VariantSizesCopyWith<$Res>(_value.product!, (value) {
       return _then(_value.copyWith(product: value) as $Val);
     });
   }
@@ -137,13 +137,13 @@ abstract class _$$_MyCardModelCopyWith<$Res>
       double? price,
       int? quantity,
       String? createdAt,
-      VaiantMyCardModel? variant,
-      ProMyCardModel? product});
+      Variants? variant,
+      VariantSizes? product});
 
   @override
-  $VaiantMyCardModelCopyWith<$Res>? get variant;
+  $VariantsCopyWith<$Res>? get variant;
   @override
-  $ProMyCardModelCopyWith<$Res>? get product;
+  $VariantSizesCopyWith<$Res>? get product;
 }
 
 /// @nodoc
@@ -184,11 +184,11 @@ class __$$_MyCardModelCopyWithImpl<$Res>
       variant: freezed == variant
           ? _value.variant
           : variant // ignore: cast_nullable_to_non_nullable
-              as VaiantMyCardModel?,
+              as Variants?,
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ProMyCardModel?,
+              as VariantSizes?,
     ));
   }
 }
@@ -216,9 +216,9 @@ class _$_MyCardModel implements _MyCardModel {
   @override
   final String? createdAt;
   @override
-  final VaiantMyCardModel? variant;
+  final Variants? variant;
   @override
-  final ProMyCardModel? product;
+  final VariantSizes? product;
 
   @override
   String toString() {
@@ -265,8 +265,8 @@ abstract class _MyCardModel implements MyCardModel {
       final double? price,
       final int? quantity,
       final String? createdAt,
-      final VaiantMyCardModel? variant,
-      final ProMyCardModel? product}) = _$_MyCardModel;
+      final Variants? variant,
+      final VariantSizes? product}) = _$_MyCardModel;
 
   factory _MyCardModel.fromJson(Map<String, dynamic> json) =
       _$_MyCardModel.fromJson;
@@ -280,9 +280,9 @@ abstract class _MyCardModel implements MyCardModel {
   @override
   String? get createdAt;
   @override
-  VaiantMyCardModel? get variant;
+  Variants? get variant;
   @override
-  ProMyCardModel? get product;
+  VariantSizes? get product;
   @override
   @JsonKey(ignore: true)
   _$$_MyCardModelCopyWith<_$_MyCardModel> get copyWith =>

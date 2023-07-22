@@ -2,6 +2,7 @@ import 'package:allpay/src/constant/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import '../../../widget/no_product_text.dart';
 import '../controllers/home_controller.dart';
 import '../models/product/big_product_model.dart';
 import '../widgets/custom_product_cart.dart';
@@ -20,20 +21,16 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
   BigProductModel categoryProductModels = BigProductModel();
   @override
   void initState() {
-    homeController.getProductsListByCategoryId(
-        page: homeController.productListByCategoryIdPage.value, id: widget.id);
+    getdata();
     super.initState();
   }
 
-  getdata() {
+  Future<void> getdata() async {
     homeController.productListByCategoryIdPage(0);
-    if (widget.name!.toLowerCase() == 'all') {
-      homeController.getProduct(
-          page: homeController.productListByCategoryIdPage.value);
-    } else {
-      homeController.getProductsListByCategoryId(
-          page: homeController.productListByCategoryIdPage.value, id: 0);
-    }
+
+    homeController.getProductsListByCategoryId(
+        page: homeController.productListByCategoryIdPage.value,
+        id: widget.name?.toLowerCase() == 'all' ? null : widget.id);
   }
 
   @override
@@ -53,9 +50,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
               )
             : homeController.categoryProductList.isNotEmpty
                 ? RefreshIndicator(
-                    onRefresh: () async {
-                      //TODO: Handle Refresh
-                    },
+                    onRefresh: getdata,
                     child: GridView.builder(
                         padding: EdgeInsets.all(Sizes.defaultPadding),
                         gridDelegate:
@@ -94,17 +89,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
                           );
                         }),
                   )
-                : emptyWidget(),
-      ),
-    );
-  }
-
-  Widget emptyWidget() {
-    return Center(
-      child: Text(
-        "No Products",
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 16),
+                : const NoProduct(),
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:allpay/src/module/transfer/controller/controller.dart';
 import 'package:allpay/src/widget/custom_button.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -154,9 +153,9 @@ class ConfirmPaymentScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
                             "Schedule",
                             style: TextStyle(
@@ -175,9 +174,9 @@ class ConfirmPaymentScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
                             "Hours",
                             style: TextStyle(
@@ -196,9 +195,9 @@ class ConfirmPaymentScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Text(
                             "Category",
                             style: TextStyle(
@@ -316,7 +315,7 @@ class ConfirmPaymentScreen extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 // for push to home screen
-                                context.router.popUntilRoot();
+
                                 //  context.router.pushNamed("home");
                                 // Navigator.push(
                                 //     context,

@@ -1,13 +1,10 @@
 import 'package:allpay/src/constant/app_setting.dart';
 import 'package:allpay/src/module/my_card/screen/refund.dart';
-import 'package:allpay/src/module/my_card/screen/topupcart.dart';
-import 'package:allpay/src/widget/custom_fill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../widget/custom_bottomshet.dart';
 import '../../../widget/custom_card.dart';
 import '../controller/mycard_controller.dart';
 
@@ -45,35 +42,35 @@ class ECardDetails extends StatelessWidget {
             padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
-                onShowBottomSheet(
-                    title: "E-Card Sitting",
-                    isWidget: false,
-                    isContainer: false,
-                    context: context,
-                    colors: Colors.transparent,
-                    isSubtitle: true,
-                    height: 385,
-                    appbar: true,
-                    isTitle: false,
-                    child: Column(
-                        children: cardDetailCon.settingEcardList
-                            .asMap()
-                            .entries
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: CustomRowSetting(
-                                    settingModel: e.value,
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const TopUpCard()));
-                                      debugPrint('1234567890');
-                                    },
-                                  ),
-                                ))
-                            .toList()));
+                // onShowBottomSheet(
+                //     title: "E-Card Sitting",
+                //     isWidget: false,
+                //     isContainer: false,
+                //     context: context,
+                //     colors: Colors.transparent,
+                //     isSubtitle: true,
+                //     height: 385,
+                //     appbar: true,
+                //     isTitle: false,
+                //     child: Column(
+                //         children: cardDetailCon.settingEcardList
+                //             .asMap()
+                //             .entries
+                //             .map((e) => Padding(
+                //                   padding: const EdgeInsets.all(20.0),
+                //                   child: CustomRowSetting(
+                //                     settingModel: e.value,
+                //                     onTap: () {
+                //                       Navigator.push(
+                //                           context,
+                //                           MaterialPageRoute(
+                //                               builder: (context) =>
+                //                                   const TopUpCard()));
+                //                       debugPrint('1234567890');
+                //                     },
+                //                   ),
+                //                 ))
+                //             .toList()));
               },
               child: SvgPicture.asset(
                 "assets/svg/Setting.svg",

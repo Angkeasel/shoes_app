@@ -1,5 +1,4 @@
 import 'package:allpay/src/module/profile/controller/profile_controller.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -27,9 +26,7 @@ class _LanguagePageState extends State<LanguagePage> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-            onPressed: () {
-              context.router.pop();
-            },
+            onPressed: () {},
             icon: SvgPicture.asset("assets/svg/arrowBack.svg")),
         title: Text(
           "Language",

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,13 +14,14 @@ class NotificationPage extends StatelessWidget {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-            onPressed: () {
-              context.router.pop();
-            },
+            onPressed: () {},
             icon: SvgPicture.asset("assets/svg/arrowBack.svg")),
         title: Text(
           "Notification",
-          style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: Colors.black),
+          style: Theme.of(context)
+              .textTheme
+              .headlineLarge!
+              .copyWith(color: Colors.black),
         ),
       ),
       body: Padding(

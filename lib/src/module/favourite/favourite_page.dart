@@ -2,8 +2,10 @@ import 'package:allpay/src/module/favourite/controller/favourite_controller.dart
 import 'package:allpay/src/module/favourite/widgets/custom_fav_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../constant/app_setting.dart';
+import '../../widget/no_product_text.dart';
 
 class FavouritePage extends StatelessWidget {
   const FavouritePage({Key? key}) : super(key: key);
@@ -33,14 +35,8 @@ class FavouritePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : homeController.favouriteList.isEmpty
-                  ? Center(
-                      child: Text(
-                        'Empty',
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall
-                            ?.copyWith(color: Colors.black),
-                      ),
+                  ? const NoProduct(
+                      text: 'No product saved to your favourite.',
                     )
                   : GridView.builder(
                       padding: const EdgeInsets.only(
@@ -49,14 +45,21 @@ class FavouritePage extends StatelessWidget {
                       itemCount: homeController.favouriteList.length,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 240,
-                              childAspectRatio: 0.75,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 20),
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 159 / 203,
+                        mainAxisSpacing: 20,
+                        crossAxisSpacing: 20,
+                      ),
                       itemBuilder: (_, index) {
                         final product = homeController.favouriteList[index];
+
                         return CustomFavoriteCard(
+                          onTap: () {
+                            context.push(
+                              '/favorite-router/detail/${product.id}',
+                            );
+                          },
                           title: product.name,
                           image: product.thumbnailUrl,
                           price: product.price,

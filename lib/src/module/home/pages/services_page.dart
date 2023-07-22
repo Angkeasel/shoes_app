@@ -1,5 +1,4 @@
 import 'package:allpay/src/widget/home/service_card.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,9 +18,7 @@ class ServicePage extends StatelessWidget {
                 .headlineSmall!
                 .copyWith(fontWeight: FontWeight.w700)),
         leading: IconButton(
-            onPressed: () {
-              context.router.pop();
-            },
+            onPressed: () {},
             icon: SvgPicture.asset("assets/svg/arrowBack.svg")),
         actions: [
           SvgPicture.asset(

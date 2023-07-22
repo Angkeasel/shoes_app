@@ -4,6 +4,7 @@ import 'package:allpay/src/module/favourite/controller/favourite_controller.dart
 import 'package:allpay/src/module/home/controllers/home_controller.dart';
 import 'package:allpay/src/module/home/models/product_details/product_details_model.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -54,11 +55,20 @@ class _DetailPageState extends State<DetailPage>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    detailCon.currentIndex(0);
+  }
+
+  @override
   Widget build(BuildContext context) {
     //========================================> Stack text description <==========================================
     return Obx(
       () => detailCon.isLoadingDetails.value
-          ? Container(
+          ?
+
+          ///Loading
+          Container(
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(color: AppColor.backgroundColor),
@@ -104,7 +114,7 @@ class _DetailPageState extends State<DetailPage>
                                                   .variants?.isNotEmpty ==
                                               true
                                           ? DecorationImage(
-                                              image: NetworkImage(
+                                              image: CachedNetworkImageProvider(
                                                 productDetailsModel
                                                     .variants![detailCon
                                                         .currentIndex.value]
@@ -112,7 +122,7 @@ class _DetailPageState extends State<DetailPage>
                                               ),
                                             )
                                           : DecorationImage(
-                                              image: NetworkImage(
+                                              image: CachedNetworkImageProvider(
                                                 productDetailsModel
                                                         .thumbnailUrl ??
                                                     '',
@@ -130,9 +140,8 @@ class _DetailPageState extends State<DetailPage>
                       body: Container(
                         decoration: const BoxDecoration(
                           color: Colors.white,
-                          // borderRadius: BorderRadius.vertical(
-                          //   top: Radius.circular(20),
-                          // ),
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(8)),
                         ),
                         child: SingleChildScrollView(
                           padding: const EdgeInsets.only(
@@ -140,32 +149,6 @@ class _DetailPageState extends State<DetailPage>
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Row(
-                              //   children: [
-                              //     const Text(
-                              //       'Colors :',
-                              //       style: TextStyle(
-                              //           color: Colors.black,
-                              //           fontWeight: FontWeight.w500,
-                              //           fontSize: 15,
-                              //           fontFamily: 'Raleway-Bold'),
-                              //       textAlign: TextAlign.center,
-                              //     ),
-                              //     Expanded(
-                              //       child: Row(
-                              //         children: productDetailsModel.variants
-                              //                 ?.map(
-                              //                   (e) => const CircleAvatar(
-                              //                     radius: 8,
-                              //                     backgroundColor: Color(0x0ff2313f),
-                              //                   ),
-                              //                 )
-                              //                 .toList() ??
-                              //             [],
-                              //       ),
-                              //     )
-                              //   ],
-                              // ),
                               const SizedBox(height: 10),
                               Text(
                                 productDetailsModel.name ?? '',
@@ -219,7 +202,7 @@ class _DetailPageState extends State<DetailPage>
                                             right: 16, top: 20, bottom: 20),
                                         child: CustomCartDetails(
                                           image: e.value.imageUrl,
-                                          price: e.value.price,
+                                          // price: e.value.price,
                                           selected:
                                               detailCon.currentIndex.value ==
                                                   e.key,
@@ -403,28 +386,106 @@ class _DetailPageState extends State<DetailPage>
     );
   }
 
-  void selectSize() {
-    showModalBottomSheet(
+  void selectSize() async {
+    final sizes =
+        productDetailsModel.variants?[detailCon.currentIndex.value].sizes;
+    await showModalBottomSheet(
       context: context,
-      builder: (_) => Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(10),
+      backgroundColor: Colors.transparent,
+      builder: (_) => Material(
+        color: Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(maxHeight: context.height * 0.7),
+          decoration: const BoxDecoration(
+            // color: Colors.white,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(10),
+            ),
           ),
-        ),
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: productDetailsModel.variants?.map((e) {
-                return Text(
-                  e.price.toString(),
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      fontFamily: 'poppins-regular', color: AppColor.darkColor),
-                );
-              }).toList() ??
-              [],
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Select Size',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    fontFamily: 'Raleway',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: sizes != null && sizes.isNotEmpty
+                    ? ListView.separated(
+                        itemBuilder: (_, index) {
+                          final size = sizes[index];
+                          final sizeText = size.sizeText;
+
+                          return InkWell(
+                            onTap: () {},
+                            child: Ink(
+                              width: double.infinity,
+                              // dense: true,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
+
+                              child: Row(
+                                children: [
+                                  const Spacer(),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Center(
+                                      child: Text(
+                                        size.sizeText.toString(),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium
+                                            ?.copyWith(
+                                              fontSize: 18,
+                                              fontFamily: 'poppins-regular',
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColor.darkColor,
+                                            ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      size.qty != null && size.qty! <= 5
+                                          ? '(2 lefts)'
+                                          : '',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium
+                                          ?.copyWith(
+                                            fontSize: 12,
+                                            fontFamily: 'poppins-regular',
+                                            fontWeight: FontWeight.w300,
+                                            color: AppColor.darkColor,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (_, __) => const SizedBox.shrink(),
+                        itemCount: sizes.length,
+                      )
+                    : const Center(
+                        child: Text('No stock available'),
+                      ),
+              )
+            ],
+          ),
         ),
       ),
     );

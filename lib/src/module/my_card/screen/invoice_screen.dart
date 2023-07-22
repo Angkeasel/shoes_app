@@ -1,7 +1,6 @@
 import 'package:allpay/src/module/my_card/widgets/customs_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen({Key? key}) : super(key: key);
@@ -9,11 +8,11 @@ class InvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              context.pop();
-            },
-            child: const Icon(Icons.arrow_back_ios)),
+        // leading: GestureDetector(
+        //     onTap: () {
+        //       context.pop();
+        //     },
+        //     child: const Icon(Icons.arrow_back_ios)),
         title: const Text("Invoice card"),
       ),
       body: SingleChildScrollView(

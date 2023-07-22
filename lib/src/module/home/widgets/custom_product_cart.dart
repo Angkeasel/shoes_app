@@ -1,4 +1,5 @@
 import 'package:allpay/src/constant/app_setting.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_favorite.dart';
@@ -73,8 +74,8 @@ class CustomProductCart extends StatelessWidget {
                           height: 100,
                           fit: BoxFit.cover,
                         )
-                      : Image.network(
-                          image == "image"
+                      : CachedNetworkImage(
+                          imageUrl: image == "image"
                               ? 'https://www.maxairsoft.com/getimage/products/default.png'
                               : image!,
                           fit: BoxFit.cover,

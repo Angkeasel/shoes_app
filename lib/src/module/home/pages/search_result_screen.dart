@@ -58,7 +58,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                   return CustomProductCart(
                     title: detailsModel.variants![index].name,
                     image: detailsModel.variants![index].imageUrl,
-                    price: detailsModel.variants![index].price,
+                    // price: detailsModel.variants![index].price,
                   );
                 }),
       ),
