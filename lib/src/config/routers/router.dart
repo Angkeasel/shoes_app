@@ -8,6 +8,7 @@ import 'package:allpay/src/module/home/pages/search_result_screen.dart';
 import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
+import 'package:allpay/src/module/profile/page/view_order_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -90,6 +91,14 @@ final GoRouter router = GoRouter(
       path: '/otp',
       builder: (context, state) => const VertifyOTPScreen(),
       routes: const [],
+    ),
+    GoRoute(
+      path: '/view-order',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) {
+        return const ViewOrderPage();
+      },
+      routes: const <GoRoute>[],
     ),
   ],
 );
