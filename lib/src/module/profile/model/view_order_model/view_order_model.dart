@@ -7,12 +7,12 @@ part 'view_order_model.g.dart';
 class ViewOrderModel with _$ViewOrderModel {
   factory ViewOrderModel({
     final int? id,
-    final double? totalAmount,
+    @JsonKey(name: 'total_amount') final double? totalAmount,
     final String? status,
-    final String? createdAt,
-    final String? updatedAt,
-    final Deliveryaddress? deliveryaddress,
-    final List<Orderitems>? orderitems,
+    @JsonKey(name: 'created_at') final String? createdAt,
+    @JsonKey(name: 'updated_at') final String? updatedAt,
+    @JsonKey(name: 'deliveryaddress') final Deliveryaddress? deliveryaddress,
+    @JsonKey(name: 'orderitems') final List<Orderitems>? orderitems,
   }) = _ViewOrderModel;
 
   factory ViewOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -23,9 +23,9 @@ class ViewOrderModel with _$ViewOrderModel {
 class Deliveryaddress with _$Deliveryaddress {
   factory Deliveryaddress({
     final int? id,
-    final String? streetNo,
-    final String? homeNo,
-    final String? fullAddress,
+    @JsonKey(name: 'street_no') final String? streetNo,
+    @JsonKey(name: 'home_no') final String? homeNo,
+    @JsonKey(name: 'full_address') final String? fullAddress,
     final double? latitute,
     final int? longtitute,
   }) = _Deliveryaddress;
@@ -53,9 +53,9 @@ class VariantModel with _$VariantModel {
     final int? id,
     final String? name,
     final String? value,
-    final String? productName,
-    final String? imageUrl,
-    final int? productId,
+    @JsonKey(name: 'productName') final String? productName,
+    @JsonKey(name: 'image_url') final String? imageUrl,
+    @JsonKey(name: 'product_id') final int? productId,
   }) = _VariantModel;
 
   factory VariantModel.fromJson(Map<String, dynamic> json) =>

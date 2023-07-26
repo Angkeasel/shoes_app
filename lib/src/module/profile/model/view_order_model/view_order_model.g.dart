@@ -9,10 +9,10 @@ part of 'view_order_model.dart';
 _$_ViewOrderModel _$$_ViewOrderModelFromJson(Map<String, dynamic> json) =>
     _$_ViewOrderModel(
       id: json['id'] as int?,
-      totalAmount: (json['totalAmount'] as num?)?.toDouble(),
+      totalAmount: (json['total_amount'] as num?)?.toDouble(),
       status: json['status'] as String?,
-      createdAt: json['createdAt'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
       deliveryaddress: json['deliveryaddress'] == null
           ? null
           : Deliveryaddress.fromJson(
@@ -25,10 +25,10 @@ _$_ViewOrderModel _$$_ViewOrderModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_ViewOrderModelToJson(_$_ViewOrderModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'totalAmount': instance.totalAmount,
+      'total_amount': instance.totalAmount,
       'status': instance.status,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
+      'created_at': instance.createdAt,
+      'updated_at': instance.updatedAt,
       'deliveryaddress': instance.deliveryaddress,
       'orderitems': instance.orderitems,
     };
@@ -36,9 +36,9 @@ Map<String, dynamic> _$$_ViewOrderModelToJson(_$_ViewOrderModel instance) =>
 _$_Deliveryaddress _$$_DeliveryaddressFromJson(Map<String, dynamic> json) =>
     _$_Deliveryaddress(
       id: json['id'] as int?,
-      streetNo: json['streetNo'] as String?,
-      homeNo: json['homeNo'] as String?,
-      fullAddress: json['fullAddress'] as String?,
+      streetNo: json['street_no'] as String?,
+      homeNo: json['home_no'] as String?,
+      fullAddress: json['full_address'] as String?,
       latitute: (json['latitute'] as num?)?.toDouble(),
       longtitute: json['longtitute'] as int?,
     );
@@ -46,9 +46,9 @@ _$_Deliveryaddress _$$_DeliveryaddressFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_DeliveryaddressToJson(_$_Deliveryaddress instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'streetNo': instance.streetNo,
-      'homeNo': instance.homeNo,
-      'fullAddress': instance.fullAddress,
+      'street_no': instance.streetNo,
+      'home_no': instance.homeNo,
+      'full_address': instance.fullAddress,
       'latitute': instance.latitute,
       'longtitute': instance.longtitute,
     };
@@ -77,8 +77,8 @@ _$_VariantModel _$$_VariantModelFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String?,
       value: json['value'] as String?,
       productName: json['productName'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      productId: json['productId'] as int?,
+      imageUrl: json['image_url'] as String?,
+      productId: json['product_id'] as int?,
     );
 
 Map<String, dynamic> _$$_VariantModelToJson(_$_VariantModel instance) =>
@@ -87,6 +87,6 @@ Map<String, dynamic> _$$_VariantModelToJson(_$_VariantModel instance) =>
       'name': instance.name,
       'value': instance.value,
       'productName': instance.productName,
-      'imageUrl': instance.imageUrl,
-      'productId': instance.productId,
+      'image_url': instance.imageUrl,
+      'product_id': instance.productId,
     };

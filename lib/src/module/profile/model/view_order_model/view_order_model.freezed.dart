@@ -21,11 +21,16 @@ ViewOrderModel _$ViewOrderModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$ViewOrderModel {
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'total_amount')
   double? get totalAmount => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'deliveryaddress')
   Deliveryaddress? get deliveryaddress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'orderitems')
   List<Orderitems>? get orderitems => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,12 +47,12 @@ abstract class $ViewOrderModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      double? totalAmount,
+      @JsonKey(name: 'total_amount') double? totalAmount,
       String? status,
-      String? createdAt,
-      String? updatedAt,
-      Deliveryaddress? deliveryaddress,
-      List<Orderitems>? orderitems});
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      @JsonKey(name: 'deliveryaddress') Deliveryaddress? deliveryaddress,
+      @JsonKey(name: 'orderitems') List<Orderitems>? orderitems});
 
   $DeliveryaddressCopyWith<$Res>? get deliveryaddress;
 }
@@ -128,12 +133,12 @@ abstract class _$$_ViewOrderModelCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      double? totalAmount,
+      @JsonKey(name: 'total_amount') double? totalAmount,
       String? status,
-      String? createdAt,
-      String? updatedAt,
-      Deliveryaddress? deliveryaddress,
-      List<Orderitems>? orderitems});
+      @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      @JsonKey(name: 'deliveryaddress') Deliveryaddress? deliveryaddress,
+      @JsonKey(name: 'orderitems') List<Orderitems>? orderitems});
 
   @override
   $DeliveryaddressCopyWith<$Res>? get deliveryaddress;
@@ -196,12 +201,12 @@ class __$$_ViewOrderModelCopyWithImpl<$Res>
 class _$_ViewOrderModel implements _ViewOrderModel {
   _$_ViewOrderModel(
       {this.id,
-      this.totalAmount,
+      @JsonKey(name: 'total_amount') this.totalAmount,
       this.status,
-      this.createdAt,
-      this.updatedAt,
-      this.deliveryaddress,
-      final List<Orderitems>? orderitems})
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'deliveryaddress') this.deliveryaddress,
+      @JsonKey(name: 'orderitems') final List<Orderitems>? orderitems})
       : _orderitems = orderitems;
 
   factory _$_ViewOrderModel.fromJson(Map<String, dynamic> json) =>
@@ -210,17 +215,22 @@ class _$_ViewOrderModel implements _ViewOrderModel {
   @override
   final int? id;
   @override
+  @JsonKey(name: 'total_amount')
   final double? totalAmount;
   @override
   final String? status;
   @override
+  @JsonKey(name: 'created_at')
   final String? createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   final String? updatedAt;
   @override
+  @JsonKey(name: 'deliveryaddress')
   final Deliveryaddress? deliveryaddress;
   final List<Orderitems>? _orderitems;
   @override
+  @JsonKey(name: 'orderitems')
   List<Orderitems>? get orderitems {
     final value = _orderitems;
     if (value == null) return null;
@@ -282,11 +292,12 @@ class _$_ViewOrderModel implements _ViewOrderModel {
 abstract class _ViewOrderModel implements ViewOrderModel {
   factory _ViewOrderModel(
       {final int? id,
-      final double? totalAmount,
+      @JsonKey(name: 'total_amount') final double? totalAmount,
       final String? status,
-      final String? createdAt,
-      final String? updatedAt,
-      final Deliveryaddress? deliveryaddress,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      @JsonKey(name: 'deliveryaddress') final Deliveryaddress? deliveryaddress,
+      @JsonKey(name: 'orderitems')
       final List<Orderitems>? orderitems}) = _$_ViewOrderModel;
 
   factory _ViewOrderModel.fromJson(Map<String, dynamic> json) =
@@ -295,16 +306,21 @@ abstract class _ViewOrderModel implements ViewOrderModel {
   @override
   int? get id;
   @override
+  @JsonKey(name: 'total_amount')
   double? get totalAmount;
   @override
   String? get status;
   @override
+  @JsonKey(name: 'created_at')
   String? get createdAt;
   @override
+  @JsonKey(name: 'updated_at')
   String? get updatedAt;
   @override
+  @JsonKey(name: 'deliveryaddress')
   Deliveryaddress? get deliveryaddress;
   @override
+  @JsonKey(name: 'orderitems')
   List<Orderitems>? get orderitems;
   @override
   @JsonKey(ignore: true)
@@ -319,8 +335,11 @@ Deliveryaddress _$DeliveryaddressFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Deliveryaddress {
   int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'street_no')
   String? get streetNo => throw _privateConstructorUsedError;
+  @JsonKey(name: 'home_no')
   String? get homeNo => throw _privateConstructorUsedError;
+  @JsonKey(name: 'full_address')
   String? get fullAddress => throw _privateConstructorUsedError;
   double? get latitute => throw _privateConstructorUsedError;
   int? get longtitute => throw _privateConstructorUsedError;
@@ -339,9 +358,9 @@ abstract class $DeliveryaddressCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? streetNo,
-      String? homeNo,
-      String? fullAddress,
+      @JsonKey(name: 'street_no') String? streetNo,
+      @JsonKey(name: 'home_no') String? homeNo,
+      @JsonKey(name: 'full_address') String? fullAddress,
       double? latitute,
       int? longtitute});
 }
@@ -405,9 +424,9 @@ abstract class _$$_DeliveryaddressCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      String? streetNo,
-      String? homeNo,
-      String? fullAddress,
+      @JsonKey(name: 'street_no') String? streetNo,
+      @JsonKey(name: 'home_no') String? homeNo,
+      @JsonKey(name: 'full_address') String? fullAddress,
       double? latitute,
       int? longtitute});
 }
@@ -464,9 +483,9 @@ class __$$_DeliveryaddressCopyWithImpl<$Res>
 class _$_Deliveryaddress implements _Deliveryaddress {
   _$_Deliveryaddress(
       {this.id,
-      this.streetNo,
-      this.homeNo,
-      this.fullAddress,
+      @JsonKey(name: 'street_no') this.streetNo,
+      @JsonKey(name: 'home_no') this.homeNo,
+      @JsonKey(name: 'full_address') this.fullAddress,
       this.latitute,
       this.longtitute});
 
@@ -476,10 +495,13 @@ class _$_Deliveryaddress implements _Deliveryaddress {
   @override
   final int? id;
   @override
+  @JsonKey(name: 'street_no')
   final String? streetNo;
   @override
+  @JsonKey(name: 'home_no')
   final String? homeNo;
   @override
+  @JsonKey(name: 'full_address')
   final String? fullAddress;
   @override
   final double? latitute;
@@ -530,9 +552,9 @@ class _$_Deliveryaddress implements _Deliveryaddress {
 abstract class _Deliveryaddress implements Deliveryaddress {
   factory _Deliveryaddress(
       {final int? id,
-      final String? streetNo,
-      final String? homeNo,
-      final String? fullAddress,
+      @JsonKey(name: 'street_no') final String? streetNo,
+      @JsonKey(name: 'home_no') final String? homeNo,
+      @JsonKey(name: 'full_address') final String? fullAddress,
       final double? latitute,
       final int? longtitute}) = _$_Deliveryaddress;
 
@@ -542,10 +564,13 @@ abstract class _Deliveryaddress implements Deliveryaddress {
   @override
   int? get id;
   @override
+  @JsonKey(name: 'street_no')
   String? get streetNo;
   @override
+  @JsonKey(name: 'home_no')
   String? get homeNo;
   @override
+  @JsonKey(name: 'full_address')
   String? get fullAddress;
   @override
   double? get latitute;
@@ -772,8 +797,11 @@ mixin _$VariantModel {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get value => throw _privateConstructorUsedError;
+  @JsonKey(name: 'productName')
   String? get productName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_url')
   String? get imageUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_id')
   int? get productId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -792,9 +820,9 @@ abstract class $VariantModelCopyWith<$Res> {
       {int? id,
       String? name,
       String? value,
-      String? productName,
-      String? imageUrl,
-      int? productId});
+      @JsonKey(name: 'productName') String? productName,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'product_id') int? productId});
 }
 
 /// @nodoc
@@ -858,9 +886,9 @@ abstract class _$$_VariantModelCopyWith<$Res>
       {int? id,
       String? name,
       String? value,
-      String? productName,
-      String? imageUrl,
-      int? productId});
+      @JsonKey(name: 'productName') String? productName,
+      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'product_id') int? productId});
 }
 
 /// @nodoc
@@ -917,9 +945,9 @@ class _$_VariantModel implements _VariantModel {
       {this.id,
       this.name,
       this.value,
-      this.productName,
-      this.imageUrl,
-      this.productId});
+      @JsonKey(name: 'productName') this.productName,
+      @JsonKey(name: 'image_url') this.imageUrl,
+      @JsonKey(name: 'product_id') this.productId});
 
   factory _$_VariantModel.fromJson(Map<String, dynamic> json) =>
       _$$_VariantModelFromJson(json);
@@ -931,10 +959,13 @@ class _$_VariantModel implements _VariantModel {
   @override
   final String? value;
   @override
+  @JsonKey(name: 'productName')
   final String? productName;
   @override
+  @JsonKey(name: 'image_url')
   final String? imageUrl;
   @override
+  @JsonKey(name: 'product_id')
   final int? productId;
 
   @override
@@ -982,9 +1013,9 @@ abstract class _VariantModel implements VariantModel {
       {final int? id,
       final String? name,
       final String? value,
-      final String? productName,
-      final String? imageUrl,
-      final int? productId}) = _$_VariantModel;
+      @JsonKey(name: 'productName') final String? productName,
+      @JsonKey(name: 'image_url') final String? imageUrl,
+      @JsonKey(name: 'product_id') final int? productId}) = _$_VariantModel;
 
   factory _VariantModel.fromJson(Map<String, dynamic> json) =
       _$_VariantModel.fromJson;
@@ -996,10 +1027,13 @@ abstract class _VariantModel implements VariantModel {
   @override
   String? get value;
   @override
+  @JsonKey(name: 'productName')
   String? get productName;
   @override
+  @JsonKey(name: 'image_url')
   String? get imageUrl;
   @override
+  @JsonKey(name: 'product_id')
   int? get productId;
   @override
   @JsonKey(ignore: true)

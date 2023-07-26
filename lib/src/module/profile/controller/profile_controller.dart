@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:allpay/src/module/profile/model/user_gender_model/user_gender_model.dart';
 import 'package:allpay/src/module/profile/model/user_profile_model/user_profile_model.dart';
+import 'package:allpay/src/module/profile/model/view_order_model/view_order_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -171,15 +173,29 @@ class ProfileController extends GetxController {
   //   }
   // }
 
-  Future<void> fetchOrderProducts() async {
-    await _apiBaseHelper
-        .onNetworkRequesting(
-      url: 'order',
-      methode: METHODE.get,
-      isAuthorize: true,
-    )
-        .then((response) {
-      debugPrint('fetchOrder: ${response[0]}');
-    });
+  final viewOrderList = <ViewOrderModel>[].obs;
+  final isLoadingOrderProduct = false.obs;
+
+  Future<List<ViewOrderModel>> fetchOrderProducts() async {
+    try {
+      isLoadingOrderProduct(true);
+      await _apiBaseHelper
+          .onNetworkRequesting(
+        url: 'order',
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
+          .then((response) {
+        response.map((e) {
+          viewOrderList.add(ViewOrderModel.fromJson(e));
+        }).toList();
+      });
+      debugPrint('fetchOrder: $viewOrderList');
+      isLoadingOrderProduct(false);
+    } catch (e) {
+      debugPrint('Error fetch order product: $e');
+      isLoadingOrderProduct(false);
+    }
+    return viewOrderList;
   }
 }
