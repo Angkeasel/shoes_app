@@ -14,8 +14,12 @@ onShowBottomSheet({
   EdgeInsets? padding,
   bool? isContainer = false,
   bool? isWidget = false,
+  bool? enableDrag,
+  bool? isDimissible,
 }) {
   showModalBottomSheet(
+      isDismissible: isDimissible ?? false,
+      enableDrag: enableDrag ?? false,
       isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
@@ -74,7 +78,7 @@ onShowBottomSheet({
                             '$title',
                             style: Theme.of(context)
                                 .textTheme
-                                .headline2!
+                                .displayMedium!
                                 .copyWith(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w700,
@@ -90,7 +94,7 @@ onShowBottomSheet({
                           '$subtitle',
                           style: Theme.of(context)
                               .textTheme
-                              .headline3!
+                              .displaySmall!
                               .copyWith(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,

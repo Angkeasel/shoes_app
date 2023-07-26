@@ -26,10 +26,6 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>To take user profile image</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>To choose user profile image</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -62,6 +58,10 @@
 	<string>This app needs access to location when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Privacy - Photo Library Usage Description</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Privacy - Camera Usage Description</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>We want to send you the favorite things</string>
 </dict>
