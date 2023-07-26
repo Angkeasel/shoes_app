@@ -508,12 +508,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          profileCon.onSubmitProfileImage();
-                        },
-                        child: const Text('hello'),
-                      ),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 50, horizontal: 20),
