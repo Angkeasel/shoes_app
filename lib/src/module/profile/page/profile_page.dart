@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:allpay/src/module/auth/sign_in/controller/contoller.dart';
 import 'package:allpay/src/module/profile/widget/custom_seleted_item_widget.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
@@ -69,46 +71,75 @@ class _ProfilePageState extends State<ProfilePage> {
                                 children: [
                                   Stack(
                                     children: [
-                                      Container(
-                                        height: 60,
-                                        width: 60,
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: e.imageUrl!.isNotEmpty
-                                            ? CachedNetworkImage(
-                                                fit: BoxFit.cover,
-                                                imageUrl: "${e.imageUrl}",
-                                                placeholder: (context, url) =>
-                                                    Shimmer.fromColors(
-                                                      baseColor:
-                                                          Colors.grey.shade300,
-                                                      highlightColor:
-                                                          Colors.grey.shade400,
-                                                      child: Container(
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color: Colors.white,
-                                                          shape:
-                                                              BoxShape.circle,
+                                      profileCon.isLoadingPickedImage.value
+                                          ? Shimmer.fromColors(
+                                              baseColor: Colors.grey.shade300,
+                                              highlightColor:
+                                                  Colors.grey.shade400,
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                height: 60,
+                                                width: 60,
+                                              ),
+                                            )
+                                          : Container(
+                                              height: 60,
+                                              width: 60,
+                                              clipBehavior:
+                                                  Clip.antiAliasWithSaveLayer,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: e.imageUrl == null
+                                                  ? Image.asset(
+                                                      'assets/image/profile.png')
+                                                  : profileCon.image == null
+                                                      ? CachedNetworkImage(
+                                                          fit: BoxFit.cover,
+                                                          imageUrl:
+                                                              "${e.imageUrl}",
+                                                          placeholder: (context,
+                                                                  url) =>
+                                                              Shimmer
+                                                                  .fromColors(
+                                                            baseColor: Colors
+                                                                .grey.shade300,
+                                                            highlightColor:
+                                                                Colors.grey
+                                                                    .shade400,
+                                                            child: Container(
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                              ),
+                                                              height: 60,
+                                                              width: 60,
+                                                            ),
+                                                          ),
+                                                          errorWidget: (context,
+                                                              url, error) {
+                                                            // debugPrint('Error URL: $url');
+                                                            // debugPrint(
+                                                            //     'Error Error: $error');
+                                                            return const Icon(
+                                                              Icons.error,
+                                                            );
+                                                          },
+                                                        )
+                                                      : Image.file(
+                                                          File(
+                                                            profileCon.imagePath
+                                                                .value,
+                                                          ),
+                                                          fit: BoxFit.cover,
                                                         ),
-                                                        height: 60,
-                                                        width: 60,
-                                                      ),
-                                                    ),
-                                                errorWidget:
-                                                    (context, url, error) {
-                                                  debugPrint('Error URL: $url');
-                                                  debugPrint(
-                                                      'Error Error: $error');
-                                                  return const Icon(
-                                                      Icons.error);
-                                                })
-                                            : Image.asset(
-                                                'assets/image/profile.png'),
-                                      ),
+                                            ),
                                       Positioned(
                                         bottom: -5.0,
                                         right: 0.0,
@@ -160,19 +191,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                 ImageSource
                                                                     .gallery,
                                                               );
-                                                              if (profileCon
-                                                                  .imagePath!
-                                                                  .isEmpty) {
-                                                                debugPrint(
-                                                                    'tempImg null');
-                                                              } else {
-                                                                debugPrint(
-                                                                    'tempImg in not null ${profileCon.imagePath}');
-                                                                await profileCon
-                                                                    .onSubmitProfileImage();
-                                                              }
+                                                              // if (profileCon
+                                                              //     .imagePath!
+                                                              //     .isEmpty) {
+                                                              //   debugPrint(
+                                                              //       'tempImg null');
+                                                              // } else {
+                                                              //   debugPrint(
+                                                              //       'tempImg in not null ${profileCon}');
+                                                              //   await profileCon
+                                                              //       .onSubmitProfileImage();
+                                                              // }
                                                               profileCon
                                                                   .update();
+                                                              context.pop();
                                                             },
                                                           ),
                                                           CustomSeletedItemWidget(
@@ -508,7 +540,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-
+                      GestureDetector(
+                        onTap: () {
+                          profileCon.onSubmitProfileImage();
+                        },
+                        child: const Text('Hello'),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 50, horizontal: 20),

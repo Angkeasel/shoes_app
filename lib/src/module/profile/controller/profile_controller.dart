@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:allpay/src/module/profile/model/user_gender_model/user_gender_model.dart';
@@ -122,57 +121,47 @@ class ProfileController extends GetxController {
     isLoadingOnSubmittedDOB(false);
   }
 
-  File? image = File(
-      '/Users/tinutchan/Library/Developer/CoreSimulator/Devices/AC07F20D-ACD2-49BD-8A2D-1E653E239261/data/Containers/Data/Application/5C38383A-471F-40A0-8E2E-9257619801B9/tmp/image_picker_E8E975B3-34F0-4D27-865E-463B91E204E4-1450-0000659B5260D292.png');
-  String? imagePath;
+  File? image;
+  final imagePath = ''.obs;
   XFile? imageFile;
-  final ImagePicker _picker = ImagePicker();
+  final _picker = ImagePicker().obs;
   final isLoadingPickedImage = false.obs;
 
-  // Future pickedImage({required ImageSource imageSource}) async {
-  //   isLoadingPickedImage(true);
-  //   try {
-  //     final pickedFile = await _picker.pickImage(
-  //       source: imageSource,
-  //       maxWidth: double.infinity,
-  //       maxHeight: double.infinity,
-  //       imageQuality: 100,
-  //     );
-  //     if (pickedFile != null) {
-  //       image = File(pickedFile.path);
-  //       // imagePath = pickedFile.path;
-  //       update();
-  //       isLoadingPickedImage(false);
-  //     } else {
-  //       debugPrint('No image selected.');
-  //     }
-  //   } catch (e) {
-  //     debugPrint('Image Picker error = = = = = $e');
-  //     isLoadingPickedImage(false);
-  //   }
-  //   return image;
-  // }
-  Future<File> pickedImage(ImageSource imageSource) async {
-    final ImagePicker picker = ImagePicker();
-    // Pick an image
-    final XFile? image = await picker.pickImage(source: imageSource);
-    //TO convert Xfile into file
-    File file = File(image!.path);
-    debugPrint('Image picked $file');
-    return file;
+  Future pickedImage(ImageSource? imageSource) async {
+    try {
+      isLoadingPickedImage(true);
+      final pickedFile = await _picker.value.pickImage(
+        source: imageSource!,
+        maxWidth: double.infinity,
+        maxHeight: double.infinity,
+        imageQuality: 100,
+      );
+      if (pickedFile != null) {
+        image = File(pickedFile.path);
+        imagePath.value = pickedFile.path;
+
+        debugPrint('Picked: $imagePath');
+        isLoadingPickedImage(false);
+      } else {
+        debugPrint('No image selected.');
+        isLoadingPickedImage(false);
+      }
+    } catch (e) {
+      debugPrint('Image Picker error = = = = = $e');
+      isLoadingPickedImage(false);
+    }
+    return imagePath.value;
   }
 
   Future onSubmitProfileImage() async {
     try {
-      List<int> imageBytes = image!.readAsBytesSync();
-      String base64Image = base64Encode(imageBytes);
-      debugPrint('base64: $base64Image');
-      _apiBaseHelper.onNetworkRequesting(
+      debugPrint('image ${imagePath.value}');
+      await _apiBaseHelper.onNetworkRequesting(
         url: 'profile',
         methode: METHODE.post,
         isAuthorize: true,
         body: {
-          "imageprofile": "data:image/png;base64,$base64Image",
+          "imageprofile": imagePath.value,
         },
       ).then((response) {
         debugPrint('Upload profile photo: $response');
@@ -180,5 +169,17 @@ class ProfileController extends GetxController {
     } catch (e) {
       debugPrint('------- onSubmitUserProfileImage Error: ${e.toString()}');
     }
+  }
+
+  Future<void> fetchOrderProducts() async {
+    await _apiBaseHelper
+        .onNetworkRequesting(
+      url: 'order',
+      methode: METHODE.get,
+      isAuthorize: true,
+    )
+        .then((response) {
+      debugPrint('fetchOrder: ${response[0]}');
+    });
   }
 }
