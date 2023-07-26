@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
@@ -6,8 +8,14 @@ class ImageViewFullScreen extends StatelessWidget {
   final String? urlImage;
   final bool isUrl;
   final String tag;
-  const ImageViewFullScreen(
-      {super.key, this.urlImage, this.isUrl = true, this.tag = ''});
+  final String? imageFile;
+  const ImageViewFullScreen({
+    super.key,
+    this.urlImage,
+    this.isUrl = true,
+    this.tag = '',
+    this.imageFile,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +27,11 @@ class ImageViewFullScreen extends StatelessWidget {
                 ? NetworkImage(
                     "$urlImage",
                   )
-                : AssetImage("$urlImage") as ImageProvider<Object>,
+                : imageFile == null
+                    ? AssetImage("$urlImage") as ImageProvider<Object>
+                    : FileImage(
+                        File('$imageFile'),
+                      ),
           ),
           Positioned(
             top: 40.0,

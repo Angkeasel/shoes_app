@@ -48,7 +48,7 @@ class ViewOrderPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const CustomTextWidget(
                         title: '2017',
@@ -68,7 +68,7 @@ class ViewOrderPage extends StatelessWidget {
                         ),
                       ),
                       const CustomTextWidget(
-                        title: '2015',
+                        title: 'DEC',
                       ),
                     ],
                   ),

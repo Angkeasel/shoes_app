@@ -30,11 +30,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final profileCon = Get.put(ProfileController());
+  final authController = Get.put(ControllerSignin());
   @override
   Widget build(BuildContext context) {
-    final profileCon = Get.put(ProfileController());
-    final authController = Get.put(ControllerSignin());
-
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
@@ -149,12 +148,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                               isDimissible: true,
                                               enableDrag: false,
                                               context: context,
-                                              height: context.height * 1 / 3,
+                                              height: context.height * 1 / 2.6,
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
                                                         vertical: 15.0),
-                                                height: context.height * 1 / 3,
+                                                height:
+                                                    context.height * 1 / 2.6,
                                                 child: Column(
                                                   children: [
                                                     Expanded(
@@ -173,9 +173,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                   builder:
                                                                       (context) =>
                                                                           ImageViewFullScreen(
-                                                                    isUrl: true,
-                                                                    urlImage:
-                                                                        '${e.imageUrl}',
+                                                                    imageFile: profileCon
+                                                                        .imagePath
+                                                                        .value,
+                                                                    isUrl: profileCon
+                                                                            .imagePath
+                                                                            .value
+                                                                            .isEmpty
+                                                                        ? true
+                                                                        : false,
+                                                                    urlImage: profileCon
+                                                                            .imagePath
+                                                                            .value
+                                                                            .isNotEmpty
+                                                                        ? profileCon
+                                                                            .imagePath
+                                                                            .value
+                                                                        : e.imageUrl,
                                                                   ),
                                                                   maintainState:
                                                                       false,
@@ -204,6 +218,12 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               // }
                                                               profileCon
                                                                   .update();
+                                                              Get.snackbar(
+                                                                  'Picture saved to ${profileCon.imagePath}',
+                                                                  'Successfully created',
+                                                                  snackPosition:
+                                                                      SnackPosition
+                                                                          .BOTTOM);
                                                               context.pop();
                                                             },
                                                           ),
@@ -540,12 +560,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          profileCon.onSubmitProfileImage();
-                        },
-                        child: const Text('Hello'),
-                      ),
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     // profileCon.upload(File(profileCon.imagePath.value));
+                      //   },
+                      //   child: const Text('Hello'),
+                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 50, horizontal: 20),

@@ -153,23 +153,23 @@ class ProfileController extends GetxController {
     return imagePath.value;
   }
 
-  Future onSubmitProfileImage() async {
-    try {
-      debugPrint('image ${imagePath.value}');
-      await _apiBaseHelper.onNetworkRequesting(
-        url: 'profile',
-        methode: METHODE.post,
-        isAuthorize: true,
-        body: {
-          "imageprofile": imagePath.value,
-        },
-      ).then((response) {
-        debugPrint('Upload profile photo: $response');
-      });
-    } catch (e) {
-      debugPrint('------- onSubmitUserProfileImage Error: ${e.toString()}');
-    }
-  }
+  // Future onSubmitProfileImage() async {
+  //   try {
+  //     debugPrint('image ${imagePath.value}');
+  //     await _apiBaseHelper.onNetworkRequesting(
+  //       url: 'profile',
+  //       methode: METHODE.post,
+  //       isAuthorize: true,
+  //       body: {
+  //         "imageprofile": imagePath.value,
+  //       },
+  //     ).then((response) {
+  //       debugPrint('Upload profile photo: $response');
+  //     });
+  //   } catch (e) {
+  //     debugPrint('------- onSubmitUserProfileImage Error: ${e.toString()}');
+  //   }
+  // }
 
   Future<void> fetchOrderProducts() async {
     await _apiBaseHelper
