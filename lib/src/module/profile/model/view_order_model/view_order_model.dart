@@ -39,7 +39,7 @@ class Orderitems with _$Orderitems {
   factory Orderitems({
     final int? id,
     final int? quantity,
-    final int? price,
+    final double? price,
     final VariantModel? variant,
   }) = _Orderitems;
 

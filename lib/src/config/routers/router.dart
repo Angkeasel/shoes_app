@@ -11,6 +11,7 @@ import 'package:allpay/src/module/home/pages/search_result_screen.dart';
 import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
+import 'package:allpay/src/module/profile/page/view_order_detail.dart';
 import 'package:allpay/src/module/profile/page/view_order_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -87,7 +88,16 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         return const ViewOrderPage();
       },
-      routes: const <GoRoute>[],
+      routes: <GoRoute>[
+        GoRoute(
+          path: 'view-order-detail/:id',
+          parentNavigatorKey: _rootNavigatorKey,
+          builder: (context, state) {
+            int id = int.parse(state.pathParameters['id']!);
+            return ViewOrderDetailPage(id: id);
+          },
+        ),
+      ],
     ),
   ],
 );

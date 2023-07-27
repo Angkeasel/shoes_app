@@ -5,6 +5,7 @@ import 'package:allpay/src/module/profile/model/user_gender_model/user_gender_mo
 import 'package:allpay/src/module/profile/model/user_profile_model/user_profile_model.dart';
 import 'package:allpay/src/module/profile/model/view_order_model/view_order_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
+import 'package:allpay/src/util/helper/upload_file.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,12 +13,15 @@ import 'package:intl/intl.dart';
 
 class ProfileController extends GetxController {
   final _apiBaseHelper = ApiBaseHelper();
+  final FileUpload fileUpload = FileUpload();
   final indexGen = 0.obs;
   final titleGen = ''.obs;
   List<String> genderList = [
     'Male',
     'Female',
   ];
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> fecthUserProfile <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   final formattedDate = ''.obs;
   final dateOfBirth = DateTime(2023, 2, 1).obs;
@@ -58,7 +62,8 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  // final userGenderList = <UserGenderModel>[].obs;
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> fecthUserGender <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
   final userGendermodel = UserGenderModel().obs;
   final isLoadingGender = false.obs;
   Future fecthUserGender() async {
@@ -83,6 +88,8 @@ class ProfileController extends GetxController {
     return userGendermodel.value;
   }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> onSubmitUserGender <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
   Future<void> onSubmitUserGender({int? id}) async {
     debugPrint('UserId: $id');
     try {
@@ -100,6 +107,8 @@ class ProfileController extends GetxController {
       debugPrint('------- onSubmitUserGender Error: ${e.toString()}');
     }
   }
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> onSubmitUserDOB <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
   final isLoadingOnSubmittedDOB = false.obs;
   Future<void> onSubmitUserDOB() async {
@@ -123,11 +132,17 @@ class ProfileController extends GetxController {
     isLoadingOnSubmittedDOB(false);
   }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> pickedImage <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
   File? image;
   final imagePath = ''.obs;
   XFile? imageFile;
   final _picker = ImagePicker().obs;
   final isLoadingPickedImage = false.obs;
+
+  clearImagePath() {
+    imagePath.isEmpty;
+  }
 
   Future pickedImage(ImageSource? imageSource) async {
     try {
@@ -155,47 +170,45 @@ class ProfileController extends GetxController {
     return imagePath.value;
   }
 
-  // Future onSubmitProfileImage() async {
-  //   try {
-  //     debugPrint('image ${imagePath.value}');
-  //     await _apiBaseHelper.onNetworkRequesting(
-  //       url: 'profile',
-  //       methode: METHODE.post,
-  //       isAuthorize: true,
-  //       body: {
-  //         "imageprofile": imagePath.value,
-  //       },
-  //     ).then((response) {
-  //       debugPrint('Upload profile photo: $response');
-  //     });
-  //   } catch (e) {
-  //     debugPrint('------- onSubmitUserProfileImage Error: ${e.toString()}');
-  //   }
-  // }
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> onSubmitProfilePicutre <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-  final viewOrderList = <ViewOrderModel>[].obs;
-  final isLoadingOrderProduct = false.obs;
-
-  Future<List<ViewOrderModel>> fetchOrderProducts() async {
+  Future<void> onSubmitProfilePicutre() async {
     try {
-      isLoadingOrderProduct(true);
-      await _apiBaseHelper
-          .onNetworkRequesting(
-        url: 'order',
-        methode: METHODE.get,
-        isAuthorize: true,
+      final response = await fileUpload
+          .uploadImage(
+        file: File(imagePath.value),
+        keyName: 'imageprofile',
+        url: 'https://ecommerceapp-m28x.onrender.com/api/v1/profile',
       )
-          .then((response) {
-        response.map((e) {
-          viewOrderList.add(ViewOrderModel.fromJson(e));
-        }).toList();
+          .then((value) {
+        debugPrint('value: $value');
+        debugPrint('status: ${value.statusCode}');
+        if (value.statusCode == 200) {
+          if (imagePath.value.isNotEmpty) {
+            Get.snackbar('Success', 'Add photo successfully',
+                snackPosition: SnackPosition.BOTTOM,
+                duration: const Duration(seconds: 5));
+          }
+        } else {
+          debugPrint('value: have');
+          Get.snackbar(
+            'Error',
+            'Please select photo',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+          );
+        }
       });
-      debugPrint('fetchOrder: $viewOrderList');
-      isLoadingOrderProduct(false);
+      debugPrint('submit profile photo: $response');
     } catch (e) {
-      debugPrint('Error fetch order product: $e');
-      isLoadingOrderProduct(false);
+      Get.snackbar(
+        'Error',
+        'Please select photo',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+      );
     }
-    return viewOrderList;
   }
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>> fetchOrderProducts <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }
