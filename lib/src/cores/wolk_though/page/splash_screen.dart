@@ -17,7 +17,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   final homeController = Get.put(HomeController());
 
   Future<void> tokenHandler(context) async {
@@ -39,15 +40,25 @@ class _SplashScreenState extends State<SplashScreen> {
               router.go('/login');
             }
           } else {
-            router.go('/home-router');
+            router.go('/');
           }
         } catch (_) {}
       },
     );
   }
 
+  late final AnimationController _animationController;
+  final _position =
+      Tween<Offset>(begin: const Offset(0, 0.1), end: Offset.zero);
+  final _opacity = Tween<double>(begin: 0, end: 1);
+
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+    _animationController.forward();
     tokenHandler(context);
     super.initState();
   }
@@ -76,10 +87,23 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
-                child: Image.asset(
-                  'assets/png/nike_logo.png',
-                  height: 140,
-                  width: 150,
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (_, __) => SlideTransition(
+                    position: _position.animate(
+                      CurvedAnimation(
+                        parent: _animationController,
+                        curve: Curves.fastEaseInToSlowEaseOut,
+                      ),
+                    ),
+                    child: FadeTransition(
+                      opacity: _opacity.animate(_animationController),
+                      child: Image.asset(
+                        'assets/png/nike_logo.png',
+                        width: 150,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               const CupertinoActivityIndicator(

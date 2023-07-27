@@ -78,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         title = homeController.searchList[index].name!;
                         debugPrint("search find = $title");
                         context.push(
-                            '/home-router/search/${homeController.searchList[index].id}');
+                            '/search/${homeController.searchList[index].id}');
                       },
                       child: Container(
                         padding: const EdgeInsets.all(10),

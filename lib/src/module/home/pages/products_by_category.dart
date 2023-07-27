@@ -72,7 +72,7 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
 
                             onTap: () {
                               context.push(
-                                  '/home-router/detail/${homeController.categoryProductList[index].id}');
+                                  '/detail/${homeController.categoryProductList[index].id}');
                             },
                             // onFav: () {
                             //   homeController.detailsModelList[index].isFav =

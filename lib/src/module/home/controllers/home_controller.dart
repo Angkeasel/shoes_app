@@ -219,7 +219,8 @@ class HomeController extends GetxController {
   // }
 
   // final servicesList = [];
-  var currentIndex = 0.obs;
+  final selectedColorIndex = 0.obs;
+  final selectedSizeIndex = 0.obs;
   final currentIndexfav = 0.obs;
   final isSelectedIndex = 0.obs;
   final isOverFlow = true.obs;
@@ -228,4 +229,26 @@ class HomeController extends GetxController {
   final isfav = false.obs;
   var favCartList = <ProductDetailsModel>[].obs;
   //var myCartList = <DetailModel>[].obs;
+
+  Future<void> addToCart({
+    required String productId,
+    required String variantId,
+    required String sizeId,
+    required String price,
+    required int qty,
+  }) async {
+    final body = {
+      "product_id": productId,
+      "variant_id": variantId,
+      "size_id": sizeId,
+      "price": price,
+      "quantity": qty
+    };
+    await api.onNetworkRequesting(
+      url: 'cart',
+      methode: METHODE.post,
+      body: body,
+      isAuthorize: true,
+    );
+  }
 }

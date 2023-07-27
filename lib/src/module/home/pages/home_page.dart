@@ -54,25 +54,6 @@ class _HomePageState extends State<HomePage> {
       // }),
       appBar: AppBar(
         centerTitle: true,
-        actions: const [
-          // IconButton(
-          //   onPressed: () {
-          //     context.push('/home-router/search-router');
-          //   },
-          //   icon: const Icon(
-          //     Icons.search,
-          //     size: 24,
-          //   ),
-          // ),
-          // IconButton(
-          //   onPressed: () {
-          //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //       return const NotificationPage();
-          //     }));
-          //   },
-          //   icon: SvgPicture.asset("assets/svg/Notif_Black.svg"),
-          // ),
-        ],
         title: SvgPicture.asset('assets/svg/homepage-logo.svg'),
         elevation: 0,
       ),
@@ -139,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                                     title: e.value.name,
                                     onTap: () {
                                       context.push(
-                                        '/home-router/category?id=${e.value.id}&name=${e.value.name}',
+                                        '/category?id=${e.value.id}&name=${e.value.name}',
                                       );
                                     },
                                   ),
@@ -164,7 +145,7 @@ class _HomePageState extends State<HomePage> {
                               page: homeController.currentPage.value,
                               query: '',
                             );
-                            context.push('/home-router/popular-router');
+                            context.push('/popular-router');
                           }),
                         ),
 
@@ -189,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                                 // isFav: e.value.,
                                 onTap: () {
                                   context.push(
-                                    '/home-router/detail/${e.value.id}',
+                                    '/detail/${e.value.id}',
                                   );
                                 },
                                 // onFav: () {

@@ -84,7 +84,7 @@ class PopularPage extends StatelessWidget {
 
                                   onTap: () {
                                     context.push(
-                                        '/home-router/detail/${homeController.productList[index].id}');
+                                        '/detail/${homeController.productList[index].id}');
                                   },
                                   // onFav: () {
                                   //   homeController.detailsModelList[index].isFav =

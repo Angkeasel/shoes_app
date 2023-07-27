@@ -1,7 +1,9 @@
 import 'package:allpay/src/config/routers/router.dart';
 import 'package:allpay/src/module/auth/local_storage/local_storage.dart';
+import 'package:allpay/src/module/profile/controller/profile_controller.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +34,10 @@ class ControllerSignin extends GetxController {
   Future<void> onlogout() async {
     await LocalStorage.storeData(key: 'access_token', value: ''); //remove Token
     router.go('/login');
+    final id = Get.put(ProfileController()).userProfileModel.value.id;
+    if (id != null) {
+      FirebaseMessaging.instance.unsubscribeFromTopic('userId-$id');
+    }
   }
 
   final loginLoading = false.obs;
@@ -42,7 +48,7 @@ class ControllerSignin extends GetxController {
           title: 'Error', message: 'Please input valid email or password');
     } else {
       loginLoading(true);
-      final loginBody = {
+      final loginBody = { 
         'email': emailTxtController.text,
         'password': passwordTxtController.text
       };
@@ -56,7 +62,11 @@ class ControllerSignin extends GetxController {
         await LocalStorage.storeData(
             key: 'access_token', value: value['accessToken']);
         loginLoading(false);
-        router.go('/home-router');
+        router.go('/');
+        final id = value['id'];
+        if (id != null) {
+          await FirebaseMessaging.instance.subscribeToTopic('userId-$id');
+        }
       }).onError((ErrorModel error, stackTrace) {
         loginLoading(false);
         alertErrorSnackbar(
@@ -86,8 +96,15 @@ class ControllerSignin extends GetxController {
             methode: METHODE.post,
             isAuthorize: false,
             body: registerBody)
-        .then((respone) {
-      router.go('/login');
+        .then((response) async {
+      await LocalStorage.storeData(
+          key: 'access_token', value: response['accessToken']);
+
+      router.go('/');
+      final id = response['id'];
+      if (id != null) {
+        await FirebaseMessaging.instance.subscribeToTopic('userId-$id');
+      }
     }).onError((ErrorModel error, stackTrace) {
       alertErrorSnackbar(
           title: "Error", message: error.bodyString["message"].toString());

@@ -118,8 +118,8 @@ class ButtomNavigationBar extends StatelessWidget {
 _selectedIndex(BuildContext context) {
   final bottomBarCon = Get.put(OnBoardingController());
   final String location = GoRouterState.of(context).location;
-  debugPrint('Location : $location');
-  if (location.startsWith('/profile/-rourter')) {
+
+  if (location.startsWith('/profile-rourter')) {
     bottomBarCon.activeIndex(4);
     return 4;
   }
@@ -135,7 +135,7 @@ _selectedIndex(BuildContext context) {
     debugPrint("RETURNED");
     return 1;
   }
-  if (location.startsWith('/home-router')) {
+  if (location == '/') {
     bottomBarCon.activeIndex(0);
     return 0;
   }
@@ -145,13 +145,13 @@ _selectedIndex(BuildContext context) {
 _onItemTapped(int index, BuildContext context) {
   switch (index) {
     case 0:
-      GoRouter.of(context).go('/home-router');
+      GoRouter.of(context).go('/');
       break;
     case 1:
       GoRouter.of(context).go('/favorite-router');
       break;
     case 2:
-      GoRouter.of(context).push('/testing-rourter');
+      GoRouter.of(context).push('/cart');
       break;
     case 3:
       GoRouter.of(context).go('/mycart/-rourter');

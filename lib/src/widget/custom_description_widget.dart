@@ -5,12 +5,16 @@ import '../constant/app_setting.dart';
 
 class DescriptionWidget extends StatelessWidget {
   final String description;
+  final String? trimExpandedText;
+  final String? trimCollapsedText;
   final int maxLines;
 
   const DescriptionWidget({
     super.key,
     required this.description,
     this.maxLines = 2,
+    this.trimExpandedText,
+    this.trimCollapsedText,
   });
 
   @override
@@ -29,8 +33,8 @@ class DescriptionWidget extends StatelessWidget {
 
     return ReadMoreText(
       description,
-      trimExpandedText: ' show less',
-      trimCollapsedText: ' show more',
+      trimExpandedText: trimExpandedText ?? ' Show Less',
+      trimCollapsedText: trimCollapsedText ?? ' Show More',
       trimMode: TrimMode.Line,
       lessStyle: morelessStyle,
       moreStyle: morelessStyle,
