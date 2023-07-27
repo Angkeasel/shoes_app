@@ -62,9 +62,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Column(
                           children: profileCon.userProfileModel.value.profiles!
                               .asMap()
-                              .values
+                              .entries
                               .map((e) {
-                            if (e.isLatest == true) {
+                            if (e.key ==
+                                profileCon.userProfileModel.value.profiles!
+                                        .length -
+                                    1) {
                               return Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -92,14 +95,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                               decoration: const BoxDecoration(
                                                 shape: BoxShape.circle,
                                               ),
-                                              child: e.imageUrl == null
+                                              child: e.value.imageUrl == null ||
+                                                      profileCon
+                                                          .imagePath.isEmpty
                                                   ? Image.asset(
                                                       'assets/image/profile.png')
-                                                  : profileCon.image == null
+                                                  : profileCon.image == null &&
+                                                          e.value.isLatest ==
+                                                              true
                                                       ? CachedNetworkImage(
                                                           fit: BoxFit.cover,
                                                           imageUrl:
-                                                              "${e.imageUrl}",
+                                                              "${e.value.imageUrl}",
                                                           placeholder: (context,
                                                                   url) =>
                                                               Shimmer
@@ -189,7 +196,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                         ? profileCon
                                                                             .imagePath
                                                                             .value
-                                                                        : e.imageUrl,
+                                                                        : e.value
+                                                                            .imageUrl,
                                                                   ),
                                                                   maintainState:
                                                                       false,
