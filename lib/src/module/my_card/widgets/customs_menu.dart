@@ -24,6 +24,8 @@ class CustomMenu extends StatelessWidget {
           flex: 2,
           child: Text(
             name ?? '',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
                 ),
