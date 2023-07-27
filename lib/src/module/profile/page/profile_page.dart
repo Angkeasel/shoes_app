@@ -65,9 +65,11 @@ class _ProfilePageState extends State<ProfilePage> {
                               .entries
                               .map((e) {
                             if (e.key ==
-                                profileCon.userProfileModel.value.profiles!
-                                        .length -
-                                    1) {
+                                    profileCon.userProfileModel.value.profiles!
+                                            .length -
+                                        1 ||
+                                profileCon
+                                    .userProfileModel.value.profiles!.isEmpty) {
                               return Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -155,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               isDimissible: true,
                                               enableDrag: false,
                                               context: context,
-                                              height: context.height * 1 / 2.6,
+                                              height: context.height * 1 / 3,
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -164,95 +166,88 @@ class _ProfilePageState extends State<ProfilePage> {
                                                     context.height * 1 / 2.6,
                                                 child: Column(
                                                   children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        children: [
-                                                          CustomSeletedItemWidget(
-                                                            label: 'View Photo',
-                                                            onTap: () {
-                                                              context.pop();
-                                                              Navigator.of(
-                                                                      context,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .push(
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) =>
-                                                                          ImageViewFullScreen(
-                                                                    imageFile: profileCon
-                                                                        .imagePath
-                                                                        .value,
-                                                                    isUrl: profileCon
-                                                                            .imagePath
-                                                                            .value
-                                                                            .isEmpty
-                                                                        ? true
-                                                                        : false,
-                                                                    urlImage: profileCon
-                                                                            .imagePath
-                                                                            .value
-                                                                            .isNotEmpty
-                                                                        ? profileCon
-                                                                            .imagePath
-                                                                            .value
-                                                                        : e.value
-                                                                            .imageUrl,
-                                                                  ),
-                                                                  maintainState:
-                                                                      false,
+                                                    Column(
+                                                      children: [
+                                                        CustomSeletedItemWidget(
+                                                          label: 'View Photo',
+                                                          onTap: () {
+                                                            context.pop();
+                                                            Navigator.of(
+                                                                    context,
+                                                                    rootNavigator:
+                                                                        true)
+                                                                .push(
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        ImageViewFullScreen(
+                                                                  imageFile:
+                                                                      profileCon
+                                                                          .imagePath
+                                                                          .value,
+                                                                  isUrl: profileCon
+                                                                          .imagePath
+                                                                          .value
+                                                                          .isEmpty
+                                                                      ? true
+                                                                      : false,
+                                                                  urlImage: profileCon
+                                                                          .imagePath
+                                                                          .value
+                                                                          .isNotEmpty
+                                                                      ? profileCon
+                                                                          .imagePath
+                                                                          .value
+                                                                      : e.value
+                                                                          .imageUrl,
                                                                 ),
-                                                              );
-                                                            },
-                                                          ),
-                                                          CustomSeletedItemWidget(
-                                                            label: 'Gallery',
-                                                            onTap: () async {
-                                                              profileCon
-                                                                  .pickedImage(
-                                                                ImageSource
-                                                                    .gallery,
-                                                              );
-                                                              // if (profileCon
-                                                              //     .imagePath!
-                                                              //     .isEmpty) {
-                                                              //   debugPrint(
-                                                              //       'tempImg null');
-                                                              // } else {
-                                                              //   debugPrint(
-                                                              //       'tempImg in not null ${profileCon}');
-                                                              //   await profileCon
-                                                              //       .onSubmitProfileImage();
-                                                              // }
-                                                              profileCon
-                                                                  .update();
-                                                              Get.snackbar(
-                                                                  'Picture saved to ${profileCon.imagePath}',
-                                                                  'Successfully created',
-                                                                  snackPosition:
-                                                                      SnackPosition
-                                                                          .BOTTOM);
-                                                              context.pop();
-                                                            },
-                                                          ),
-                                                          CustomSeletedItemWidget(
-                                                            label: 'Camera',
-                                                            onTap: () {
-                                                              profileCon
-                                                                  .pickedImage(
-                                                                ImageSource
-                                                                    .camera,
-                                                              );
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
+                                                                maintainState:
+                                                                    false,
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
+                                                        CustomSeletedItemWidget(
+                                                          label: 'Gallery',
+                                                          onTap: () async {
+                                                            profileCon
+                                                                .pickedImage(
+                                                              ImageSource
+                                                                  .gallery,
+                                                            );
+                                                            profileCon
+                                                                .onSubmitProfilePicutre();
+                                                            profileCon
+                                                                .clearImagePath();
+                                                            profileCon.update();
+                                                            context.pop();
+                                                          },
+                                                        ),
+                                                        CustomSeletedItemWidget(
+                                                          colors: Colors.blue,
+                                                          label: 'Camera',
+                                                          onTap: () {
+                                                            profileCon
+                                                                .pickedImage(
+                                                              ImageSource
+                                                                  .camera,
+                                                            );
+                                                          },
+                                                        ),
+                                                      ],
                                                     ),
-                                                    CustomSeletedItemWidget(
-                                                      label: 'Cancel',
-                                                      onTap: () {
-                                                        context.pop();
-                                                      },
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 8.0),
+                                                      child:
+                                                          CustomSeletedItemWidget(
+                                                        colors: Colors.red,
+                                                        label: 'Cancel',
+                                                        onTap: () {
+                                                          context.pop();
+                                                        },
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -570,7 +565,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       // GestureDetector(
                       //   onTap: () {
+                      //     debugPrint('one: ');
                       //     // profileCon.upload(File(profileCon.imagePath.value));
+                      //     profileCon.onSubmitProfilePicutre();
                       //   },
                       //   child: const Text('Hello'),
                       // ),
