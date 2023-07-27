@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:allpay/src/module/auth/sign_in/controller/contoller.dart';
+import 'package:allpay/src/module/profile/controller/view_order_controller.dart';
 import 'package:allpay/src/module/profile/widget/custom_seleted_item_widget.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:allpay/src/widget/custom_bottomshet.dart';
@@ -32,6 +33,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final profileCon = Get.put(ProfileController());
   final authController = Get.put(ControllerSignin());
+  final viewOrderCon = Get.put(ViewOrderController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,14 +156,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                         child: InkWell(
                                           onTap: () {
                                             onShowBottomSheet(
-                                              isDimissible: true,
+                                              isDimissible: false,
                                               enableDrag: false,
                                               context: context,
                                               height: context.height * 1 / 3,
                                               child: Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
-                                                        vertical: 15.0),
+                                                        vertical: 15.0,
+                                                        horizontal: 20.0),
                                                 height:
                                                     context.height * 1 / 2.6,
                                                 child: Column(
@@ -224,7 +227,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           },
                                                         ),
                                                         CustomSeletedItemWidget(
-                                                          colors: Colors.blue,
                                                           label: 'Camera',
                                                           onTap: () {
                                                             profileCon
@@ -242,7 +244,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               top: 8.0),
                                                       child:
                                                           CustomSeletedItemWidget(
-                                                        colors: Colors.red,
                                                         label: 'Cancel',
                                                         onTap: () {
                                                           context.pop();
@@ -526,6 +527,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           onTap: () {
                             debugPrint('onTap');
                             context.push('/view-order');
+                            viewOrderCon.fetchOrderProducts();
                           },
                         ),
                       ),
