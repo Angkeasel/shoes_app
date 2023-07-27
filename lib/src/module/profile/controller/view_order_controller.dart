@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class ViewOrderController extends GetxController {
   final _apiBaseHelper = ApiBaseHelper();
   final viewOrderList = <ViewOrderModel>[].obs;
+  final viewOrderModel = ViewOrderModel().obs;
   final isLoadingOrderProduct = false.obs;
 
   Future<List<ViewOrderModel>> fetchOrderProducts() async {
@@ -23,7 +24,11 @@ class ViewOrderController extends GetxController {
           viewOrderList.add(ViewOrderModel.fromJson(e));
         }).toList();
       });
-      debugPrint('fetchOrder: $viewOrderList');
+      viewOrderList.map((elemnet) {
+        viewOrderModel.value = elemnet;
+        debugPrint('value E: ${viewOrderModel.value}');
+      }).toList();
+      debugPrint('fetchOrder: ${viewOrderModel.value}');
       isLoadingOrderProduct(false);
     } catch (e) {
       debugPrint('Error fetch order product: $e');

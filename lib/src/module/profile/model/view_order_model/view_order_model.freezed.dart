@@ -590,7 +590,7 @@ Orderitems _$OrderitemsFromJson(Map<String, dynamic> json) {
 mixin _$Orderitems {
   int? get id => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
-  int? get price => throw _privateConstructorUsedError;
+  double? get price => throw _privateConstructorUsedError;
   VariantModel? get variant => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -605,7 +605,7 @@ abstract class $OrderitemsCopyWith<$Res> {
           Orderitems value, $Res Function(Orderitems) then) =
       _$OrderitemsCopyWithImpl<$Res, Orderitems>;
   @useResult
-  $Res call({int? id, int? quantity, int? price, VariantModel? variant});
+  $Res call({int? id, int? quantity, double? price, VariantModel? variant});
 
   $VariantModelCopyWith<$Res>? get variant;
 }
@@ -640,7 +640,7 @@ class _$OrderitemsCopyWithImpl<$Res, $Val extends Orderitems>
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variant: freezed == variant
           ? _value.variant
           : variant // ignore: cast_nullable_to_non_nullable
@@ -669,7 +669,7 @@ abstract class _$$_OrderitemsCopyWith<$Res>
       __$$_OrderitemsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, int? quantity, int? price, VariantModel? variant});
+  $Res call({int? id, int? quantity, double? price, VariantModel? variant});
 
   @override
   $VariantModelCopyWith<$Res>? get variant;
@@ -703,7 +703,7 @@ class __$$_OrderitemsCopyWithImpl<$Res>
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variant: freezed == variant
           ? _value.variant
           : variant // ignore: cast_nullable_to_non_nullable
@@ -725,7 +725,7 @@ class _$_Orderitems implements _Orderitems {
   @override
   final int? quantity;
   @override
-  final int? price;
+  final double? price;
   @override
   final VariantModel? variant;
 
@@ -768,7 +768,7 @@ abstract class _Orderitems implements Orderitems {
   factory _Orderitems(
       {final int? id,
       final int? quantity,
-      final int? price,
+      final double? price,
       final VariantModel? variant}) = _$_Orderitems;
 
   factory _Orderitems.fromJson(Map<String, dynamic> json) =
@@ -779,7 +779,7 @@ abstract class _Orderitems implements Orderitems {
   @override
   int? get quantity;
   @override
-  int? get price;
+  double? get price;
   @override
   VariantModel? get variant;
   @override

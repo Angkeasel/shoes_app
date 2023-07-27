@@ -27,13 +27,14 @@ class ViewOrderPage extends StatelessWidget {
                   ? SingleChildScrollView(
                       child: Column(
                       children: viewOrderCon.viewOrderList.map((viewOrder) {
-                        debugPrint('list========${viewOrderCon.viewOrderList}');
                         return Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: CustomViewOrderWidget(
                             onTap: () {
                               context.push(
                                   '/view-order/view-order-detail/${viewOrder.id}');
+                              debugPrint(
+                                  'hello: ${viewOrderCon.viewOrderModel.value.orderitems}');
                             },
                             orderId: '${viewOrder.id}',
                             status: '${viewOrder.status}',

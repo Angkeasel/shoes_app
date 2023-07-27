@@ -57,7 +57,7 @@ _$_Orderitems _$$_OrderitemsFromJson(Map<String, dynamic> json) =>
     _$_Orderitems(
       id: json['id'] as int?,
       quantity: json['quantity'] as int?,
-      price: json['price'] as int?,
+      price: (json['price'] as num?)?.toDouble(),
       variant: json['variant'] == null
           ? null
           : VariantModel.fromJson(json['variant'] as Map<String, dynamic>),
