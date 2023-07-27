@@ -211,30 +211,4 @@ class ProfileController extends GetxController {
   }
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>> fetchOrderProducts <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
-  final viewOrderList = <ViewOrderModel>[].obs;
-  final isLoadingOrderProduct = false.obs;
-
-  Future<List<ViewOrderModel>> fetchOrderProducts() async {
-    try {
-      isLoadingOrderProduct(true);
-      await _apiBaseHelper
-          .onNetworkRequesting(
-        url: 'order',
-        methode: METHODE.get,
-        isAuthorize: true,
-      )
-          .then((response) {
-        response.map((e) {
-          viewOrderList.add(ViewOrderModel.fromJson(e));
-        }).toList();
-      });
-      debugPrint('fetchOrder: $viewOrderList');
-      isLoadingOrderProduct(false);
-    } catch (e) {
-      debugPrint('Error fetch order product: $e');
-      isLoadingOrderProduct(false);
-    }
-    return viewOrderList;
-  }
 }
