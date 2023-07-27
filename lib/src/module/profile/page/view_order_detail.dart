@@ -16,7 +16,7 @@ class ViewOrderDetailPage extends StatelessWidget {
         title: const Text('Invoice Card'),
       ),
       body: Obx(
-        () => viewOrderCon.isLoadingOrderProduct.value
+        () => viewOrderCon.isLoadingOrderInvoice.value
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -125,18 +125,19 @@ class ViewOrderDetailPage extends StatelessWidget {
                         thickness: 2,
                       ),
                       Column(
-                        children: viewOrderCon.viewOrderModel.value.orderitems!
+                        children: viewOrderCon
+                            .orderInvoiceModel.value.orderitems!
+                            .asMap()
+                            .entries
                             .map((e) {
-                          debugPrint('Hello $e');
                           return Column(
                             children: [
                               CustomMenu(
-                                name: 'Text',
-                                sized: '47',
-                                qty: e.quantity,
-                                price: e.price,
-                                amount: viewOrderCon
-                                    .viewOrderModel.value.totalAmount,
+                                name: '${e.value.variant?.productName}',
+                                sized: '${e.value.size?.sizeText}',
+                                qty: e.value.quantity,
+                                price: e.value.price,
+                                amount: e.value.totalPrice,
                               ),
                               const Divider(
                                 color: Colors.black,
@@ -150,7 +151,7 @@ class ViewOrderDetailPage extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "Subtotal : ",
+                        "Subtotal : ${viewOrderCon.orderInvoiceModel.value.totalAmount ?? ''}\$",
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Colors.black, fontWeight: FontWeight.w600),
                       ),
@@ -158,7 +159,7 @@ class ViewOrderDetailPage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        "Discount : ",
+                        "Discount : 0%",
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Colors.black, fontWeight: FontWeight.w600),
                       ),
@@ -166,7 +167,7 @@ class ViewOrderDetailPage extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        "Total : ",
+                        "Total : ${viewOrderCon.orderInvoiceModel.value.totalAmount ?? ''}\$",
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Colors.black, fontWeight: FontWeight.w600),
                       ),

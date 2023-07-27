@@ -33,8 +33,7 @@ class ViewOrderPage extends StatelessWidget {
                             onTap: () {
                               context.push(
                                   '/view-order/view-order-detail/${viewOrder.id}');
-                              debugPrint(
-                                  'hello: ${viewOrderCon.viewOrderModel.value.orderitems}');
+                              viewOrderCon.fetchInvoiceOrder(id: viewOrder.id);
                             },
                             orderId: '${viewOrder.id}',
                             status: '${viewOrder.status}',

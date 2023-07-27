@@ -39,7 +39,7 @@ class CustomMenu extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            " $qty",
+            "$qty",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
                 ),
@@ -47,7 +47,7 @@ class CustomMenu extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            "$price",
+            "\$$price",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
                 ),
@@ -55,7 +55,7 @@ class CustomMenu extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            "$amount",
+            "\$$amount",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
                 ),
