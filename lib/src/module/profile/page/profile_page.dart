@@ -69,12 +69,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                     .asMap()
                                     .entries
                                     .map((e) {
+                                  debugPrint(
+                                      "Img URL: ${e.value.imageUrl!.isEmpty}");
+                                  debugPrint(
+                                      "Img Path: ${profileCon.imagePath.isEmpty}");
                                   if (e.key ==
-                                          profileCon.userProfileModel.value
-                                                  .profiles!.length -
-                                              1 ||
                                       profileCon.userProfileModel.value
-                                          .profiles!.isEmpty) {
+                                              .profiles!.length -
+                                          1) {
                                     return Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -108,13 +110,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       shape: BoxShape.circle,
                                                     ),
                                                     child: e.value.imageUrl ==
-                                                                null ||
+                                                                null &&
                                                             profileCon.imagePath
                                                                 .isEmpty
                                                         ? Image.asset(
                                                             'assets/image/profile.png')
-                                                        : profileCon.image ==
-                                                                    null &&
+                                                        : profileCon.imagePath
+                                                                    .isEmpty ||
                                                                 e.value.isLatest ==
                                                                     true
                                                             ? CachedNetworkImage(
@@ -150,7 +152,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                     (context,
                                                                         url,
                                                                         error) {
-                                                                  // debugPrint('Error URL: $url');
+                                                                  // debugPrint(
+                                                                  //     'Error URL: $url');
                                                                   // debugPrint(
                                                                   //     'Error Error: $error');
                                                                   return const Icon(
@@ -211,8 +214,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                         isImageFile: profileCon.imagePath.value.isNotEmpty
                                                                             ? true
                                                                             : false,
-                                                                        isUrl: e.value.isLatest == true &&
-                                                                                e.value.imageUrl!.isNotEmpty
+                                                                        isUrl: e.value.isLatest == true ||
+                                                                                e.value.imageUrl!.isNotEmpty && profileCon.imagePath.value.isEmpty
                                                                             ? true
                                                                             : false,
                                                                         urlImage: e
@@ -808,6 +811,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               accept: 'Yes',
                               cancel: 'Cancel',
                               onTap: () async {
+                                // await authController.onlogout();
                                 await authController.onlogout();
                               },
                             );
