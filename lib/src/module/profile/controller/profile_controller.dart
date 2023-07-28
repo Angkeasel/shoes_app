@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:allpay/src/module/profile/model/user_gender_model/user_gender_model.dart';
 import 'package:allpay/src/module/profile/model/user_profile_model/user_profile_model.dart';
-import 'package:allpay/src/module/profile/model/view_order_model/view_order_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
 import 'package:allpay/src/util/helper/upload_file.dart';
 import 'package:flutter/material.dart';
@@ -140,12 +139,10 @@ class ProfileController extends GetxController {
   final _picker = ImagePicker().obs;
   final isLoadingPickedImage = false.obs;
 
-  clearImagePath() {
-    imagePath.isEmpty;
-  }
-
   Future pickedImage(ImageSource? imageSource) async {
     try {
+      imagePath.value.isEmpty == true;
+      image == null;
       isLoadingPickedImage(true);
       final pickedFile = await _picker.value.pickImage(
         source: imageSource!,
@@ -153,6 +150,7 @@ class ProfileController extends GetxController {
         maxHeight: double.infinity,
         imageQuality: 100,
       );
+
       if (pickedFile != null) {
         image = File(pickedFile.path);
         imagePath.value = pickedFile.path;

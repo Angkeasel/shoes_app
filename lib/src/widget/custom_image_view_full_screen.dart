@@ -9,12 +9,14 @@ class ImageViewFullScreen extends StatelessWidget {
   final bool isUrl;
   final String tag;
   final String? imageFile;
+  final bool isImageFile;
   const ImageViewFullScreen({
     super.key,
     this.urlImage,
     this.isUrl = true,
     this.tag = '',
     this.imageFile,
+    this.isImageFile = false,
   });
 
   @override
@@ -27,8 +29,9 @@ class ImageViewFullScreen extends StatelessWidget {
                 ? NetworkImage(
                     "$urlImage",
                   )
-                : imageFile == null
-                    ? AssetImage("$urlImage") as ImageProvider<Object>
+                : isImageFile == false
+                    ? const AssetImage("assets/image/profile.png")
+                        as ImageProvider<Object>
                     : FileImage(
                         File('$imageFile'),
                       ),

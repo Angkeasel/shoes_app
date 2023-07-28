@@ -188,21 +188,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                       profileCon
                                                                           .imagePath
                                                                           .value,
-                                                                  isUrl: profileCon
-                                                                          .imagePath
-                                                                          .value
-                                                                          .isEmpty
-                                                                      ? true
-                                                                      : false,
-                                                                  urlImage: profileCon
+                                                                  isImageFile: profileCon
                                                                           .imagePath
                                                                           .value
                                                                           .isNotEmpty
-                                                                      ? profileCon
-                                                                          .imagePath
-                                                                          .value
-                                                                      : e.value
-                                                                          .imageUrl,
+                                                                      ? true
+                                                                      : false,
+                                                                  isUrl: e.value.isLatest ==
+                                                                              true &&
+                                                                          e.value.imageUrl!
+                                                                              .isNotEmpty
+                                                                      ? true
+                                                                      : false,
+                                                                  urlImage: e
+                                                                      .value
+                                                                      .imageUrl,
                                                                 ),
                                                                 maintainState:
                                                                     false,
@@ -220,8 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                             );
                                                             profileCon
                                                                 .onSubmitProfilePicutre();
-                                                            profileCon
-                                                                .clearImagePath();
+
                                                             profileCon.update();
                                                             context.pop();
                                                           },
