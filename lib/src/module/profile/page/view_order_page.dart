@@ -38,10 +38,10 @@ class ViewOrderPage extends StatelessWidget {
                             orderId: '${viewOrder.id}',
                             status: '${viewOrder.status}',
                             totalAmount: '${viewOrder.totalAmount}',
-                            time: TextFormat()
-                                .formatTime('${viewOrder.createdAt}'),
-                            date: TextFormat()
-                                .getFormattedDate('${viewOrder.createdAt}'),
+                            time:
+                                TextFormat.formatTime('${viewOrder.createdAt}'),
+                            date: TextFormat.getFormattedDate(
+                                '${viewOrder.createdAt}'),
                           ),
                         );
                       }).toList(),

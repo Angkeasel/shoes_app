@@ -61,255 +61,479 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.only(
                             left: 20, bottom: 10, right: 20),
                         color: Colors.white,
-                        child: Column(
-                          children: profileCon.userProfileModel.value.profiles!
-                              .asMap()
-                              .entries
-                              .map((e) {
-                            if (e.key ==
-                                    profileCon.userProfileModel.value.profiles!
-                                            .length -
-                                        1 ||
-                                profileCon
-                                    .userProfileModel.value.profiles!.isEmpty) {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Stack(
-                                    children: [
-                                      profileCon.isLoadingPickedImage.value
-                                          ? Shimmer.fromColors(
-                                              baseColor: Colors.grey.shade300,
-                                              highlightColor:
-                                                  Colors.grey.shade400,
-                                              child: Container(
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                height: 60,
-                                                width: 60,
-                                              ),
-                                            )
-                                          : Container(
-                                              height: 60,
-                                              width: 60,
-                                              clipBehavior:
-                                                  Clip.antiAliasWithSaveLayer,
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: e.value.imageUrl == null ||
-                                                      profileCon
-                                                          .imagePath.isEmpty
-                                                  ? Image.asset(
-                                                      'assets/image/profile.png')
-                                                  : profileCon.image == null &&
-                                                          e.value.isLatest ==
-                                                              true
-                                                      ? CachedNetworkImage(
-                                                          fit: BoxFit.cover,
-                                                          imageUrl:
-                                                              "${e.value.imageUrl}",
-                                                          placeholder: (context,
-                                                                  url) =>
-                                                              Shimmer
-                                                                  .fromColors(
-                                                            baseColor: Colors
-                                                                .grey.shade300,
-                                                            highlightColor:
-                                                                Colors.grey
-                                                                    .shade400,
-                                                            child: Container(
-                                                              decoration:
-                                                                  const BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                shape: BoxShape
-                                                                    .circle,
+                        child: profileCon
+                                .userProfileModel.value.profiles!.isNotEmpty
+                            ? Column(
+                                children: profileCon
+                                    .userProfileModel.value.profiles!
+                                    .asMap()
+                                    .entries
+                                    .map((e) {
+                                  if (e.key ==
+                                          profileCon.userProfileModel.value
+                                                  .profiles!.length -
+                                              1 ||
+                                      profileCon.userProfileModel.value
+                                          .profiles!.isEmpty) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            profileCon
+                                                    .isLoadingPickedImage.value
+                                                ? Shimmer.fromColors(
+                                                    baseColor:
+                                                        Colors.grey.shade300,
+                                                    highlightColor:
+                                                        Colors.grey.shade400,
+                                                    child: Container(
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: Colors.white,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      height: 60,
+                                                      width: 60,
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    height: 60,
+                                                    width: 60,
+                                                    clipBehavior: Clip
+                                                        .antiAliasWithSaveLayer,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: e.value.imageUrl ==
+                                                                null ||
+                                                            profileCon.imagePath
+                                                                .isEmpty
+                                                        ? Image.asset(
+                                                            'assets/image/profile.png')
+                                                        : profileCon.image ==
+                                                                    null &&
+                                                                e.value.isLatest ==
+                                                                    true
+                                                            ? CachedNetworkImage(
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                imageUrl:
+                                                                    "${e.value.imageUrl}",
+                                                                placeholder: (context,
+                                                                        url) =>
+                                                                    Shimmer
+                                                                        .fromColors(
+                                                                  baseColor: Colors
+                                                                      .grey
+                                                                      .shade300,
+                                                                  highlightColor:
+                                                                      Colors
+                                                                          .grey
+                                                                          .shade400,
+                                                                  child:
+                                                                      Container(
+                                                                    decoration:
+                                                                        const BoxDecoration(
+                                                                      color: Colors
+                                                                          .white,
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                    ),
+                                                                    height: 60,
+                                                                    width: 60,
+                                                                  ),
+                                                                ),
+                                                                errorWidget:
+                                                                    (context,
+                                                                        url,
+                                                                        error) {
+                                                                  // debugPrint('Error URL: $url');
+                                                                  // debugPrint(
+                                                                  //     'Error Error: $error');
+                                                                  return const Icon(
+                                                                    Icons.error,
+                                                                  );
+                                                                },
+                                                              )
+                                                            : Image.file(
+                                                                File(
+                                                                  profileCon
+                                                                      .imagePath
+                                                                      .value,
+                                                                ),
+                                                                fit: BoxFit
+                                                                    .cover,
                                                               ),
-                                                              height: 60,
-                                                              width: 60,
+                                                  ),
+                                            Positioned(
+                                              bottom: -5.0,
+                                              right: 0.0,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  onShowBottomSheet(
+                                                    isDimissible: false,
+                                                    enableDrag: false,
+                                                    context: context,
+                                                    height:
+                                                        context.height * 1 / 3,
+                                                    child: Container(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 15.0,
+                                                          horizontal: 20.0),
+                                                      height: context.height *
+                                                          1 /
+                                                          2.6,
+                                                      child: Column(
+                                                        children: [
+                                                          Column(
+                                                            children: [
+                                                              CustomSeletedItemWidget(
+                                                                label:
+                                                                    'View Photo',
+                                                                onTap: () {
+                                                                  context.pop();
+                                                                  Navigator.of(
+                                                                          context,
+                                                                          rootNavigator:
+                                                                              true)
+                                                                      .push(
+                                                                    MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              ImageViewFullScreen(
+                                                                        imageFile: profileCon
+                                                                            .imagePath
+                                                                            .value,
+                                                                        isImageFile: profileCon.imagePath.value.isNotEmpty
+                                                                            ? true
+                                                                            : false,
+                                                                        isUrl: e.value.isLatest == true &&
+                                                                                e.value.imageUrl!.isNotEmpty
+                                                                            ? true
+                                                                            : false,
+                                                                        urlImage: e
+                                                                            .value
+                                                                            .imageUrl,
+                                                                      ),
+                                                                      maintainState:
+                                                                          false,
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
+                                                              CustomSeletedItemWidget(
+                                                                label:
+                                                                    'Gallery',
+                                                                onTap:
+                                                                    () async {
+                                                                  profileCon
+                                                                      .pickedImage(
+                                                                    ImageSource
+                                                                        .gallery,
+                                                                  );
+                                                                  profileCon
+                                                                      .onSubmitProfilePicutre();
+
+                                                                  profileCon
+                                                                      .update();
+                                                                  context.pop();
+                                                                },
+                                                              ),
+                                                              CustomSeletedItemWidget(
+                                                                label: 'Camera',
+                                                                onTap: () {
+                                                                  profileCon
+                                                                      .pickedImage(
+                                                                    ImageSource
+                                                                        .camera,
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 8.0),
+                                                            child:
+                                                                CustomSeletedItemWidget(
+                                                              label: 'Cancel',
+                                                              onTap: () {
+                                                                context.pop();
+                                                              },
                                                             ),
                                                           ),
-                                                          errorWidget: (context,
-                                                              url, error) {
-                                                            // debugPrint('Error URL: $url');
-                                                            // debugPrint(
-                                                            //     'Error Error: $error');
-                                                            return const Icon(
-                                                              Icons.error,
-                                                            );
-                                                          },
-                                                        )
-                                                      : Image.file(
-                                                          File(
-                                                            profileCon.imagePath
-                                                                .value,
-                                                          ),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                            ),
-                                      Positioned(
-                                        bottom: -5.0,
-                                        right: 0.0,
-                                        child: InkWell(
-                                          onTap: () {
-                                            onShowBottomSheet(
-                                              isDimissible: false,
-                                              enableDrag: false,
-                                              context: context,
-                                              height: context.height * 1 / 3,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 15.0,
-                                                        horizontal: 20.0),
-                                                height:
-                                                    context.height * 1 / 2.6,
-                                                child: Column(
-                                                  children: [
-                                                    Column(
-                                                      children: [
-                                                        CustomSeletedItemWidget(
-                                                          label: 'View Photo',
-                                                          onTap: () {
-                                                            context.pop();
-                                                            Navigator.of(
-                                                                    context,
-                                                                    rootNavigator:
-                                                                        true)
-                                                                .push(
-                                                              MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        ImageViewFullScreen(
-                                                                  imageFile:
-                                                                      profileCon
-                                                                          .imagePath
-                                                                          .value,
-                                                                  isImageFile: profileCon
-                                                                          .imagePath
-                                                                          .value
-                                                                          .isNotEmpty
-                                                                      ? true
-                                                                      : false,
-                                                                  isUrl: e.value.isLatest ==
-                                                                              true &&
-                                                                          e.value.imageUrl!
-                                                                              .isNotEmpty
-                                                                      ? true
-                                                                      : false,
-                                                                  urlImage: e
-                                                                      .value
-                                                                      .imageUrl,
-                                                                ),
-                                                                maintainState:
-                                                                    false,
-                                                              ),
-                                                            );
-                                                          },
-                                                        ),
-                                                        CustomSeletedItemWidget(
-                                                          label: 'Gallery',
-                                                          onTap: () async {
-                                                            profileCon
-                                                                .pickedImage(
-                                                              ImageSource
-                                                                  .gallery,
-                                                            );
-                                                            profileCon
-                                                                .onSubmitProfilePicutre();
-
-                                                            profileCon.update();
-                                                            context.pop();
-                                                          },
-                                                        ),
-                                                        CustomSeletedItemWidget(
-                                                          label: 'Camera',
-                                                          onTap: () {
-                                                            profileCon
-                                                                .pickedImage(
-                                                              ImageSource
-                                                                  .camera,
-                                                            );
-                                                          },
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8.0),
-                                                      child:
-                                                          CustomSeletedItemWidget(
-                                                        label: 'Cancel',
-                                                        onTap: () {
-                                                          context.pop();
-                                                        },
+                                                        ],
                                                       ),
                                                     ),
-                                                  ],
+                                                  );
+                                                },
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(4),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.white,
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.camera_alt_outlined,
+                                                    size: 20,
+                                                  ),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.all(4),
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.white,
                                             ),
-                                            child: const Icon(
-                                              Icons.camera_alt_outlined,
-                                              size: 20,
+                                          ],
+                                        ),
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 15),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "${profileCon.userProfileModel.value.email}"
+                                                    .replaceAll(
+                                                        RegExp(
+                                                            '(?<=.)[^@](?=[^@]*?[^@]@)'),
+                                                        '*'),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 20),
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text(
+                                                "Account Information",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleSmall!
+                                                    .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        color: const Color(
+                                                            0xff9E9E9E)),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  return const SizedBox();
+                                }).toList(),
+                              )
+                            : Column(children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        profileCon.isLoadingPickedImage.value
+                                            ? Shimmer.fromColors(
+                                                baseColor: Colors.grey.shade300,
+                                                highlightColor:
+                                                    Colors.grey.shade400,
+                                                child: Container(
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  height: 60,
+                                                  width: 60,
+                                                ),
+                                              )
+                                            : Container(
+                                                height: 60,
+                                                width: 60,
+                                                clipBehavior:
+                                                    Clip.antiAliasWithSaveLayer,
+                                                decoration: const BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: profileCon
+                                                        .imagePath.isEmpty
+                                                    ? Image.asset(
+                                                        'assets/image/profile.png')
+                                                    : Image.file(
+                                                        File(
+                                                          '${profileCon.imagePath}',
+                                                        ),
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                              ),
+                                        Positioned(
+                                          bottom: -5.0,
+                                          right: 0.0,
+                                          child: InkWell(
+                                            onTap: () {
+                                              onShowBottomSheet(
+                                                isDimissible: false,
+                                                enableDrag: false,
+                                                context: context,
+                                                height: context.height * 1 / 3,
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 15.0,
+                                                      horizontal: 20.0),
+                                                  height:
+                                                      context.height * 1 / 2.6,
+                                                  child: Column(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          CustomSeletedItemWidget(
+                                                            label: 'View Photo',
+                                                            onTap: () {
+                                                              context.pop();
+                                                              Navigator.of(
+                                                                      context,
+                                                                      rootNavigator:
+                                                                          true)
+                                                                  .push(
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) {
+                                                                    return ImageViewFullScreen(
+                                                                      isUrl:
+                                                                          false,
+                                                                      urlImage:
+                                                                          'assets/image/profile.png',
+                                                                      imageFile:
+                                                                          '${profileCon.imagePath}',
+                                                                      isImageFile: profileCon
+                                                                              .imagePath
+                                                                              .isEmpty
+                                                                          ? false
+                                                                          : true,
+                                                                    );
+                                                                  },
+                                                                  maintainState:
+                                                                      false,
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                          CustomSeletedItemWidget(
+                                                            label: 'Gallery',
+                                                            onTap: () async {
+                                                              profileCon
+                                                                  .pickedImage(
+                                                                ImageSource
+                                                                    .gallery,
+                                                              );
+                                                              profileCon
+                                                                  .update();
+                                                              context.pop();
+                                                              Future.delayed(
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          800),
+                                                                  () {
+                                                                if (profileCon
+                                                                    .imagePath
+                                                                    .isNotEmpty) {
+                                                                  profileCon
+                                                                      .onSubmitProfilePicutre();
+                                                                }
+                                                              });
+                                                            },
+                                                          ),
+                                                          CustomSeletedItemWidget(
+                                                            label: 'Camera',
+                                                            onTap: () {
+                                                              profileCon
+                                                                  .pickedImage(
+                                                                ImageSource
+                                                                    .camera,
+                                                              );
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8.0),
+                                                        child:
+                                                            CustomSeletedItemWidget(
+                                                          label: 'Cancel',
+                                                          onTap: () {
+                                                            context.pop();
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(4),
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Colors.white,
+                                              ),
+                                              child: const Icon(
+                                                Icons.camera_alt_outlined,
+                                                size: 20,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 15),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${profileCon.userProfileModel.value.email}"
-                                              .replaceAll(
-                                                  RegExp(
-                                                      '(?<=.)[^@](?=[^@]*?[^@]@)'),
-                                                  '*'),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 20),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          "Account Information",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall!
-                                              .copyWith(
-                                                  fontWeight: FontWeight.w400,
-                                                  color:
-                                                      const Color(0xff9E9E9E)),
-                                        )
                                       ],
                                     ),
-                                  ),
-                                ],
-                              );
-                            }
-                            return const SizedBox();
-                          }).toList(),
-                        ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 15),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${profileCon.userProfileModel.value.email}"
+                                                .replaceAll(
+                                                    RegExp(
+                                                        '(?<=.)[^@](?=[^@]*?[^@]@)'),
+                                                    '*'),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 20),
+                                          ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            "Account Information",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall!
+                                                .copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: const Color(
+                                                        0xff9E9E9E)),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ]),
                       ),
                       const SizedBox(
                         height: 20,

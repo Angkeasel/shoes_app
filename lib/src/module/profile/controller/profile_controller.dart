@@ -44,7 +44,6 @@ class ProfileController extends GetxController {
         final dateTime = userProfileModel.value.dateOfBirth;
         final date = DateTime.parse(dateTime!);
         formattedDate.value = DateFormat('MM/dd/yyyy').format(date);
-        debugPrint('hi: $formattedDate');
       });
     } catch (e) {
       debugPrint('------- fecthUserProfile Error: $e');
@@ -183,18 +182,20 @@ class ProfileController extends GetxController {
         debugPrint('status: ${value.statusCode}');
         if (value.statusCode == 200) {
           if (imagePath.value.isNotEmpty) {
-            Get.snackbar('Success', 'Add photo successfully',
-                snackPosition: SnackPosition.BOTTOM,
-                duration: const Duration(seconds: 5));
+            Get.snackbar(
+              'Success',
+              'Add photo successfully',
+              snackPosition: SnackPosition.BOTTOM,
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.green,
+            );
           }
         } else {
           debugPrint('value: have');
-          Get.snackbar(
-            'Error',
-            'Please select photo',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.red,
-          );
+          Get.snackbar('Error', 'Please select photo',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 5));
         }
       });
       debugPrint('submit profile photo: $response');
