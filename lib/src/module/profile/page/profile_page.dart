@@ -69,10 +69,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     .asMap()
                                     .entries
                                     .map((e) {
-                                  debugPrint(
-                                      "Img URL: ${e.value.imageUrl!.isEmpty}");
-                                  debugPrint(
-                                      "Img Path: ${profileCon.imagePath.isEmpty}");
                                   if (e.key ==
                                       profileCon.userProfileModel.value
                                               .profiles!.length -
@@ -553,10 +549,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                   '${profileCon.userProfileModel.value.firstName}\t'
                                   '${profileCon.userProfileModel.value.lastName}',
                               isLastText: true,
-                              onTap: () {
-                                debugPrint('onTap');
-                                profileCon.fecthUserProfile();
-                              },
                             ),
                             const Divider(),
                             const SizedBox(
@@ -627,9 +619,6 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: 'Birthday',
                               isMoreText: true,
                               moreText: profileCon.formattedDate.value,
-                              // ${profileCon.dateTime.value.month}\t/'
-                              //     '${profileCon.dateTime.value.day}\t/'
-                              //     '${profileCon.dateTime.value.year}'
                               onTap: () {
                                 debugPrint('Tapped:');
                                 showCupertinoModalPopup(
@@ -749,11 +738,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         margin: const EdgeInsets.only(top: 10.0),
                         color: Colors.white,
                         child: CustomSettingRow(
-                          title: 'View Order',
+                          title: 'My Order',
                           onTap: () {
                             debugPrint('onTap');
                             context.push('/view-order');
                             viewOrderCon.fetchOrderProducts();
+                          },
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 10.0),
+                        color: Colors.white,
+                        child: CustomSettingRow(
+                          title: 'My Favourite',
+                          onTap: () {
+                            debugPrint('onTap');
                           },
                         ),
                       ),
@@ -791,14 +791,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           },
                         ),
                       ),
-                      // GestureDetector(
-                      //   onTap: () {
-                      //     debugPrint('one: ');
-                      //     // profileCon.upload(File(profileCon.imagePath.value));
-                      //     profileCon.onSubmitProfilePicutre();
-                      //   },
-                      //   child: const Text('Hello'),
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 50, horizontal: 20),
