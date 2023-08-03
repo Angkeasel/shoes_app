@@ -74,8 +74,11 @@ class ProfileController extends GetxController {
         isAuthorize: true,
       )
           .then((response) {
-        var responseJson = response[0];
-        userGendermodel.value = UserGenderModel.fromJson(responseJson);
+        debugPrint('response: $response');
+        response.map((e) {
+          userGendermodel.value = UserGenderModel.fromJson(e);
+          debugPrint('elemne: ${userGendermodel.value}');
+        }).toList();
         debugPrint('e: ${userGendermodel.value}');
       });
     } catch (e) {
@@ -92,14 +95,22 @@ class ProfileController extends GetxController {
     debugPrint('UserId: $id');
     try {
       await _apiBaseHelper.onNetworkRequesting(
-          url: 'gender/$id',
-          methode: METHODE.update,
+          url: userGendermodel.value.value!.isEmpty ? 'gender' : 'gender/$id',
+          methode: userGendermodel.value.value!.isEmpty
+              ? METHODE.post
+              : METHODE.update,
           isAuthorize: true,
           body: {
             "value": titleGen.value,
           }).then((response) {
-        // var message = response;
-        // debugPrint('onSubmit: $message');
+        var message = response;
+        if (message == ' Gender was updated successfully...') {
+          Get.snackbar(
+            'Gender Added!',
+            message,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
       });
     } catch (e) {
       debugPrint('------- onSubmitUserGender Error: ${e.toString()}');

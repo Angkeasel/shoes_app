@@ -580,7 +580,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               title: 'Gender',
                               isMoreText: true,
                               moreText:
-                                  '${profileCon.userGendermodel.value.value}', //profileCon.titleGen.value,
+                                  profileCon.userGendermodel.value.value ?? '',
                               onTap: () {
                                 onShowBottomSheetGender(
                                   height:
@@ -596,6 +596,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ontap: () {
                                         profileCon.indexGen.value = e.key;
                                         profileCon.titleGen.value = e.value;
+                                        debugPrint("======>e.value${e.value}");
                                         debugPrint(
                                             "======>${profileCon.indexGen.value}");
                                         debugPrint(
