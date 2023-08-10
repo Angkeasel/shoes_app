@@ -1,6 +1,6 @@
 import 'package:allpay/src/constant/app_setting.dart';
 import 'package:allpay/src/module/my_card/controller/map_controller.dart';
-import 'package:allpay/src/module/my_card/screen/choose_location_address.dart';
+import 'package:allpay/src/module/my_card/controller/mycard_controller.dart';
 import 'package:allpay/src/widget/custom_dot_contianer.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ import '../../home/widgets/custom_email_cart.dart';
 import '../../home/widgets/custom_payment_method.dart';
 import '../../home/widgets/custom_text_lable.dart';
 import 'order_detail.dart';
+import 'select_delivery_address.dart';
 
 class CheckOutMyCart extends StatelessWidget {
   const CheckOutMyCart({super.key});
@@ -19,6 +20,7 @@ class CheckOutMyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mapController = Get.put(AddressController());
+    final myCardController = Get.put(MyCardController());
     return Scaffold(
       backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
@@ -84,8 +86,9 @@ class CheckOutMyCart extends StatelessWidget {
                             onTap: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return const ChooseLocationAddress();
+                                return const SelectDeliveryAddressPage();
                               }));
+                              myCardController.fetchDeliveryAddress();
                             },
                             icon: Icons.add_circle_outline,
                             title: 'Add Address',
@@ -109,9 +112,10 @@ class CheckOutMyCart extends StatelessWidget {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) {
-                                      return const ChooseLocationAddress();
+                                      return const SelectDeliveryAddressPage();
                                     }),
                                   );
+                                  myCardController.fetchDeliveryAddress();
                                 },
                                 child: SvgPicture.asset('assets/svg/edit.svg'),
                               ),

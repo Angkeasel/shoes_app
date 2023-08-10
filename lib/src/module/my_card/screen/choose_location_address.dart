@@ -153,6 +153,8 @@ class _ChooseLocationAddressState extends State<ChooseLocationAddress> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           GoogleMap(
@@ -232,4 +234,3 @@ class _ChooseLocationAddressState extends State<ChooseLocationAddress> {
     );
   }
 }
-
