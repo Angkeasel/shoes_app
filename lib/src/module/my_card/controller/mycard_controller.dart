@@ -10,11 +10,19 @@ class MyCardController extends GetxController {
   ApiBaseHelper api = ApiBaseHelper();
   var myCardList = <MyCardModel>[].obs;
 
-  final ValueNotifier<int> counter = ValueNotifier<int>(1);
+  final ValueNotifier counter = ValueNotifier(1);
+
+  num get getTotalCost => myCardList.isNotEmpty
+      ? myCardList.fold(
+          0, (previousValue, element) => previousValue + (element.price ?? 0))
+      : 0;
+
   final loadingCart = false.obs;
-  Future<List<MyCardModel>> getMyCard() async {
+  Future<List<MyCardModel>> getMyCard({bool loading = true}) async {
     try {
-      loadingCart(true);
+      if (loading) {
+        loadingCart(true);
+      }
       await api
           .onNetworkRequesting(
               url: "cart", methode: METHODE.get, isAuthorize: true)

@@ -39,7 +39,7 @@ final GoRouter router = GoRouter(
   routes: [
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) {
+      builder: (_, state, child) {
         return ButtomNavigationBar(
           child: child,
         );
@@ -50,49 +50,49 @@ final GoRouter router = GoRouter(
     // GoRoute(
     //   name: 'AllFav',
     //   path: '/fav',
-    //   builder: (context, state) => const FavouritePage(),
+    //   builder: (_, state) => const FavouritePage(),
     // ),
     GoRoute(
       path: '/sso',
-      builder: (context, state) => const SplashScreen(),
+      builder: (_, state) => const SplashScreen(),
       routes: const [],
     ),
     GoRoute(
       path: '/boarding',
-      builder: (context, state) => const OnBoardingScreen(),
+      builder: (_, state) => const OnBoardingScreen(),
       routes: const [],
     ),
     GoRoute(
       path: '/login',
-      builder: (context, state) => const LoginScreens(),
+      builder: (_, state) => const LoginScreens(),
       routes: const [],
     ),
     GoRoute(
       path: '/register',
-      builder: (context, state) => RegisterScreen(),
+      builder: (_, state) => RegisterScreen(),
       routes: const [],
     ),
     GoRoute(
       path: '/fogetpass',
-      builder: (context, state) => const ForgetPassword(),
+      builder: (_, state) => const ForgetPassword(),
       routes: const [],
     ),
     GoRoute(
       path: '/otp',
-      builder: (context, state) => const VertifyOTPScreen(),
+      builder: (_, state) => const VertifyOTPScreen(),
       routes: const [],
     ),
     GoRoute(
       path: '/view-order',
       parentNavigatorKey: _rootNavigatorKey,
-      builder: (context, state) {
+      builder: (_, state) {
         return const ViewOrderPage();
       },
       routes: <GoRoute>[
         GoRoute(
           path: 'view-order-detail/:id',
           parentNavigatorKey: _rootNavigatorKey,
-          builder: (context, state) {
+          builder: (_, state) {
             int id = int.parse(state.pathParameters['id']!);
             return ViewOrderDetailPage(id: id);
           },
@@ -110,7 +110,7 @@ final _shellRoutes = <GoRoute>[
       // GoRoute(
       //     parentNavigatorKey: _rootNavigatorKey,
       //     path: 'detail',
-      //     builder: (BuildContext context, GoRouterState state) {
+      //     builder: ( _,  state) {
       //       final detailModel = state.extra as DetailModel;
       //       return DetailPage(detailModel: detailModel);
       //     },
@@ -135,42 +135,50 @@ final _shellRoutes = <GoRoute>[
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: 'detail/:id',
-          builder: (_, GoRouterState state) => DetailPage(
+          builder: (_, state) => DetailPage(
                 id: int.tryParse(state.pathParameters['id'] ?? '')!,
               ),
           routes: const <GoRoute>[]),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: 'popular-router',
-        builder: (context, state) => PopularPage(),
+        builder: (_, state) => PopularPage(),
         routes: const [],
       ),
-      GoRoute(
-          parentNavigatorKey: _rootNavigatorKey,
-          path: 'search/:id',
-          builder: (BuildContext context, GoRouterState state) =>
-              SearchResultScreen(
-                  id: int.tryParse(state.pathParameters['id']!)!),
-          routes: const <GoRoute>[]),
+      // GoRoute(
+      //     parentNavigatorKey: _rootNavigatorKey,
+      //     path: 'search/:id',
+      //     builder: (_, state) => SearchResultScreen(
+      //         id: int.tryParse(state.pathParameters['id']!)!),
+      //     routes: const <GoRoute>[]),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
-        path: 'search-router',
-        builder: (context, state) => const SearchScreen(),
-        routes: const [],
+        path: 'go-search',
+        builder: (_, state) => const SearchScreen(),
+        routes: [
+          GoRoute(
+            parentNavigatorKey: _rootNavigatorKey,
+            path: 'search-result',
+            builder: (_, state) => SearchResultScreen(
+              textSearch: state.queryParameters['textSearch'],
+              // name: state.queryParameters['name'] ?? '',
+            ),
+          ),
+        ],
       ),
       GoRoute(
-          parentNavigatorKey: _rootNavigatorKey,
-          path: 'category',
-          builder: (_, GoRouterState state) => ProductsByCategoryPage(
-                id: int.tryParse(state.queryParameters['id'] ?? ''),
-                name: state.queryParameters['name'],
-                // name: state.queryParameters['name'] ?? '',
-              ),
-          routes: const <GoRoute>[]),
+        parentNavigatorKey: _rootNavigatorKey,
+        path: 'category',
+        builder: (_, state) => ProductsByCategoryPage(
+          id: int.tryParse(state.queryParameters['id'] ?? ''),
+          name: state.queryParameters['name'],
+          // name: state.queryParameters['name'] ?? '',
+        ),
+      ),
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: 'mycard-router',
-        builder: (context, state) => const MyCardPage(),
+        builder: (_, state) => const MyCardPage(),
         routes: const [],
       ),
     ],
@@ -178,7 +186,7 @@ final _shellRoutes = <GoRoute>[
   GoRoute(
     name: 'AllFav',
     path: '/fav',
-    builder: (context, state) => const FavouritePage(),
+    builder: (_, state) => const FavouritePage(),
   ),
 
   GoRoute(
@@ -190,29 +198,26 @@ final _shellRoutes = <GoRoute>[
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: 'detail/:id',
-        builder: (_, GoRouterState state) => DetailPage(
+        builder: (_, state) => DetailPage(
           id: int.tryParse(state.pathParameters['id'] ?? '')!,
         ),
       ),
     ],
   ),
-  //GoRoute(path: '/boarding',builder: (context, state)=>const OnBoardingScreen()),
+  //GoRoute(path: '/boarding',builder: (_, state)=>const OnBoardingScreen()),
 
   GoRoute(
     path: '/mycart/-rourter',
-    pageBuilder: (BuildContext context, GoRouterState state) =>
-        const NoTransitionPage(child: InvoiceScreen()),
+    pageBuilder: (_, state) => const NoTransitionPage(child: InvoiceScreen()),
   ),
   GoRoute(
     path: '/profile/-rourter',
-    pageBuilder: (BuildContext context, GoRouterState state) =>
-        const NoTransitionPage(child: ProfilePage()),
+    pageBuilder: (_, state) => const NoTransitionPage(child: ProfilePage()),
     routes: <GoRoute>[
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: 'edit-profile',
-        builder: (BuildContext context, GoRouterState state) =>
-            const EditProfilePage(),
+        builder: (_, state) => const EditProfilePage(),
       )
     ],
   ),
@@ -227,7 +232,7 @@ const noAuthRoute = [
   '/otp'
 ];
 
-FutureOr<String?> _redirect(BuildContext context, GoRouterState state) async {
+FutureOr<String?> _redirect(_, state) async {
   final location = state.location;
   final token = await LocalStorage.getStringValue(key: 'access_token');
   debugPrint('TK : $token');
