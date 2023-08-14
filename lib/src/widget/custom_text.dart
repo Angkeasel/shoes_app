@@ -53,7 +53,7 @@ class CustomTextFiled extends StatelessWidget {
     this.suffixIcon,
     this.titleError,
     this.isReadOnly,
-    this.enable,
+    this.enable = true,
     this.hintTextStyle,
     this.textInputAction,
     this.isValidate = false,
@@ -128,7 +128,7 @@ class CustomTextFiled extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               hintText: hintText,
               hintStyle: hintTextStyle,
-              fillColor: enable == false || isReadOnly == true
+              fillColor: enable == true || isReadOnly == false
                   ? Colors.white
                   : const Color(0xffF2F2F2),
               // fillColor:isSelected!? Colors.white: Colors.grey.shade200,

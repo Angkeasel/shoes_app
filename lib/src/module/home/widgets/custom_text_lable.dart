@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomTextLable extends StatelessWidget {
   final String? text;
@@ -27,11 +28,12 @@ class CustomTextLable extends StatelessWidget {
                   .copyWith(color: const Color(0xff707B81), fontSize: 16),
         ),
         Text(
-          "\$$lablePrice",
-          style: styleLable??Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: const Color(0xff1A2530),
-                fontFamily: 'poppins-regular',
-              ),
+          "\$${NumberFormat('###.00').format(lablePrice)}",
+          style: styleLable ??
+              Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: const Color(0xff1A2530),
+                    fontFamily: 'poppins-regular',
+                  ),
         ),
       ],
     );

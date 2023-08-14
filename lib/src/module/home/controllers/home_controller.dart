@@ -1,8 +1,12 @@
 import 'package:allpay/src/module/home/models/product/big_product_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
+import 'package:allpay/src/util/loading/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../util/alert_snackbar.dart';
+import '../../my_card/controller/mycard_controller.dart';
 import '../models/catagary/catagary_model.dart';
 import '../models/detail_model.dart';
 import '../models/product/product_model.dart';
@@ -55,21 +59,25 @@ class HomeController extends GetxController {
   }) async {
     loadingFetchAllProduct(true);
 
+    final url = "products?name=$query";
+
+    print("URL : $url");
     try {
       await api
           .onNetworkRequesting(
-              url: "products?page=$page&size=10&name=$query",
-              methode: METHODE.get,
-              isAuthorize: false)
+        url: url,
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
           .then((value) {
         bigProductModel.value = BigProductModel.fromJson(value);
-        debugPrint('=========> product$value');
+        debugPrint('=========> product ${value.length}');
         if (currentPage.value == 0) {
           productList.clear();
           // clear list before we add
         }
 
-        debugPrint("val: $value");
+        debugPrint("Length : ${value.length}");
         value['data'].map((e) {
           productModel.value = ProductModel.fromJson(e);
           if (!productList.contains(productModel.value)) {
@@ -91,6 +99,43 @@ class HomeController extends GetxController {
     }
     loadingFetchAllProduct(false);
     return bigProductModel.value;
+  }
+
+  ///
+  final listSearchProduct = <ProductModel>[].obs;
+  final loadingSearchResult = false.obs;
+  Future<List<ProductModel>> searchProductByName({
+    required String? textSearch,
+  }) async {
+    loadingSearchResult(true);
+    final listSearchProd = <ProductModel>[];
+
+    final url = "products?name=${textSearch ?? ''}";
+
+    try {
+      await api
+          .onNetworkRequesting(
+        url: url,
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
+          .then((responseBody) {
+        responseBody['data'].map((e) {
+          listSearchProd.add(ProductModel.fromJson(e));
+        }).toList();
+
+        listSearchProduct.assignAll(listSearchProd);
+
+        loadingSearchResult(false);
+      }).onError((ErrorModel error, _) {
+        debugPrint('=======>Error Body :${error.bodyString}');
+      });
+    } catch (e) {
+      debugPrint('Error :${e.toString()}');
+    }
+    loadingSearchResult(false);
+
+    return listSearchProd;
   }
 
   //=================================> get Product detail<==========================
@@ -231,12 +276,14 @@ class HomeController extends GetxController {
   //var myCartList = <DetailModel>[].obs;
 
   Future<void> addToCart({
+    required BuildContext context,
     required String productId,
     required String variantId,
     required String sizeId,
     required String price,
     required int qty,
   }) async {
+    showLoading(context);
     final body = {
       "product_id": productId,
       "variant_id": variantId,
@@ -244,11 +291,91 @@ class HomeController extends GetxController {
       "price": price,
       "quantity": qty
     };
-    await api.onNetworkRequesting(
+    await api
+        .onNetworkRequesting(
       url: 'cart',
       methode: METHODE.post,
       body: body,
       isAuthorize: true,
+    )
+        .then(
+      (resBody) {
+        debugPrint('Add to Cart : $resBody');
+        removeLoading();
+        showInfoSnackBar(
+          message: 'Product added to cart successsfully',
+          action: SnackBarAction(
+            label: 'View',
+            onPressed: () {
+              context.go('/cart');
+            },
+          ),
+        );
+      },
+    ).onError(
+      (ErrorModel error, _) {
+        debugPrint('Add to Cart : ${error.bodyString}');
+        removeLoading();
+      },
+    );
+  }
+
+  Future<void> updateItemInCart({
+    required BuildContext context,
+    required String id,
+    required int qty,
+    // required String productId,
+    // required String variantID,
+  }) async {
+    showLoading(context);
+    final body = {
+      // "product_id": productId,
+      // "variant_id": variantID,
+      "quantity": qty,
+    };
+    await api
+        .onNetworkRequesting(
+      url: 'cart/$id',
+      methode: METHODE.update,
+      body: body,
+      isAuthorize: true,
+    )
+        .then(
+      (resBody) async {
+        debugPrint('Update Cart : $resBody');
+        await Get.put(MyCardController()).getMyCard(loading: false);
+        removeLoading();
+      },
+    ).onError(
+      (ErrorModel error, _) {
+        debugPrint('Update Cart : ${error.bodyString}');
+        removeLoading();
+      },
+    );
+  }
+
+  Future<void> removeItemFromCart({
+    required BuildContext context,
+    required String id,
+  }) async {
+    showLoading(context);
+    await api
+        .onNetworkRequesting(
+      url: 'cart/$id',
+      methode: METHODE.delete,
+      isAuthorize: true,
+    )
+        .then(
+      (resBody) async {
+        debugPrint('Add to Cart : $resBody');
+        await Get.put(MyCardController()).getMyCard(loading: false);
+        removeLoading();
+      },
+    ).onError(
+      (ErrorModel error, _) {
+        debugPrint('Add to Cart : ${error.bodyString}');
+        removeLoading();
+      },
     );
   }
 }

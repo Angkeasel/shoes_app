@@ -8,6 +8,8 @@ import 'package:allpay/src/module/home/pages/detail_page.dart';
 import 'package:allpay/src/module/home/pages/home_page.dart';
 import 'package:allpay/src/module/home/pages/popular_page.dart';
 import 'package:allpay/src/module/home/pages/search_result_screen.dart';
+import 'package:allpay/src/module/my_card/screen/add_new_delivery_address.dart';
+import 'package:allpay/src/module/my_card/screen/choose_location_address.dart';
 import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
@@ -132,6 +134,7 @@ final _shellRoutes = <GoRoute>[
           ),
         ),
       ),
+
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: 'detail/:id',
@@ -218,6 +221,23 @@ final _shellRoutes = <GoRoute>[
         parentNavigatorKey: _rootNavigatorKey,
         path: 'edit-profile',
         builder: (_, state) => const EditProfilePage(),
+      )
+    ],
+  ),
+
+  // Add new address
+
+  GoRoute(
+    path: '/add-new-delivery-address',
+    builder: (context, state) {
+      return const AddNewDeliveryAddress();
+    },
+    routes: [
+      GoRoute(
+        path: 'choose-location-address',
+        builder: (context, state) {
+          return const ChooseLocationAddress();
+        },
       )
     ],
   ),

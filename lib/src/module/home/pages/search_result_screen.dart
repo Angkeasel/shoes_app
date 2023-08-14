@@ -1,13 +1,18 @@
-import 'package:allpay/src/module/home/models/product_details/product_details_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../constant/sizes.dart';
+import '../../../widget/no_product_text.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/custom_product_cart.dart';
 
 class SearchResultScreen extends StatefulWidget {
-  final int id;
-  const SearchResultScreen({super.key, required this.id});
+  final String? textSearch;
+  const SearchResultScreen({
+    super.key,
+    required this.textSearch,
+  });
 
   @override
   State<SearchResultScreen> createState() => _SearchResultScreenState();
@@ -15,19 +20,20 @@ class SearchResultScreen extends StatefulWidget {
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
   final homeController = Get.put(HomeController());
-  ProductDetailsModel detailsModel = ProductDetailsModel();
+
   @override
   void initState() {
-    fetch();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetch();
+    });
     super.initState();
+    //
   }
 
   Future<void> fetch() async {
+    print(widget.textSearch);
     try {
-      await homeController.getProductDetails(widget.id).then((value) {
-        detailsModel = value;
-        debugPrint('===========> detailsModel123 $detailsModel');
-      });
+      await homeController.searchProductByName(textSearch: widget.textSearch);
     } catch (e) {
       debugPrint('===========> hello detailsModel ${e.toString()}');
     }
@@ -38,29 +44,47 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        title: Text("Search result of '${widget.textSearch}'"),
+        titleTextStyle: Theme.of(context).appBarTheme.titleTextStyle?.copyWith(
+            fontWeight: FontWeight.w400, fontStyle: FontStyle.italic),
       ),
       body: Obx(
-        () => homeController.isLoadingDetails.value
+        () => homeController.loadingSearchResult.value
             ? const Center(
                 child: CircularProgressIndicator(
-                color: Colors.red,
-              ))
-            : GridView.builder(
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 20, bottom: 20),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 240,
-                    childAspectRatio: 0.75,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20),
-                itemCount: detailsModel.variants!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CustomProductCart(
-                    title: detailsModel.variants![index].name,
-                    image: detailsModel.variants![index].imageUrl,
-                    // price: detailsModel.variants![index].price,
-                  );
-                }),
+                  color: Colors.red,
+                ),
+              )
+            : homeController.listSearchProduct.isNotEmpty
+                ? RefreshIndicator(
+                    onRefresh: () async {
+                      //TODO: Refresh
+                    },
+                    child: GridView.builder(
+                        padding: EdgeInsets.all(Sizes.defaultPadding),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 157 / 201,
+                          mainAxisSpacing: 20,
+                          crossAxisSpacing: 20,
+                        ),
+                        itemCount: homeController.listSearchProduct.length,
+                        itemBuilder: (_, index) {
+                          return CustomProductCart(
+                            title: homeController.listSearchProduct[index].name,
+                            image: homeController
+                                .listSearchProduct[index].thumbnailUrl,
+                            price:
+                                homeController.listSearchProduct[index].price,
+                            onTap: () {
+                              context.push(
+                                  '/detail/${homeController.listSearchProduct[index].id}');
+                            },
+                          );
+                        }),
+                  )
+                : const NoProduct(),
       ),
     );
   }

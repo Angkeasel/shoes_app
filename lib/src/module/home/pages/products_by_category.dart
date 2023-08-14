@@ -69,23 +69,10 @@ class _ProductsByCategoryPageState extends State<ProductsByCategoryPage> {
                                 .categoryProductList[index].thumbnailUrl,
                             price:
                                 homeController.categoryProductList[index].price,
-
                             onTap: () {
                               context.push(
                                   '/detail/${homeController.categoryProductList[index].id}');
                             },
-                            // onFav: () {
-                            //   homeController.detailsModelList[index].isFav =
-                            //       !homeController.detailsModelList[index].isFav!;
-                            //   if (homeController.detailsModelList[index].isFav!) {
-                            //     homeController.favCartList
-                            //         .add(homeController.detailsModelList[index]);
-                            //   } else {
-                            //     homeController.favCartList.removeAt(index);
-                            //     homeController.update();
-                            //   }
-                            //   homeController.update();
-                            // },
                           );
                         }),
                   )

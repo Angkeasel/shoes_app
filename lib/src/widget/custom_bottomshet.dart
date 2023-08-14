@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 onShowBottomSheet({
-  BuildContext? context,
+  required BuildContext context,
   String? title,
   Function? ontab,
   String? subtitle,
@@ -18,8 +18,8 @@ onShowBottomSheet({
   bool? isDimissible,
 }) {
   showModalBottomSheet(
-      isDismissible: isDimissible ?? false,
-      enableDrag: enableDrag ?? false,
+      // isDismissible: isDimissible ?? false,
+      // enableDrag: enableDrag ?? false,
       isScrollControlled: true,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
@@ -28,7 +28,8 @@ onShowBottomSheet({
           topRight: Radius.circular(20.0),
         ),
       ),
-      context: context!,
+      useRootNavigator: true,
+      context: context,
       builder: (context) {
         return Container(
           padding: padding,

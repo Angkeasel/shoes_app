@@ -19,6 +19,9 @@ _$_ProductDetailsModel _$$_ProductDetailsModelFromJson(
       variants: (json['variants'] as List<dynamic>?)
           ?.map((e) => Variants.fromJson(e as Map<String, dynamic>))
           .toList(),
+      reviews: (json['reviews'] as List<dynamic>?)
+          ?.map((e) => Review.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_ProductDetailsModelToJson(
@@ -32,6 +35,7 @@ Map<String, dynamic> _$$_ProductDetailsModelToJson(
       'discount': instance.discount,
       'is_favorite': instance.isFavorite,
       'variants': instance.variants,
+      'reviews': instance.reviews,
     };
 
 _$_VariantSizes _$$_VariantSizesFromJson(Map<String, dynamic> json) =>
@@ -71,4 +75,30 @@ Map<String, dynamic> _$$_VariantsToJson(_$_Variants instance) =>
       'product_name': instance.productName,
       'image_url': instance.imageUrl,
       'sizes': instance.sizes,
+    };
+
+_$_Review _$$_ReviewFromJson(Map<String, dynamic> json) => _$_Review(
+      id: json['id'] as int?,
+      rating: json['rating'] as num?,
+      reviewText: json['review_text'] as String?,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$_ReviewToJson(_$_Review instance) => <String, dynamic>{
+      'id': instance.id,
+      'rating': instance.rating,
+      'review_text': instance.reviewText,
+      'user': instance.user,
+    };
+
+_$_User _$$_UserFromJson(Map<String, dynamic> json) => _$_User(
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+    );
+
+Map<String, dynamic> _$$_UserToJson(_$_User instance) => <String, dynamic>{
+      'first_name': instance.firstName,
+      'last_name': instance.lastName,
     };

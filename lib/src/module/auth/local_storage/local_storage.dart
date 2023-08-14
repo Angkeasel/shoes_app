@@ -46,6 +46,17 @@ class LocalStorage {
   static Future<double> getDoubleValue({String? key}) async {
     return (_prefs!.getDouble(key!) ?? 0.0);
   }
+
+  static Future<List<String>> getListStringValue({required String key}) async {
+    return _prefs?.getStringList(key) ?? [];
+  }
+
+  static Future<void> storeListStringValue({
+    required String key,
+    required List<String> value,
+  }) async {
+    await _prefs!.setStringList(key, value);
+  }
 }
 
 

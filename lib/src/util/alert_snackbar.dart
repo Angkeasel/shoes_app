@@ -168,7 +168,7 @@ showDialogConfirmation({
   required BuildContext context,
   required String txt,
   required String accept,
-  required String cancel,
+  required String? cancel,
   GestureTapCallback? onTapCancel,
   GestureTapCallback? onTap,
 }) async {
@@ -176,15 +176,17 @@ showDialogConfirmation({
     context: context,
     builder: (dialogContext) {
       return AlertDialog(
+        surfaceTintColor: Colors.transparent,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        insetPadding: const EdgeInsets.symmetric(horizontal: 0),
-        actionsPadding: const EdgeInsets.all(20),
-        contentPadding:
-            const EdgeInsets.only(left: 28, right: 28, top: 15, bottom: 5),
+        titlePadding: const EdgeInsets.only(top: 20, bottom: 0),
+        // insetPadding: const EdgeInsets.symmetric(horizontal: 0),
+        // actionsPadding: const EdgeInsets.all(20),
+        // contentPadding:
+        //     const EdgeInsets.only(left: 28, right: 28, top: 15, bottom: 5),
         title: const Text(
-          "Confirmation",
+          "Confirm",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 18,
@@ -198,7 +200,13 @@ showDialogConfirmation({
             fontWeight: FontWeight.w500,
             color: Colors.black,
           ),
+          textAlign: TextAlign.center,
         ),
+        // contentTextStyle: const TextStyle(
+        //   fontSize: 13,
+        //   fontWeight: FontWeight.w500,
+        //   color: Colors.black,
+        // ),
         actions: [
           GestureDetector(
             onTap: () {
@@ -206,7 +214,7 @@ showDialogConfirmation({
               onTapCancel?.call();
             },
             child: Text(
-              cancel,
+              cancel ?? 'Cancel',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

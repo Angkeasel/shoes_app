@@ -1,3 +1,4 @@
+import 'package:allpay/src/module/my_card/model/address/address_models.dart';
 import 'package:allpay/src/module/my_card/model/mycard/my_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,7 @@ import '../../../util/api_base_herper.dart';
 class MyCardController extends GetxController {
   /// for used present
 
-  ApiBaseHelper api = ApiBaseHelper();
+  final ApiBaseHelper _api = ApiBaseHelper();
   var myCardList = <MyCardModel>[].obs;
 
   final ValueNotifier counter = ValueNotifier(1);
@@ -23,7 +24,9 @@ class MyCardController extends GetxController {
       if (loading) {
         loadingCart(true);
       }
-      await api
+
+      loadingCart(true);
+      await _api
           .onNetworkRequesting(
               url: "cart", methode: METHODE.get, isAuthorize: true)
           .then((value) {
@@ -40,5 +43,90 @@ class MyCardController extends GetxController {
       loadingCart(false);
     }
     return myCardList;
+  }
+
+  final isDefault = false.obs;
+  final deliveryAddressList = <AddressModels>[].obs;
+  final deliveryAddressModel = AddressModels().obs;
+  final isFetchingDeliveryAddress = false.obs;
+
+  Future fetchDeliveryAddress() async {
+    isFetchingDeliveryAddress(true);
+    try {
+      await _api
+          .onNetworkRequesting(
+        url: 'delivery-address',
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
+          .then((response) {
+        deliveryAddressList.clear();
+        debugPrint('Response: $response');
+        response.map((e) {
+          deliveryAddressModel.value = AddressModels.fromJson(e);
+          deliveryAddressList.add(deliveryAddressModel.value);
+        }).toList();
+        isFetchingDeliveryAddress(false);
+      }).onError((ErrorModel error, _) {
+        debugPrint('Data: $deliveryAddressList');
+        isFetchingDeliveryAddress(false);
+      });
+    } catch (e) {
+      debugPrint('Error Fetch Delivery-address : ${e.toString()}');
+      isFetchingDeliveryAddress(false);
+    }
+    return deliveryAddressList;
+  }
+
+  ///TODO: Place Order
+  Future<void> placeOrder() async {
+    final body = {
+      "total_amount": 32.2,
+      "deliveryaddress_id": 1,
+      "prices": myCardList.map((element) => element.price).toList(),
+      "quantities": myCardList.map((element) => element.quantity).toList(),
+      "variant_ids": myCardList.map((element) => element.variant?.id).toList(),
+      // "size_ids": myCardList.map((element) => element.variant.sizes).toList(),
+      "product_ids": myCardList.map((element) => element.product?.id).toList()
+    };
+    await _api
+        .onNetworkRequesting(
+      url: 'order',
+      methode: METHODE.post,
+      body: body,
+      isAuthorize: true,
+    )
+        .then(
+      (resBody) async {
+        debugPrint(' $resBody');
+        await Get.put(MyCardController()).getMyCard(loading: false);
+      },
+    ).onError(
+      (ErrorModel error, _) {
+        debugPrint('${error.bodyString}');
+      },
+    );
+  }
+
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final streetNumberController = TextEditingController();
+  final homeNumberController = TextEditingController();
+  final fullAddressController = TextEditingController();
+
+  void clearTextController() {
+    firstNameController.text = '';
+    lastNameController.text = '';
+    phoneController.text = '';
+    streetNumberController.text = '';
+    homeNumberController.text = '';
+    fullAddressController.text = '';
+  }
+
+  @override
+  void onInit() {
+    fetchDeliveryAddress();
+    super.onInit();
   }
 }

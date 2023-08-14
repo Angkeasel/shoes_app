@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../constant/app_setting.dart';
-import '../../widget/no_product_text.dart';
 
 class FavouritePage extends StatelessWidget {
   const FavouritePage({Key? key}) : super(key: key);
@@ -35,8 +34,40 @@ class FavouritePage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 )
               : homeController.favouriteList.isEmpty
-                  ? const NoProduct(
-                      text: 'No product saved to your favourite.',
+                  ? Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.favorite_border_rounded,
+                            size: 26,
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            "Empty Favourite List",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  color: AppColor.textLightColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            "You haven't saved any favourite yet, Let's add to your.",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  color: AppColor.textLightColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+                          ),
+                        ],
+                      ),
                     )
                   : GridView.builder(
                       padding: const EdgeInsets.only(

@@ -1,7 +1,5 @@
 // ignore_for_file: iterable_contains_unrelated_type
 
-import 'dart:math';
-
 import 'package:allpay/src/module/favourite/controller/favourite_controller.dart';
 import 'package:allpay/src/module/home/controllers/home_controller.dart';
 import 'package:allpay/src/module/home/models/product_details/product_details_model.dart';
@@ -56,6 +54,7 @@ class _DetailPageState extends State<DetailPage>
     try {
       await detailCon.getProductDetails(widget.id).then((value) {
         productDetailsModel = value;
+        debugPrint(value.isFavorite.toString());
       });
     } catch (e) {
       debugPrint('heeeeeh=====>$e');
@@ -421,104 +420,120 @@ class _DetailPageState extends State<DetailPage>
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    ...List.generate(5, (index) {
-                                      final rate = Random().nextInt(6);
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 20),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                const CircleAvatar(
-                                                  backgroundColor:
-                                                      AppColor.backgroundColor,
-                                                  // radius: 15,
-                                                  child: Icon(
-                                                    Icons.person_rounded,
-                                                    size: 25,
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                Expanded(
-                                                  child: Padding(
+                                    if (productDetailsModel.reviews != null &&
+                                        productDetailsModel
+                                                .reviews?.isNotEmpty ==
+                                            true)
+                                      ...productDetailsModel.reviews
+                                              ?.map((e) => Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            bottom: 0),
+                                                            bottom: 20),
                                                     child: Column(
                                                       crossAxisAlignment:
                                                           CrossAxisAlignment
                                                               .start,
                                                       children: [
-                                                        Text(
-                                                          'User ${String.fromCharCode(65 + index)}',
-                                                          style:
-                                                              const TextStyle(
-                                                            color: AppColor
-                                                                .textLightColor,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            // fontFamily:
-                                                            //     'poppins-regular',
-                                                            fontSize: 13,
-                                                          ),
-                                                        ),
                                                         Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
                                                           children: [
-                                                            ...List.generate(
-                                                              5,
-                                                              (index) => Icon(
-                                                                Icons.star,
-                                                                color: index < rate
-                                                                    ? Colors
-                                                                        .yellow
-                                                                    : Colors
-                                                                        .grey,
-                                                                size: 12,
+                                                            const CircleAvatar(
+                                                              backgroundColor:
+                                                                  AppColor
+                                                                      .backgroundColor,
+                                                              // radius: 15,
+                                                              child: Icon(
+                                                                Icons
+                                                                    .person_rounded,
+                                                                size: 25,
                                                               ),
                                                             ),
                                                             const SizedBox(
-                                                                width: 5),
-                                                            Text(
-                                                              rate
-                                                                  .toDouble()
-                                                                  .toString(),
-                                                              style:
-                                                                  const TextStyle(
-                                                                color: AppColor
-                                                                    .textLightColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontFamily:
-                                                                    'poppins-regular',
-                                                                fontSize: 12,
+                                                                width: 10),
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        bottom:
+                                                                            0),
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      e.user?.firstName ??
+                                                                          '',
+                                                                      style:
+                                                                          const TextStyle(
+                                                                        color: AppColor
+                                                                            .textLightColor,
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
+                                                                        // fontFamily:
+                                                                        //     'poppins-regular',
+                                                                        fontSize:
+                                                                            13,
+                                                                      ),
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        ...List
+                                                                            .generate(
+                                                                          5,
+                                                                          (index) =>
+                                                                              Icon(
+                                                                            Icons.star,
+                                                                            color: index < (e.rating ?? 0)
+                                                                                ? Colors.yellow
+                                                                                : Colors.grey,
+                                                                            size:
+                                                                                12,
+                                                                          ),
+                                                                        ),
+                                                                        const SizedBox(
+                                                                            width:
+                                                                                5),
+                                                                        Text(
+                                                                          e.rating?.toDouble().toString() ??
+                                                                              '',
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            color:
+                                                                                AppColor.textLightColor,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                            fontFamily:
+                                                                                'poppins-regular',
+                                                                            fontSize:
+                                                                                12,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
-                                                            ),
+                                                            )
                                                           ],
                                                         ),
+                                                        const SizedBox(
+                                                            height: 5),
+                                                        DescriptionWidget(
+                                                          description:
+                                                              e.reviewText ??
+                                                                  '',
+                                                          // trimCollapsedText: ' Read More',
+                                                          // trimExpandedText: ' Read Less',
+                                                        )
                                                       ],
                                                     ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                            const SizedBox(height: 5),
-                                            DescriptionWidget(
-                                              description:
-                                                  'I really love this product.' *
-                                                      (index + 1),
-                                              // trimCollapsedText: ' Read More',
-                                              // trimExpandedText: ' Read Less',
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    })
+                                                  ))
+                                              .toList() ??
+                                          [],
                                   ],
                                 ),
                               ),
@@ -572,7 +587,7 @@ class _DetailPageState extends State<DetailPage>
                             child: CustomButtons(
                               image: 'assets/png/bag-2.png',
                               title: 'Add to Cart',
-                              onTap: () {
+                              onTap: () async {
                                 if (detailCon.selectedSizeIndex.value >= 0) {
                                   final productId =
                                       productDetailsModel.id.toString();
@@ -581,24 +596,34 @@ class _DetailPageState extends State<DetailPage>
                                           detailCon.selectedColorIndex.value);
 
                                   final variantId =
-                                      selectedColoredProduct?.id.toString();
-                                  final sizeId = productDetailsModel
-                                      .variants?[
-                                          detailCon.selectedColorIndex.value]
-                                      .sizes?[detailCon.selectedSizeIndex.value]
-                                      .toString();
-                                  final price = productDetailsModel
-                                      .variants?[
-                                          detailCon.selectedColorIndex.value]
-                                      .sizes?[detailCon.selectedSizeIndex.value]
-                                      .toString();
+                                      selectedColoredProduct?.id?.toString();
 
-                                  // detailCon.addToCart(
-                                  //     productId: productId,
-                                  //     variantId: variantId,
-                                  //     sizeId: sizeId,
-                                  //     price: price,
-                                  // qty: 1);
+                                  final sizeId = selectedColoredProduct
+                                      ?.sizes?[
+                                          detailCon.selectedSizeIndex.value]
+                                      .id
+                                      ?.toString();
+
+                                  final price = selectedColoredProduct
+                                      ?.sizes?[
+                                          detailCon.selectedSizeIndex.value]
+                                      .price
+                                      ?.toString();
+                                  debugPrint('a : $price ');
+                                  if (variantId == null ||
+                                      sizeId == null ||
+                                      price == null) {
+                                    return;
+                                  }
+
+                                  await detailCon.addToCart(
+                                    context: context,
+                                    productId: productId,
+                                    variantId: variantId,
+                                    sizeId: sizeId,
+                                    price: price,
+                                    qty: 1,
+                                  );
                                 } else {
                                   showInfoSnackBar(
                                       message: 'Please select a size.');

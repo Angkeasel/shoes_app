@@ -4,7 +4,6 @@ import 'package:allpay/src/constant/app_setting.dart';
 
 import 'package:allpay/src/module/home/widgets/custom_button_category.dart';
 import 'package:allpay/src/module/profile/controller/profile_controller.dart';
-import 'package:allpay/src/widget/custom_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,6 +36,15 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  Future<void> _refresh() async {
+    homeController.currentPage.value = 0;
+    await homeController.getCategory();
+    await homeController.getProduct(
+      page: homeController.currentPage.value,
+      query: '',
+    );
+  }
+
   final profileCon = Get.put(ProfileController());
   final homeController = Get.put(HomeController());
   PageController pageControllers = PageController(initialPage: 0);
@@ -66,13 +74,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.red,
               ))
             : RefreshIndicator(
-                onRefresh: () async {
-                  homeController.currentPage.value = 0;
-                  await homeController.getProduct(
-                    page: homeController.currentPage.value,
-                    query: '',
-                  );
-                },
+                onRefresh: _refresh,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.only(top: 20),
@@ -85,9 +87,43 @@ class _HomePageState extends State<HomePage> {
                             left: 20, right: 10, bottom: 0),
                         child: Row(
                           children: [
-                            const Expanded(
-                              child: CustomTextFiled(
-                                hintText: 'Women, kid, style . . .',
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.push('/go-search');
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 15,
+                                    vertical: 15,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(14),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(.04),
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 4),
+                                      )
+                                    ],
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/svg/search_icon.svg'),
+                                      const SizedBox(width: 30),
+                                      const Text(
+                                        'Looking for shoes',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: AppColor.appbarColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
                             IconButton(

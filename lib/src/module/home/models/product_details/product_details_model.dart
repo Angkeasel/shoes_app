@@ -14,7 +14,7 @@ class ProductDetailsModel with _$ProductDetailsModel {
     @JsonKey(name: 'discount') final int? discount,
     @JsonKey(name: 'is_favorite') final bool? isFavorite,
     @JsonKey(name: 'variants') final List<Variants>? variants,
-    // @JsonKey(name: 'reviews') final List<dynamic>? reviews,
+    @JsonKey(name: 'reviews') final List<Review>? reviews,
   }) = _ProductDetailsModel;
 
   factory ProductDetailsModel.fromJson(Map<String, dynamic> json) =>
@@ -48,4 +48,26 @@ class Variants with _$Variants {
 
   factory Variants.fromJson(Map<String, dynamic> json) =>
       _$VariantsFromJson(json);
+}
+
+@freezed
+class Review with _$Review {
+  factory Review({
+    @JsonKey(name: 'id') final int? id,
+    @JsonKey(name: 'rating') final num? rating,
+    @JsonKey(name: 'review_text') final String? reviewText,
+    @JsonKey(name: 'user') final User? user,
+  }) = _Review;
+
+  factory Review.fromJson(Map<String, dynamic> json) => _$ReviewFromJson(json);
+}
+
+@freezed
+class User with _$User {
+  factory User({
+    @JsonKey(name: 'first_name') final String? firstName,
+    @JsonKey(name: 'last_name') final String? lastName,
+  }) = _User;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

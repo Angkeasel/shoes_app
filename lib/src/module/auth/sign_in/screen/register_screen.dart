@@ -103,11 +103,15 @@ class RegisterScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                CustomButtons(
-                  title: 'Sign Up',
-                  onTap: () {
-                    logController.onRegister();
-                  },
+                Obx(
+                  () => logController.signUpLoading.value
+                      ? const CircularProgressIndicator()
+                      : CustomButtons(
+                          title: 'Sign Up',
+                          onTap: () {
+                            logController.onRegister();
+                          },
+                        ),
                 ),
                 const SizedBox(
                   height: 20,

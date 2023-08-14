@@ -1,9 +1,10 @@
+import 'package:allpay/src/constant/app_setting.dart';
+import 'package:allpay/src/module/auth/local_storage/local_storage.dart';
 import 'package:allpay/src/module/home/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
-import '../../../widget/custom_text.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -16,88 +17,115 @@ class _SearchScreenState extends State<SearchScreen> {
   final homeController = Get.put(HomeController());
   @override
   void initState() {
-    // homeController.getProduct();
+    getAllSearchHistory();
     super.initState();
   }
 
-  var title = '';
+  List<String> _searchHistories = [];
+
+  void getAllSearchHistory() async {
+    _searchHistories =
+        await LocalStorage.getListStringValue(key: 'search-history');
+    setState(() {});
+  }
+
+  void addHistory(String value) async {
+    if (value.isNotEmpty && !_searchHistories.contains(value)) {
+      _searchHistories.add(value);
+      setState(() {});
+      await LocalStorage.storeListStringValue(
+          key: 'search-history', value: _searchHistories);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            IconButton(
-              onPressed: () {
-                homeController.searchList.value = [];
-                homeController.searchController.text = '';
-                searchReturn('');
-                context.pop();
-              },
-              icon: const Icon(Icons.arrow_back_ios),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: CustomTextFiled(
-                  controller: homeController.searchController,
-                  hintText: 'Search by product name',
-                  labelStyle: Theme.of(context).textTheme.bodyMedium,
-                  suffixIcon: const Icon(Icons.search),
-                  height: 60,
-                  onChanges: (e) {
-                    searchReturn(e);
-
-                    debugPrint('==========> search name$e');
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
+        automaticallyImplyLeading: true,
+        title: const Text('Search'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (homeController.searchController.text.isNotEmpty)
-            Expanded(
-              child: Container(
-                color: Colors.transparent,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  // physics: const NeverScrollableScrollPhysics(),
-                  itemCount: homeController.searchList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        title = homeController.searchList[index].name!;
-                        debugPrint("search find = $title");
-                        context.push(
-                            '/search/${homeController.searchList[index].id}');
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        margin: const EdgeInsets.symmetric(vertical: 5),
-                        decoration:
-                            const BoxDecoration(color: Colors.transparent),
-                        child: Text(
-                          homeController.searchList[index].name!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.black),
-                        ),
-                      ),
-                    );
-                  },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: TextField(
+              onTapOutside: (event) {
+                FocusScope.of(context).unfocus();
+              },
+              textInputAction: TextInputAction.search,
+              onSubmitted: (value) {
+                //TODO: Call Search
+
+                context.push('/go-search/search-result?textSearch=$value');
+                addHistory(value);
+              },
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                hintText: 'Search your shoes',
+                labelStyle: Theme.of(context).textTheme.bodyMedium,
+                prefixIcon: SizedBox(
+                  width: 16,
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/svg/search_icon.svg',
+                      width: 16,
+                    ),
+                  ),
                 ),
               ),
-            )
+            ),
+          ),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Shoes',
+              style: TextStyle(
+                fontFamily: 'Raleway-SemiBold',
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemBuilder: (_, index) {
+                final text = _searchHistories.reversed.toList()[index];
+                return GestureDetector(
+                  onTap: () {
+                    context.push('/go-search/search-result?textSearch=$text');
+                  },
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        SvgPicture.asset('assets/svg/history_icon.svg'),
+                        const SizedBox(width: 10),
+                        Text(text),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (_, index) => const SizedBox(height: 20),
+              itemCount: _searchHistories.length,
+            ),
+          )
         ],
       ),
     );

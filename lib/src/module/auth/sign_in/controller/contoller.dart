@@ -48,7 +48,7 @@ class ControllerSignin extends GetxController {
           title: 'Error', message: 'Please input valid email or password');
     } else {
       loginLoading(true);
-      final loginBody = { 
+      final loginBody = {
         'email': emailTxtController.text,
         'password': passwordTxtController.text
       };
@@ -83,7 +83,10 @@ class ControllerSignin extends GetxController {
   TextEditingController registerEmailTxtController = TextEditingController();
   TextEditingController registerPasswordTxtController = TextEditingController();
 
+  final signUpLoading = false.obs;
+
   Future<void> onRegister() async {
+    signUpLoading(true);
     final registerBody = {
       "first_name": registerFirstNameTxtController.text,
       "last_name": registerLastNameTxtController.text,
@@ -105,7 +108,9 @@ class ControllerSignin extends GetxController {
       if (id != null) {
         await FirebaseMessaging.instance.subscribeToTopic('userId-$id');
       }
+      signUpLoading(false);
     }).onError((ErrorModel error, stackTrace) {
+      signUpLoading(false);
       alertErrorSnackbar(
           title: "Error", message: error.bodyString["message"].toString());
     });

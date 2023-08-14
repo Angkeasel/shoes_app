@@ -1,4 +1,6 @@
 import 'package:allpay/src/constant/app_setting.dart';
+import 'package:allpay/src/module/home/controllers/home_controller.dart';
+import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +32,7 @@ class MyCardPage extends StatefulWidget {
 
 class _MyCardPageState extends State<MyCardPage> {
   final myCardController = Get.put(MyCardController());
+  final homeController = Get.put(HomeController());
 
   @override
   void initState() {
@@ -95,14 +98,13 @@ class _MyCardPageState extends State<MyCardPage> {
                             direction: Axis.horizontal,
                             dragStartBehavior: DragStartBehavior.start,
                             startActionPane: ActionPane(
-                              extentRatio: 0.2,
+                              extentRatio: 0.35,
                               motion: const ScrollMotion(),
                               children: [
                                 Expanded(
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 10),
-                                    margin: const EdgeInsets.only(right: 10),
                                     decoration: BoxDecoration(
                                       color: AppColor.primaryColor,
                                       borderRadius: BorderRadius.circular(8),
@@ -166,6 +168,36 @@ class _MyCardPageState extends State<MyCardPage> {
                                     ),
                                   ),
                                 ),
+                                const SizedBox(width: 10),
+                                CustomSlidableAction(
+                                  onPressed: (_) async {
+                                    final cartModel =
+                                        myCardController.myCardList[index];
+                                    await homeController.updateItemInCart(
+                                      context: context,
+                                      id: cartModel.id.toString(),
+                                      qty: cartModel.quantity!,
+                                      // productId:
+                                      //     cartModel.variant!.id.toString(),
+                                      // variantID:
+                                      //     cartModel.variant!.id.toString(),
+                                    );
+                                    // TODO: Update Stock
+                                  },
+                                  borderRadius: BorderRadius.circular(8),
+                                  backgroundColor: AppColor.primaryColor,
+                                  padding: EdgeInsets.zero,
+                                  child: const Text(
+                                    'Apply',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        fontFamily: 'Raleway'
+                                        // color: Colors.red,
+                                        ),
+                                  ),
+                                ),
+                                const SizedBox(width: 10)
                               ],
                             ),
                             endActionPane: ActionPane(
@@ -178,7 +210,30 @@ class _MyCardPageState extends State<MyCardPage> {
                                 SlidableAction(
                                   onPressed: (_) {
                                     // TODO: On Delete Product
-                                    myCardController.myCardList.removeAt(index);
+                                    showDialogConfirmation(
+                                      context: context,
+                                      txt: 'remove this item from cart',
+                                      accept: 'Yes',
+                                      cancel: 'Cancel',
+                                      onTap: () {
+                                        Navigator.pop(context);
+
+                                        homeController.removeItemFromCart(
+                                          context: context,
+                                          id: myCardController
+                                              .myCardList[index].id
+                                              .toString(),
+                                        );
+                                      },
+                                    );
+
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (_) => const AlertDialog(
+                                    //     title: Text('Confirm'),
+                                    //     actions: [],
+                                    //   ),
+                                    // );
                                   },
                                   borderRadius: BorderRadius.circular(8),
                                   backgroundColor: AppColor.errorColor,
@@ -214,14 +269,14 @@ class _MyCardPageState extends State<MyCardPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         ValueListenableBuilder(
-                          builder:
-                              (BuildContext context, int value, Widget? child) {
+                          valueListenable: myCardController.counter,
+                          builder: (_, value, __) {
                             return CustomTextLable(
                               text: 'Subtotal',
-                              lablePrice: double.parse("0"),
+                              lablePrice:
+                                  myCardController.getTotalCost.toDouble(),
                             );
                           },
-                          valueListenable: myCardController.counter,
                         ),
                         const SizedBox(height: 8),
                         CustomTextLable(
@@ -247,7 +302,8 @@ class _MyCardPageState extends State<MyCardPage> {
                                   .textTheme
                                   .titleSmall!
                                   .copyWith(color: const Color(0xff2B2B2B)),
-                              lablePrice: double.parse('100'),
+                              lablePrice:
+                                  myCardController.getTotalCost.toDouble(),
                               styleLable: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
@@ -264,10 +320,14 @@ class _MyCardPageState extends State<MyCardPage> {
                           child: CustomButtons(
                             title: 'Check Out',
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return const CheckOutMyCart();
-                              }));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) {
+                                    return const CheckOutMyCart();
+                                  },
+                                ),
+                              );
                             },
                           ),
                         )
