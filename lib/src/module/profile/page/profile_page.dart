@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:allpay/src/module/auth/sign_in/controller/contoller.dart';
 import 'package:allpay/src/module/profile/controller/view_order_controller.dart';
+import 'package:allpay/src/module/profile/page/term_and_condition.dart';
 import 'package:allpay/src/module/profile/widget/custom_seleted_item_widget.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:allpay/src/widget/custom_bottomshet.dart';
@@ -647,8 +648,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: CustomSettingRow(
                           title: 'Term and Condition',
                           onTap: () {
-                            debugPrint('onTap');
-                            context.push('');
+                            Get.to(() => const TermAndCondition());
                           },
                         ),
                       ),

@@ -1,6 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../module/notification/controller/controller_notification.dart';
 
@@ -12,48 +11,51 @@ class CustomNotification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
       width: double.infinity,
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        // color: Colors.grey,
+        color: Colors.grey.withOpacity(0.1),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.01),
-
+            spreadRadius: 0.1,
             blurRadius: 7,
             //offset: Offset(3, 0), // changes position of shadow
           ),
         ],
       ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SvgPicture.asset(
-            notificationModel!.svg!,
-            height: 75,
-            width: 75,
+          CachedNetworkImage(
+            imageUrl:
+                'https://static.vecteezy.com/system/resources/previews/017/257/837/original/notification-golden-bell-cartoon-free-png.png',
+            width: 40,
           ),
-          const SizedBox(
-            width: 20,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                notificationModel!.title!,
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+          const SizedBox(width: 15),
+          Expanded(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  notificationModel!.title!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                    fontFamily: 'poppins-regular',
+                  ),
                 ),
-              ),
-              Text(
-                notificationModel!.text!,
-                style: GoogleFonts.poppins(
-                    fontSize: 12, fontWeight: FontWeight.w400),
-              ),
-            ],
+                Text(
+                  notificationModel!.text!,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w100,
+                    fontSize: 12,
+                    fontFamily: 'poppins-regular',
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constant/app_setting.dart';
-import '../../../widget/custom_banner.dart';
 
 class AddCardScreen extends StatefulWidget {
   const AddCardScreen({super.key});

@@ -31,38 +31,54 @@ class NotificationScreen extends StatelessWidget {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: Padding(
+      body: ListView(
         padding: const EdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 36,
+        children: [
+          Text(
+            "Today",
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
-            Text(
-              "Today",
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+          ),
+          const SizedBox(height: 10),
+          Column(
+            children: notificationCon.notificationList
+                .asMap()
+                .entries
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: CustomNotification(
+                      notificationModel: e.value,
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+          Text(
+            "Yesterday",
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            Column(
-              children: notificationCon.notificationList
-                  .asMap()
-                  .entries
-                  .map((e) => Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: CustomNotification(
-                          notificationModel: e.value,
-                        ),
-                      ))
-                  .toList(),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(height: 10),
+          Column(
+            children: notificationCon.notificationList
+                .asMap()
+                .entries
+                .map(
+                  (e) => Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: CustomNotification(
+                      notificationModel: e.value,
+                    ),
+                  ),
+                )
+                .toList(),
+          )
+        ],
       ),
     );
   }

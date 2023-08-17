@@ -11,6 +11,7 @@ import 'package:allpay/src/module/home/pages/search_result_screen.dart';
 import 'package:allpay/src/module/my_card/screen/add_new_delivery_address.dart';
 import 'package:allpay/src/module/my_card/screen/choose_location_address.dart';
 import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
+import 'package:allpay/src/module/notification/screen/notification.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
 import 'package:allpay/src/module/profile/page/view_order_detail.dart';
@@ -25,7 +26,6 @@ import '../../module/buttomnavigationbar/bottomnavigationbar.dart';
 import '../../module/favourite/favourite_page.dart';
 import '../../module/home/pages/search_screen.dart';
 import '../../module/home/pages/products_by_category.dart';
-import '../../module/my_card/screen/invoice_screen.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = Get.key;
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -211,11 +211,15 @@ final _shellRoutes = <GoRoute>[
 
   GoRoute(
     path: '/mycart/-rourter',
-    pageBuilder: (_, state) => const NoTransitionPage(child: InvoiceScreen()),
+    pageBuilder: (_, state) => const NoTransitionPage(
+      child: NotificationScreen(),
+    ),
   ),
   GoRoute(
     path: '/profile/-rourter',
-    pageBuilder: (_, state) => const NoTransitionPage(child: ProfilePage()),
+    pageBuilder: (_, state) => const NoTransitionPage(
+      child: ProfilePage(),
+    ),
     routes: <GoRoute>[
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
