@@ -91,14 +91,35 @@ class ProfileController extends GetxController {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>> onSubmitUserGender <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
-  Future<void> onSubmitUserGender({int? id}) async {
-    debugPrint('UserId: $id');
+  // Future<void> onUpdateUserGender({int? id}) async {
+  //   debugPrint('UserId: $id');
+  //   try {
+  //     await _apiBaseHelper.onNetworkRequesting(
+  //         url: 'gender/$id',
+  //         methode: METHODE.update,
+  //         isAuthorize: true,
+  //         body: {
+  //           "value": titleGen.value,
+  //         }).then((response) {
+  //       var message = response;
+  //       if (message == ' Gender was updated successfully...') {
+  //         Get.snackbar(
+  //           'Gender Added!',
+  //           message,
+  //           snackPosition: SnackPosition.BOTTOM,
+  //         );
+  //       }
+  //     });
+  //   } catch (e) {
+  //     debugPrint('------- onSubmitUserGender Error: ${e.toString()}');
+  //   }
+  // }
+
+  Future<void> onSubmitUserGender() async {
     try {
       await _apiBaseHelper.onNetworkRequesting(
-          url: userGendermodel.value.value!.isEmpty ? 'gender' : 'gender/$id',
-          methode: userGendermodel.value.value!.isEmpty
-              ? METHODE.post
-              : METHODE.update,
+          url: 'gender',
+          methode: METHODE.post,
           isAuthorize: true,
           body: {
             "value": titleGen.value,
