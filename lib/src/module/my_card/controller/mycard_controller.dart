@@ -1,3 +1,4 @@
+import 'package:allpay/src/module/my_card/controller/map_controller.dart';
 import 'package:allpay/src/module/my_card/model/address/address_models.dart';
 import 'package:allpay/src/module/my_card/model/mycard/my_card_model.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class MyCardController extends GetxController {
   /// for used present
 
   final ApiBaseHelper _api = ApiBaseHelper();
+  final mapController = Get.put(AddressController());
   var myCardList = <MyCardModel>[].obs;
 
   final ValueNotifier counter = ValueNotifier(1);
@@ -78,7 +80,7 @@ class MyCardController extends GetxController {
     return deliveryAddressList;
   }
 
-  ///TODO: Place Order
+  // Place Order
   Future<void> placeOrder() async {
     final body = {
       "total_amount": 32.2,
@@ -106,6 +108,29 @@ class MyCardController extends GetxController {
         debugPrint('${error.bodyString}');
       },
     );
+  }
+
+  Future<void> postAddress() async {
+    await _api.onNetworkRequesting(
+        url: 'delivery-address',
+        methode: METHODE.post,
+        isAuthorize: true,
+        body: {
+          "first_name": firstNameController.text,
+          "last_name": lastNameController.text,
+          "phone": phoneController.text,
+          "street_no": streetNumberController.text,
+          "home_no": homeNumberController.text,
+          "full_address": fullAddressController.text,
+          "latitute": mapController.latitude.toDouble(),
+          "longtitute": mapController.longitude.toDouble(),
+        }).then((response) async {
+      debugPrint('Post adrees Success : $response');
+      clearTextController();
+    }).onError((ErrorModel error, stackTrace) {
+      debugPrint(
+          'Post Adress not work : ${error.bodyString}, ${error.statusCode}');
+    });
   }
 
   final firstNameController = TextEditingController();

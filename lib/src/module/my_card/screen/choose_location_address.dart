@@ -200,6 +200,8 @@ class _ChooseLocationAddressState extends State<ChooseLocationAddress> {
                     mapController.isCheckMaker.value = false;
                     Navigator.pop(context);
                   });
+                  debugPrint(
+                      'get lat long : ${mapController.latitudePosition.value}: ${mapController.longitudePosition.value}');
                 },
                 child: Text(
                   'Choose Address',

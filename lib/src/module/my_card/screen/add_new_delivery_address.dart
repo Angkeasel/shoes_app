@@ -167,7 +167,8 @@ class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
             child: CustomButtons(
               title: 'Add',
               onTap: () {
-                //TODO: Add Adress
+                myCardController.postAddress();
+                debugPrint('WORK Adress Post');
               },
             ),
           ),

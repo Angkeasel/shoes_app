@@ -90,20 +90,22 @@ class SelectDeliveryAddressPage extends StatelessWidget {
                   ),
                   Expanded(
                     child: myCardController.deliveryAddressList.isNotEmpty
-                        ? Column(
-                            children:
-                                myCardController.deliveryAddressList.map((e) {
-                              return CustomDeliveryAddressCard(
-                                phoneNumber: e.phone,
-                                firstName: e.firstName,
-                                lastName: e.lastName,
-                                fullAddress: e.fullAddress,
-                                label: e.label,
-                                onChanged: (p0) {},
-                                value: myCardController.isDefault.value,
-                                isDefualt: e.isDefault,
-                              );
-                            }).toList(),
+                        ? SingleChildScrollView(
+                            child: Column(
+                              children:
+                                  myCardController.deliveryAddressList.map((e) {
+                                return CustomDeliveryAddressCard(
+                                  phoneNumber: e.phone,
+                                  firstName: e.firstName,
+                                  lastName: e.lastName,
+                                  fullAddress: e.fullAddress,
+                                  label: e.label,
+                                  onChanged: (p0) {},
+                                  value: myCardController.isDefault.value,
+                                  isDefualt: e.isDefault,
+                                );
+                              }).toList(),
+                            ),
                           )
                         : const Center(
                             child: NoProduct(text: 'No Address added'),

@@ -96,6 +96,7 @@ class CheckOutMyCart extends StatelessWidget {
                         : Row(
                             children: [
                               Expanded(
+                                //Nantib
                                 child: Text(
                                   mapController.address.value,
                                   maxLines: 2,
