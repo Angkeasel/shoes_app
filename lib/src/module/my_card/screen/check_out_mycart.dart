@@ -47,17 +47,11 @@ class CheckOutMyCart extends StatelessWidget {
                   children: [
                     Text(
                       "Contact Information",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    // CustomEmailCart(
-                    //   title: 'Angkeasel',
-                    //   subTitle: 'UserName',
-                    //   onTap: () {},
-                    //   icons: 'assets/svg/email.svg',
-                    // ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -74,7 +68,7 @@ class CheckOutMyCart extends StatelessWidget {
                     ),
                     Text(
                       "Address",
-                      style: Theme.of(context).textTheme.titleSmall,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(
                       height: 15,
@@ -122,12 +116,15 @@ class CheckOutMyCart extends StatelessWidget {
                               ),
                             ],
                           ),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     Text(
                       "Payment Method",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineSmall!
-                          .copyWith(fontWeight: FontWeight.w500),
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(
+                      height: 15,
                     ),
                     Container(
                       margin: const EdgeInsets.only(bottom: 10),
@@ -179,7 +176,7 @@ class CheckOutMyCart extends StatelessWidget {
                       text: 'Total Cost',
                       style: Theme.of(context)
                           .textTheme
-                          .titleSmall!
+                          .titleMedium!
                           .copyWith(color: const Color(0xff2B2B2B)),
                       lablePrice: myCardController.getTotalCost.toDouble(),
                       styleLable: Theme.of(context)
@@ -191,7 +188,7 @@ class CheckOutMyCart extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     CustomButtons(
-                      title: 'Place Order',
+                      title: 'Order',
                       onTap: () {
                         Navigator.push(
                           context,

@@ -178,7 +178,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         context.height * 1 / 3,
                                                     child: Container(
                                                       padding: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           vertical: 15.0,
                                                           horizontal: 20.0),
                                                       height: context.height *
@@ -255,7 +255,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsets
-                                                                        .only(
+                                                                    .only(
                                                                     top: 8.0),
                                                             child:
                                                                 CustomSeletedItemWidget(
@@ -295,11 +295,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "${profileCon.userProfileModel.value.email}"
-                                                    .replaceAll(
-                                                        RegExp(
-                                                            '(?<=.)[^@](?=[^@]*?[^@]@)'),
-                                                        '*'),
+                                                "${profileCon.userProfileModel.value.firstName} ${profileCon.userProfileModel.value.lastName}",
+                                                // .replaceAll(
+                                                //     RegExp(
+                                                //         '(?<=.)[^@](?=[^@]*?[^@]@)'),
+                                                //     '*'),
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleSmall!
@@ -387,7 +387,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                       context.height * 1 / 3,
                                                   child: Container(
                                                     padding: const EdgeInsets
-                                                            .symmetric(
+                                                        .symmetric(
                                                         vertical: 15.0,
                                                         horizontal: 20.0),
                                                     height: context.height *
@@ -468,7 +468,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   top: 8.0),
                                                           child:
                                                               CustomSeletedItemWidget(
@@ -507,11 +507,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "${profileCon.userProfileModel.value.email}"
-                                                  .replaceAll(
-                                                      RegExp(
-                                                          '(?<=.)[^@](?=[^@]*?[^@]@)'),
-                                                      '*'),
+                                              "${profileCon.userProfileModel.value.firstName} ${profileCon.userProfileModel.value.lastName}",
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall!

@@ -92,17 +92,22 @@ class SelectDeliveryAddressPage extends StatelessWidget {
                     child: myCardController.deliveryAddressList.isNotEmpty
                         ? SingleChildScrollView(
                             child: Column(
-                              children:
-                                  myCardController.deliveryAddressList.map((e) {
+                              children: myCardController.deliveryAddressList
+                                  .asMap()
+                                  .entries
+                                  .map((e) {
                                 return CustomDeliveryAddressCard(
-                                  phoneNumber: e.phone,
-                                  firstName: e.firstName,
-                                  lastName: e.lastName,
-                                  fullAddress: e.fullAddress,
-                                  label: e.label,
-                                  onChanged: (p0) {},
-                                  value: myCardController.isDefault.value,
-                                  isDefualt: e.isDefault,
+                                  phoneNumber: e.value.phone,
+                                  firstName: e.value.firstName,
+                                  lastName: e.value.lastName,
+                                  fullAddress: e.value.fullAddress,
+                                  label: e.value.label,
+                                  isSelected: e.key ==
+                                      myCardController.currentIndex.value,
+                                  ontap: () {
+                                    myCardController.currentIndex.value = e.key;
+                                  },
+                                  isDefualt: e.value.isDefault,
                                 );
                               }).toList(),
                             ),

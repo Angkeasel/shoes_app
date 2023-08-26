@@ -3,12 +3,14 @@ import 'package:allpay/src/module/my_card/model/address/address_models.dart';
 import 'package:allpay/src/module/my_card/model/mycard/my_card_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../util/api_base_herper.dart';
 
 class MyCardController extends GetxController {
   /// for used present
-
+  var isSelect = false.obs;
+  var currentIndex = 0.obs;
   final ApiBaseHelper _api = ApiBaseHelper();
   final mapController = Get.put(AddressController());
   var myCardList = <MyCardModel>[].obs;
@@ -110,7 +112,9 @@ class MyCardController extends GetxController {
     );
   }
 
-  Future<void> postAddress() async {
+  Future<void> postAddress(
+    BuildContext context,
+  ) async {
     await _api.onNetworkRequesting(
         url: 'delivery-address',
         methode: METHODE.post,
@@ -125,6 +129,8 @@ class MyCardController extends GetxController {
           "latitute": mapController.latitude.toDouble(),
           "longtitute": mapController.longitude.toDouble(),
         }).then((response) async {
+      context.pop();
+      context.pop();
       debugPrint('Post adrees Success : $response');
       clearTextController();
     }).onError((ErrorModel error, stackTrace) {
