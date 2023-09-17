@@ -35,9 +35,6 @@ class MapUtils {
 
   //on Created google map
   static void onCreatedGoogleMap(GoogleMapController controller) {
-    rootBundle.loadString('assets/images/map_style.txt').then((string) {
-      controller.setMapStyle(string);
-    });
     mapController.complete(controller);
   }
 

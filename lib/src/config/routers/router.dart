@@ -37,7 +37,7 @@ final GoRouter router = GoRouter(
   navigatorKey: _rootNavigatorKey,
   debugLogDiagnostics: true,
   initialLocation: _initialLocation,
-  redirect: _redirect,
+  // redirect: _redirect,
   routes: [
     ShellRoute(
       navigatorKey: _shellNavigatorKey,

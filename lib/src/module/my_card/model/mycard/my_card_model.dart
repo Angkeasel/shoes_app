@@ -12,7 +12,7 @@ class MyCardModel with _$MyCardModel {
     int? quantity,
     String? createdAt,
     Variants? variant,
-    VariantSizes? product,
+    @JsonKey(name: 'size') VariantSizes? product,
   }) = _MyCardModel;
 
   factory MyCardModel.fromJson(Map<String, dynamic> json) =>

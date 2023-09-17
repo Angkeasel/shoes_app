@@ -1,3 +1,4 @@
+import 'package:allpay/src/module/my_card/controller/map_controller.dart';
 import 'package:allpay/src/module/my_card/controller/mycard_controller.dart';
 import 'package:allpay/src/widget/custom_text.dart';
 import 'package:allpay/src/widget/home/custom_buttons.dart';
@@ -18,11 +19,14 @@ const myCurrnetLoacation = LatLng(11.588000535464978, 104.89708251231646);
 
 class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
   final myCardController = Get.put(MyCardController());
+  final addressController = Get.put(AddressController());
   @override
   void dispose() {
     super.dispose();
     myCardController.clearTextController();
   }
+
+  late final GoogleMapController _googleMapController;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,7 @@ class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
                   Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 10.0),
-                    color: Colors.white,
+                    // color: Colors.white,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +62,7 @@ class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
                           child: CustomTextFiled(
                             controller: myCardController.lastNameController,
                             label: 'Last Name',
-                            hintText: 'First Name',
+                            hintText: 'Last Name',
                           ),
                         ),
                         Padding(
@@ -76,7 +80,7 @@ class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
                     margin: const EdgeInsets.symmetric(vertical: 10.0),
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20.0, vertical: 10.0),
-                    color: Colors.white,
+                    // color: Colors.white,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
@@ -108,44 +112,68 @@ class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10.0),
-                          child: Container(
-                            clipBehavior: Clip.antiAlias,
+                          child: SizedBox(
                             height: 200.0,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.0),
-                                color: Colors.white),
                             child: Stack(
                               children: [
-                                const GoogleMap(
-                                  myLocationEnabled: true,
-                                  myLocationButtonEnabled: false,
-                                  zoomControlsEnabled: false,
-                                  scrollGesturesEnabled:
-                                      false, //widget.isScrolled!,
-
-                                  mapType: MapType.normal,
-
-                                  initialCameraPosition: CameraPosition(
-                                    target: myCurrnetLoacation,
-                                    zoom: 16,
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: GoogleMap(
+                                    onMapCreated: (controller) {
+                                      _googleMapController = controller;
+                                    },
+                                    myLocationEnabled: true,
+                                    myLocationButtonEnabled: false,
+                                    zoomControlsEnabled: false,
+                                    scrollGesturesEnabled: false,
+                                    tiltGesturesEnabled: false,
+                                    zoomGesturesEnabled: false,
+                                    rotateGesturesEnabled: false,
+                                    mapType: MapType.normal,
+                                    initialCameraPosition: const CameraPosition(
+                                      target: myCurrnetLoacation,
+                                      zoom: 16,
+                                    ),
                                   ),
                                 ),
                                 Positioned(
                                   right: 10,
                                   bottom: 10,
                                   child: FloatingActionButton(
-                                    onPressed: () {
-                                      Navigator.push(
+                                    shape: const CircleBorder(),
+                                    onPressed: () async {
+                                      await Navigator.push<LatLng>(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) {
                                             return const ChooseLocationAddress();
                                           },
                                         ),
-                                      );
+                                      ).then((value) async {
+                                        if (value == null) return;
+
+                                        myCardController.fullAddressController
+                                            .text = (await addressController
+                                                .getAddressFromLatLng(
+                                              value.latitude,
+                                              value.longitude,
+                                            )) ??
+                                            '';
+                                        _googleMapController.animateCamera(
+                                          CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                              target: LatLng(
+                                                value.latitude,
+                                                value.longitude,
+                                              ),
+                                              zoom: 16,
+                                            ),
+                                          ),
+                                        );
+                                      });
                                     },
                                     child: const Icon(
-                                      Icons.edit,
+                                      Icons.map,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -163,7 +191,7 @@ class _AddNewDeliveryAddressState extends State<AddNewDeliveryAddress> {
           ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(20.0).copyWith(top: 0),
             child: CustomButtons(
               title: 'Add',
               onTap: () {

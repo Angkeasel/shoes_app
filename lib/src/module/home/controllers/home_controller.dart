@@ -316,6 +316,9 @@ class HomeController extends GetxController {
       (ErrorModel error, _) {
         debugPrint('Add to Cart : ${error.bodyString}');
         removeLoading();
+        showInfoSnackBar(
+          message: 'Product added to cart fail',
+        );
       },
     );
   }
@@ -329,26 +332,24 @@ class HomeController extends GetxController {
   }) async {
     showLoading(context);
     final body = {
-      // "product_id": productId,
-      // "variant_id": variantID,
       "quantity": qty,
     };
     await api
         .onNetworkRequesting(
-      url: 'cart/$id',
+      url: 'cart-by-id/$id',
       methode: METHODE.update,
       body: body,
       isAuthorize: true,
     )
         .then(
       (resBody) async {
-        debugPrint('Update Cart : $resBody');
+        debugPrint('Update Cart Success: $resBody');
         await Get.put(MyCardController()).getMyCard(loading: false);
         removeLoading();
       },
     ).onError(
       (ErrorModel error, _) {
-        debugPrint('Update Cart : ${error.bodyString}');
+        debugPrint('Update Cart Error: ${error.bodyString}');
         removeLoading();
       },
     );

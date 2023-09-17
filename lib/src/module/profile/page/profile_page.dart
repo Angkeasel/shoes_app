@@ -59,8 +59,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: const EdgeInsets.only(
                             left: 20, bottom: 10, right: 20),
                         color: Colors.white,
-                        child: profileCon
-                                .userProfileModel.value.profiles!.isNotEmpty
+                        child: profileCon.userProfileModel.value.profiles
+                                    ?.isNotEmpty ==
+                                true
                             ? Column(
                                 children: profileCon
                                     .userProfileModel.value.profiles!
@@ -248,7 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
+                                                                  .only(
                                                                   top: 8.0),
                                                           child:
                                                               CustomSeletedItemWidget(
@@ -555,93 +556,50 @@ class _ProfilePageState extends State<ProfilePage> {
                       //     ],
                       //   ),
                       // ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        margin: const EdgeInsets.only(top: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'My Account',
-                          onTap: () {
-                            debugPrint('onTap');
-                            context.push('/profile/-rourter/edit-profile');
-                          },
-                        ),
+                      const SizedBox(height: 16),
+                      CustomSettingRow(
+                        title: 'My Account',
+                        onTap: () {
+                          debugPrint('onTap');
+                          context.push('/profile/-rourter/edit-profile');
+                        },
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        margin: const EdgeInsets.only(top: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'Notification',
-                          onTap: () {
-                            debugPrint('onTap');
-                            context.push('');
-                          },
-                        ),
+                      CustomSettingRow(
+                        title: 'Notification',
+                        onTap: () {},
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'Language',
-                          onTap: () {
-                            debugPrint('onTap');
-                            context.push('');
-                          },
-                        ),
+                      CustomSettingRow(
+                        title: 'Language',
+                        onTap: () {},
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        margin: const EdgeInsets.only(top: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'My Order',
-                          onTap: () {
-                            debugPrint('onTap');
-                            context.push('/view-order');
-                            viewOrderCon.fetchOrderProducts();
-                          },
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'My Favourite',
-                          onTap: () {
-                            debugPrint('onTap');
-                          },
-                        ),
-                      ),
+                      const SizedBox(height: 16),
+                      CustomSettingRow(
+                        title: 'My Order',
+                        onTap: () {
+                          debugPrint('onTap');
 
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        margin: const EdgeInsets.only(top: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'Term and Condition',
-                          onTap: () {
-                            Get.to(() => const TermAndCondition());
-                          },
-                        ),
+                          viewOrderCon.fetchOrderProducts();
+                        },
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 10.0),
-                        color: Colors.white,
-                        child: CustomSettingRow(
-                          title: 'Policy Privacy',
-                          onTap: () {
-                            debugPrint('onTap');
-                            context.push('/profile/-rourter/edit-profile');
-                          },
-                        ),
+                      CustomSettingRow(
+                        title: 'My Favourite',
+                        onTap: () {
+                          debugPrint('onTap');
+                        },
+                      ),
+                      const SizedBox(height: 16),
+
+                      CustomSettingRow(
+                        title: 'Term and Condition',
+                        onTap: () {
+                          Get.to(() => const TermAndCondition());
+                        },
+                      ),
+                      CustomSettingRow(
+                        title: 'Policy Privacy',
+                        onTap: () {
+                          debugPrint('onTap');
+                        },
                       ),
 
                       Padding(

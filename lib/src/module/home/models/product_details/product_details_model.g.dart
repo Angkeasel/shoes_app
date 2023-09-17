@@ -42,7 +42,6 @@ _$_VariantSizes _$$_VariantSizesFromJson(Map<String, dynamic> json) =>
     _$_VariantSizes(
       id: json['id'] as int?,
       sizeText: json['size_text'] as String?,
-      price: (json['price'] as num?)?.toDouble(),
       qty: json['qty'] as int?,
       variantId: json['variant_id'] as int?,
     );
@@ -51,7 +50,6 @@ Map<String, dynamic> _$$_VariantSizesToJson(_$_VariantSizes instance) =>
     <String, dynamic>{
       'id': instance.id,
       'size_text': instance.sizeText,
-      'price': instance.price,
       'qty': instance.qty,
       'variant_id': instance.variantId,
     };
@@ -65,6 +63,7 @@ _$_Variants _$$_VariantsFromJson(Map<String, dynamic> json) => _$_Variants(
       sizes: (json['sizes'] as List<dynamic>?)
           ?.map((e) => VariantSizes.fromJson(e as Map<String, dynamic>))
           .toList(),
+      price: (json['price'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$_VariantsToJson(_$_Variants instance) =>
@@ -75,6 +74,7 @@ Map<String, dynamic> _$$_VariantsToJson(_$_Variants instance) =>
       'product_name': instance.productName,
       'image_url': instance.imageUrl,
       'sizes': instance.sizes,
+      'price': instance.price,
     };
 
 _$_Review _$$_ReviewFromJson(Map<String, dynamic> json) => _$_Review(

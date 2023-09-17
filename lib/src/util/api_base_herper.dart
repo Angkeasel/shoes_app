@@ -51,6 +51,7 @@ class ApiBaseHelper {
           if (body != null) {
             final response = await http.post(Uri.parse(fullUrl),
                 body: json.encode(body), headers: headerDefault);
+            debugPrint('RESPONSE :${response.statusCode} ');
             return _returnResponse(response, fullUrl);
           }
           return Future.error(

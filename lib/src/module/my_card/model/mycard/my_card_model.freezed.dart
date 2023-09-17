@@ -25,6 +25,7 @@ mixin _$MyCardModel {
   int? get quantity => throw _privateConstructorUsedError;
   String? get createdAt => throw _privateConstructorUsedError;
   Variants? get variant => throw _privateConstructorUsedError;
+  @JsonKey(name: 'size')
   VariantSizes? get product => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,7 +46,7 @@ abstract class $MyCardModelCopyWith<$Res> {
       int? quantity,
       String? createdAt,
       Variants? variant,
-      VariantSizes? product});
+      @JsonKey(name: 'size') VariantSizes? product});
 
   $VariantsCopyWith<$Res>? get variant;
   $VariantSizesCopyWith<$Res>? get product;
@@ -138,7 +139,7 @@ abstract class _$$_MyCardModelCopyWith<$Res>
       int? quantity,
       String? createdAt,
       Variants? variant,
-      VariantSizes? product});
+      @JsonKey(name: 'size') VariantSizes? product});
 
   @override
   $VariantsCopyWith<$Res>? get variant;
@@ -202,7 +203,7 @@ class _$_MyCardModel implements _MyCardModel {
       this.quantity,
       this.createdAt,
       this.variant,
-      this.product});
+      @JsonKey(name: 'size') this.product});
 
   factory _$_MyCardModel.fromJson(Map<String, dynamic> json) =>
       _$$_MyCardModelFromJson(json);
@@ -218,6 +219,7 @@ class _$_MyCardModel implements _MyCardModel {
   @override
   final Variants? variant;
   @override
+  @JsonKey(name: 'size')
   final VariantSizes? product;
 
   @override
@@ -266,7 +268,7 @@ abstract class _MyCardModel implements MyCardModel {
       final int? quantity,
       final String? createdAt,
       final Variants? variant,
-      final VariantSizes? product}) = _$_MyCardModel;
+      @JsonKey(name: 'size') final VariantSizes? product}) = _$_MyCardModel;
 
   factory _MyCardModel.fromJson(Map<String, dynamic> json) =
       _$_MyCardModel.fromJson;
@@ -282,6 +284,7 @@ abstract class _MyCardModel implements MyCardModel {
   @override
   Variants? get variant;
   @override
+  @JsonKey(name: 'size')
   VariantSizes? get product;
   @override
   @JsonKey(ignore: true)

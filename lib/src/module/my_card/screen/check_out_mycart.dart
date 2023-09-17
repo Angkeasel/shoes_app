@@ -75,13 +75,15 @@ class CheckOutMyCart extends StatelessWidget {
                     ),
                     mapController.address.value.isEmpty
                         ? CustomContainDotted(
-                            // final location = GoRouter.of(context).location;
-                            // context.push('/choose-location-address');
                             onTap: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return const SelectDeliveryAddressPage();
-                              }));
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const SelectDeliveryAddressPage();
+                                  },
+                                ),
+                              );
                               myCardController.fetchDeliveryAddress();
                             },
                             icon: Icons.add_circle_outline,

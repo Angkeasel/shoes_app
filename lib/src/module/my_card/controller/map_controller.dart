@@ -27,25 +27,23 @@ class AddressController extends GetxController {
     // locationDetailController.close();
   }
 
-  Future getAddressFromLatLng(double lat, double lng) async {
+  Future<String?> getAddressFromLatLng(double lat, double lng) async {
+    String address = '';
     try {
       await placemarkFromCoordinates(lat, lng)
           .then((List<Placemark> placemarks) {
         Placemark place = placemarks[0];
 
-        address.value =
+        address =
             '${place.street}, ${place.subLocality},${place.administrativeArea}, ${place.country}'
                 .toString();
-
-        debugPrint(
-            "Full Address:$address ${place.street}, ${place.administrativeArea},${place.name}, ${place.country}");
       });
     } catch (e) {
       debugPrint("Full Address:$e");
     } finally {
       debugPrint("Full ");
     }
-    return address.value;
+    return address;
   }
 
   addNewAddress(

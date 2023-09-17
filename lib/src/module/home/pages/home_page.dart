@@ -26,6 +26,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
+    homeController.currentPage.value = 0;
     homeController.getCategory();
     homeController.getProduct(
       page: homeController.currentPage.value,
@@ -43,6 +44,7 @@ class _HomePageState extends State<HomePage> {
       page: homeController.currentPage.value,
       query: '',
     );
+    await homeController.getSlide();
   }
 
   final profileCon = Get.put(ProfileController());

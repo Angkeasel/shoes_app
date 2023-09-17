@@ -384,8 +384,6 @@ mixin _$VariantSizes {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'size_text')
   String? get sizeText => throw _privateConstructorUsedError;
-  @JsonKey(name: 'price')
-  double? get price => throw _privateConstructorUsedError;
   @JsonKey(name: 'qty')
   int? get qty => throw _privateConstructorUsedError;
   @JsonKey(name: 'variant_id')
@@ -406,7 +404,6 @@ abstract class $VariantSizesCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'id') int? id,
       @JsonKey(name: 'size_text') String? sizeText,
-      @JsonKey(name: 'price') double? price,
       @JsonKey(name: 'qty') int? qty,
       @JsonKey(name: 'variant_id') int? variantId});
 }
@@ -426,7 +423,6 @@ class _$VariantSizesCopyWithImpl<$Res, $Val extends VariantSizes>
   $Res call({
     Object? id = freezed,
     Object? sizeText = freezed,
-    Object? price = freezed,
     Object? qty = freezed,
     Object? variantId = freezed,
   }) {
@@ -439,10 +435,6 @@ class _$VariantSizesCopyWithImpl<$Res, $Val extends VariantSizes>
           ? _value.sizeText
           : sizeText // ignore: cast_nullable_to_non_nullable
               as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
       qty: freezed == qty
           ? _value.qty
           : qty // ignore: cast_nullable_to_non_nullable
@@ -466,7 +458,6 @@ abstract class _$$_VariantSizesCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'id') int? id,
       @JsonKey(name: 'size_text') String? sizeText,
-      @JsonKey(name: 'price') double? price,
       @JsonKey(name: 'qty') int? qty,
       @JsonKey(name: 'variant_id') int? variantId});
 }
@@ -484,7 +475,6 @@ class __$$_VariantSizesCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? sizeText = freezed,
-    Object? price = freezed,
     Object? qty = freezed,
     Object? variantId = freezed,
   }) {
@@ -497,10 +487,6 @@ class __$$_VariantSizesCopyWithImpl<$Res>
           ? _value.sizeText
           : sizeText // ignore: cast_nullable_to_non_nullable
               as String?,
-      price: freezed == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double?,
       qty: freezed == qty
           ? _value.qty
           : qty // ignore: cast_nullable_to_non_nullable
@@ -519,7 +505,6 @@ class _$_VariantSizes implements _VariantSizes {
   _$_VariantSizes(
       {@JsonKey(name: 'id') this.id,
       @JsonKey(name: 'size_text') this.sizeText,
-      @JsonKey(name: 'price') this.price,
       @JsonKey(name: 'qty') this.qty,
       @JsonKey(name: 'variant_id') this.variantId});
 
@@ -533,9 +518,6 @@ class _$_VariantSizes implements _VariantSizes {
   @JsonKey(name: 'size_text')
   final String? sizeText;
   @override
-  @JsonKey(name: 'price')
-  final double? price;
-  @override
   @JsonKey(name: 'qty')
   final int? qty;
   @override
@@ -544,7 +526,7 @@ class _$_VariantSizes implements _VariantSizes {
 
   @override
   String toString() {
-    return 'VariantSizes(id: $id, sizeText: $sizeText, price: $price, qty: $qty, variantId: $variantId)';
+    return 'VariantSizes(id: $id, sizeText: $sizeText, qty: $qty, variantId: $variantId)';
   }
 
   @override
@@ -555,7 +537,6 @@ class _$_VariantSizes implements _VariantSizes {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.sizeText, sizeText) ||
                 other.sizeText == sizeText) &&
-            (identical(other.price, price) || other.price == price) &&
             (identical(other.qty, qty) || other.qty == qty) &&
             (identical(other.variantId, variantId) ||
                 other.variantId == variantId));
@@ -563,8 +544,7 @@ class _$_VariantSizes implements _VariantSizes {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, sizeText, price, qty, variantId);
+  int get hashCode => Object.hash(runtimeType, id, sizeText, qty, variantId);
 
   @JsonKey(ignore: true)
   @override
@@ -584,7 +564,6 @@ abstract class _VariantSizes implements VariantSizes {
   factory _VariantSizes(
       {@JsonKey(name: 'id') final int? id,
       @JsonKey(name: 'size_text') final String? sizeText,
-      @JsonKey(name: 'price') final double? price,
       @JsonKey(name: 'qty') final int? qty,
       @JsonKey(name: 'variant_id') final int? variantId}) = _$_VariantSizes;
 
@@ -597,9 +576,6 @@ abstract class _VariantSizes implements VariantSizes {
   @override
   @JsonKey(name: 'size_text')
   String? get sizeText;
-  @override
-  @JsonKey(name: 'price')
-  double? get price;
   @override
   @JsonKey(name: 'qty')
   int? get qty;
@@ -630,6 +606,8 @@ mixin _$Variants {
   String? get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'sizes')
   List<VariantSizes>? get sizes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
+  double? get price => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -648,7 +626,8 @@ abstract class $VariantsCopyWith<$Res> {
       @JsonKey(name: 'value') String? value,
       @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'sizes') List<VariantSizes>? sizes});
+      @JsonKey(name: 'sizes') List<VariantSizes>? sizes,
+      @JsonKey(name: 'price') double? price});
 }
 
 /// @nodoc
@@ -670,6 +649,7 @@ class _$VariantsCopyWithImpl<$Res, $Val extends Variants>
     Object? productName = freezed,
     Object? imageUrl = freezed,
     Object? sizes = freezed,
+    Object? price = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -696,6 +676,10 @@ class _$VariantsCopyWithImpl<$Res, $Val extends Variants>
           ? _value.sizes
           : sizes // ignore: cast_nullable_to_non_nullable
               as List<VariantSizes>?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
     ) as $Val);
   }
 }
@@ -713,7 +697,8 @@ abstract class _$$_VariantsCopyWith<$Res> implements $VariantsCopyWith<$Res> {
       @JsonKey(name: 'value') String? value,
       @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'image_url') String? imageUrl,
-      @JsonKey(name: 'sizes') List<VariantSizes>? sizes});
+      @JsonKey(name: 'sizes') List<VariantSizes>? sizes,
+      @JsonKey(name: 'price') double? price});
 }
 
 /// @nodoc
@@ -733,6 +718,7 @@ class __$$_VariantsCopyWithImpl<$Res>
     Object? productName = freezed,
     Object? imageUrl = freezed,
     Object? sizes = freezed,
+    Object? price = freezed,
   }) {
     return _then(_$_Variants(
       id: freezed == id
@@ -759,6 +745,10 @@ class __$$_VariantsCopyWithImpl<$Res>
           ? _value._sizes
           : sizes // ignore: cast_nullable_to_non_nullable
               as List<VariantSizes>?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -772,7 +762,8 @@ class _$_Variants implements _Variants {
       @JsonKey(name: 'value') this.value,
       @JsonKey(name: 'product_name') this.productName,
       @JsonKey(name: 'image_url') this.imageUrl,
-      @JsonKey(name: 'sizes') final List<VariantSizes>? sizes})
+      @JsonKey(name: 'sizes') final List<VariantSizes>? sizes,
+      @JsonKey(name: 'price') this.price})
       : _sizes = sizes;
 
   factory _$_Variants.fromJson(Map<String, dynamic> json) =>
@@ -805,8 +796,12 @@ class _$_Variants implements _Variants {
   }
 
   @override
+  @JsonKey(name: 'price')
+  final double? price;
+
+  @override
   String toString() {
-    return 'Variants(id: $id, name: $name, value: $value, productName: $productName, imageUrl: $imageUrl, sizes: $sizes)';
+    return 'Variants(id: $id, name: $name, value: $value, productName: $productName, imageUrl: $imageUrl, sizes: $sizes, price: $price)';
   }
 
   @override
@@ -821,13 +816,14 @@ class _$_Variants implements _Variants {
                 other.productName == productName) &&
             (identical(other.imageUrl, imageUrl) ||
                 other.imageUrl == imageUrl) &&
-            const DeepCollectionEquality().equals(other._sizes, _sizes));
+            const DeepCollectionEquality().equals(other._sizes, _sizes) &&
+            (identical(other.price, price) || other.price == price));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, value, productName,
-      imageUrl, const DeepCollectionEquality().hash(_sizes));
+      imageUrl, const DeepCollectionEquality().hash(_sizes), price);
 
   @JsonKey(ignore: true)
   @override
@@ -850,7 +846,8 @@ abstract class _Variants implements Variants {
       @JsonKey(name: 'value') final String? value,
       @JsonKey(name: 'product_name') final String? productName,
       @JsonKey(name: 'image_url') final String? imageUrl,
-      @JsonKey(name: 'sizes') final List<VariantSizes>? sizes}) = _$_Variants;
+      @JsonKey(name: 'sizes') final List<VariantSizes>? sizes,
+      @JsonKey(name: 'price') final double? price}) = _$_Variants;
 
   factory _Variants.fromJson(Map<String, dynamic> json) = _$_Variants.fromJson;
 
@@ -872,6 +869,9 @@ abstract class _Variants implements Variants {
   @override
   @JsonKey(name: 'sizes')
   List<VariantSizes>? get sizes;
+  @override
+  @JsonKey(name: 'price')
+  double? get price;
   @override
   @JsonKey(ignore: true)
   _$$_VariantsCopyWith<_$_Variants> get copyWith =>

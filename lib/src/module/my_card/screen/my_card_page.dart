@@ -41,10 +41,10 @@ class _MyCardPageState extends State<MyCardPage> {
     super.initState();
   }
 
-//  if(homeController.totalCard>=1){
-//    homeController.subTotal.value = homeController.myCartList[0].price!;
-//    homeController.totalCost.value=homeController.subTotal.value+1.00;
-//     }
+  Future<void> _onRefresh() async {
+    await myCardController.getMyCard();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,174 +85,180 @@ class _MyCardPageState extends State<MyCardPage> {
                     height: 10,
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      padding:
-                          const EdgeInsets.only(left: 20, right: 20, top: 15),
-                      itemCount: myCardController.myCardList.length,
-                      itemBuilder: (BuildContext ctx, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            bottom: 10,
-                          ),
-                          child: Slidable(
-                            direction: Axis.horizontal,
-                            dragStartBehavior: DragStartBehavior.start,
-                            startActionPane: ActionPane(
-                              extentRatio: 0.35,
-                              motion: const ScrollMotion(),
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10),
-                                    decoration: BoxDecoration(
-                                      color: AppColor.primaryColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      // mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            final qty = myCardController
-                                                    .myCardList[index]
-                                                    .quantity! +
-                                                1;
-                                            myCardController.myCardList[index] =
-                                                myCardController
-                                                    .myCardList[index]
-                                                    .copyWith(quantity: qty);
-                                            setState(() {});
-                                          },
-                                          child: const Icon(
-                                            Icons.add_rounded,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        Text(
-                                          myCardController
-                                              .myCardList[index].quantity
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontFamily: 'Raleway',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            final qty = myCardController
-                                                    .myCardList[index]
-                                                    .quantity! -
-                                                1;
-                                            if (qty >= 1) {
+                    child: RefreshIndicator(
+                      onRefresh: _onRefresh,
+                      child: ListView.builder(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 15),
+                        itemCount: myCardController.myCardList.length,
+                        itemBuilder: (BuildContext ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: 10,
+                            ),
+                            child: Slidable(
+                              direction: Axis.horizontal,
+                              dragStartBehavior: DragStartBehavior.start,
+                              startActionPane: ActionPane(
+                                extentRatio: 0.35,
+                                motion: const ScrollMotion(),
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10),
+                                      decoration: BoxDecoration(
+                                        color: AppColor.primaryColor,
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        // mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              final qty = myCardController
+                                                      .myCardList[index]
+                                                      .quantity! +
+                                                  1;
                                               myCardController
                                                       .myCardList[index] =
                                                   myCardController
                                                       .myCardList[index]
                                                       .copyWith(quantity: qty);
                                               setState(() {});
-                                            }
-                                          },
-                                          child: const Icon(
-                                            Icons.minimize_rounded,
-                                            color: Colors.white,
+                                            },
+                                            child: const Icon(
+                                              Icons.add_rounded,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            myCardController
+                                                .myCardList[index].quantity
+                                                .toString(),
+                                            style: const TextStyle(
+                                              fontFamily: 'Raleway',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              final qty = myCardController
+                                                      .myCardList[index]
+                                                      .quantity! -
+                                                  1;
+                                              if (qty >= 1) {
+                                                myCardController
+                                                        .myCardList[index] =
+                                                    myCardController
+                                                        .myCardList[index]
+                                                        .copyWith(
+                                                            quantity: qty);
+                                                setState(() {});
+                                              }
+                                            },
+                                            child: const Icon(
+                                              Icons.minimize_rounded,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                const SizedBox(width: 10),
-                                CustomSlidableAction(
-                                  onPressed: (_) async {
-                                    final cartModel =
-                                        myCardController.myCardList[index];
-                                    await homeController.updateItemInCart(
-                                      context: context,
-                                      id: cartModel.id.toString(),
-                                      qty: cartModel.quantity!,
-                                      // productId:
-                                      //     cartModel.variant!.id.toString(),
-                                      // variantID:
-                                      //     cartModel.variant!.id.toString(),
-                                    );
-                                    // TODO: Update Stock
-                                  },
-                                  borderRadius: BorderRadius.circular(8),
-                                  backgroundColor: AppColor.primaryColor,
-                                  padding: EdgeInsets.zero,
-                                  child: const Text(
-                                    'Apply',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12,
-                                        fontFamily: 'Raleway'
-                                        // color: Colors.red,
-                                        ),
+                                  const SizedBox(width: 10),
+                                  CustomSlidableAction(
+                                    onPressed: (_) async {
+                                      final cartModel =
+                                          myCardController.myCardList[index];
+                                      await homeController.updateItemInCart(
+                                        context: context,
+                                        id: cartModel.id.toString(),
+                                        qty: cartModel.quantity!,
+                                        // productId:
+                                        //     cartModel.variant!.id.toString(),
+                                        // variantID:
+                                        //     cartModel.variant!.id.toString(),
+                                      );
+                                      // TODO: Update Stock
+                                    },
+                                    borderRadius: BorderRadius.circular(8),
+                                    backgroundColor: AppColor.primaryColor,
+                                    padding: EdgeInsets.zero,
+                                    child: const Text(
+                                      'Apply',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          fontFamily: 'Raleway'
+                                          // color: Colors.red,
+                                          ),
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 10)
-                              ],
-                            ),
-                            endActionPane: ActionPane(
-                              extentRatio: 0.2,
-                              motion: const Padding(
-                                padding: EdgeInsets.only(left: 10.0),
-                                child: ScrollMotion(),
+                                  const SizedBox(width: 10)
+                                ],
                               ),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (_) {
-                                    // TODO: On Delete Product
-                                    showDialogConfirmation(
-                                      context: context,
-                                      txt: 'remove this item from cart',
-                                      accept: 'Yes',
-                                      cancel: 'Cancel',
-                                      onTap: () {
-                                        Navigator.pop(context);
-
-                                        homeController.removeItemFromCart(
-                                          context: context,
-                                          id: myCardController
-                                              .myCardList[index].id
-                                              .toString(),
-                                        );
-                                      },
-                                    );
-
-                                    // showDialog(
-                                    //   context: context,
-                                    //   builder: (_) => const AlertDialog(
-                                    //     title: Text('Confirm'),
-                                    //     actions: [],
-                                    //   ),
-                                    // );
-                                  },
-                                  borderRadius: BorderRadius.circular(8),
-                                  backgroundColor: AppColor.errorColor,
-                                  padding: EdgeInsets.zero,
-                                  icon: Icons.delete_rounded,
+                              endActionPane: ActionPane(
+                                extentRatio: 0.2,
+                                motion: const Padding(
+                                  padding: EdgeInsets.only(left: 10.0),
+                                  child: ScrollMotion(),
                                 ),
-                              ],
+                                children: [
+                                  SlidableAction(
+                                    onPressed: (_) {
+                                      // TODO: On Delete Product
+                                      showDialogConfirmation(
+                                        context: context,
+                                        txt: 'remove this item from cart',
+                                        accept: 'Yes',
+                                        cancel: 'Cancel',
+                                        onTap: () {
+                                          Navigator.pop(context);
+
+                                          homeController.removeItemFromCart(
+                                            context: context,
+                                            id: myCardController
+                                                .myCardList[index].id
+                                                .toString(),
+                                          );
+                                        },
+                                      );
+
+                                      // showDialog(
+                                      //   context: context,
+                                      //   builder: (_) => const AlertDialog(
+                                      //     title: Text('Confirm'),
+                                      //     actions: [],
+                                      //   ),
+                                      // );
+                                    },
+                                    borderRadius: BorderRadius.circular(8),
+                                    backgroundColor: AppColor.errorColor,
+                                    padding: EdgeInsets.zero,
+                                    icon: Icons.delete_rounded,
+                                  ),
+                                ],
+                              ),
+                              child: CustomMyCart(
+                                  //width: Slidable.of(context)?.animation.isCompleted==true?100:400,
+                                  title: myCardController
+                                      .myCardList[index].variant!.name,
+                                  image: myCardController
+                                      .myCardList[index].variant!.imageUrl,
+                                  price:
+                                      myCardController.myCardList[index].price),
                             ),
-                            child: CustomMyCart(
-                                //width: Slidable.of(context)?.animation.isCompleted==true?100:400,
-                                title: myCardController
-                                    .myCardList[index].variant!.name,
-                                image: myCardController
-                                    .myCardList[index].variant!.imageUrl,
-                                price:
-                                    myCardController.myCardList[index].price),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Container(

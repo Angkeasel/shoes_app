@@ -34,8 +34,9 @@ class _DetailPageState extends State<DetailPage>
     with SingleTickerProviderStateMixin {
   @override
   void initState() {
-    // detailCon.currentIndex.value = 0;
-    // // detailCon.eachPrice.value = widget.detailModel!.images![0].eachPrice!;
+    detailCon.selectedColorIndex(0);
+    detailCon.selectedSizeIndex(-1);
+
     _animationController =
         AnimationController(duration: const Duration(seconds: 1), vsync: this);
     _animationController.forward();
@@ -456,7 +457,7 @@ class _DetailPageState extends State<DetailPage>
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
-                                                                            .only(
+                                                                        .only(
                                                                         bottom:
                                                                             0),
                                                                 child: Column(
@@ -569,7 +570,7 @@ class _DetailPageState extends State<DetailPage>
                                   textAlign: TextAlign.center,
                                 ),
                                 Text(
-                                  '\$${productDetailsModel.variants?.itemAt(detailCon.selectedColorIndex.value)?.sizes?.itemAt(0)?.price ?? 0}',
+                                  '\$${productDetailsModel.variants?.itemAt(detailCon.selectedColorIndex.value)?.price ?? 0}',
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600,
@@ -604,11 +605,8 @@ class _DetailPageState extends State<DetailPage>
                                       .id
                                       ?.toString();
 
-                                  final price = selectedColoredProduct
-                                      ?.sizes?[
-                                          detailCon.selectedSizeIndex.value]
-                                      .price
-                                      ?.toString();
+                                  final price =
+                                      selectedColoredProduct?.price?.toString();
                                   debugPrint('a : $price ');
                                   if (variantId == null ||
                                       sizeId == null ||

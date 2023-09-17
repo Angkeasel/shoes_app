@@ -22,80 +22,17 @@ class SelectDeliveryAddressPage extends StatelessWidget {
                   color: Colors.red,
                 ),
               )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const AddNewDeliveryAddress();
-                            },
-                          ),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        // decoration: BoxDecoration(
-                        //   color: Colors.white,
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: Colors.grey.shade300,
-                        //       offset: const Offset(0.3, 0.3),
-                        //     )
-                        //   ],
-                        // ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(Icons.add),
-                                const SizedBox(
-                                  width: 8.0,
-                                ),
-                                Text(
-                                  'Add New Delivery Address',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 30.0),
-                              child: Divider(
-                                color: Colors.grey.shade300,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 8.0, left: 20.0, right: 20.0),
-                    child: Text(
-                      'My Address',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                  ),
-                  Expanded(
-                    child: myCardController.deliveryAddressList.isNotEmpty
-                        ? SingleChildScrollView(
-                            child: Column(
-                              children: myCardController.deliveryAddressList
-                                  .asMap()
-                                  .entries
-                                  .map((e) {
+            : SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    myCardController.deliveryAddressList.isNotEmpty
+                        ? Column(
+                            children: myCardController.deliveryAddressList
+                                .asMap()
+                                .entries
+                                .map(
+                              (e) {
                                 return CustomDeliveryAddressCard(
                                   phoneNumber: e.value.phone,
                                   firstName: e.value.firstName,
@@ -109,14 +46,51 @@ class SelectDeliveryAddressPage extends StatelessWidget {
                                   },
                                   isDefualt: e.value.isDefault,
                                 );
-                              }).toList(),
-                            ),
+                              },
+                            ).toList(),
                           )
                         : const Center(
-                            child: NoProduct(text: 'No Address added'),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 30),
+                              child: NoProduct(text: 'No Address added'),
+                            ),
                           ),
-                  ),
-                ],
+                    SizedBox(
+                      width: double.infinity,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const AddNewDeliveryAddress();
+                              },
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 20.0),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.add),
+                              const SizedBox(width: 8.0),
+                              Text(
+                                'Add New Delivery Address',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
       ),
     );

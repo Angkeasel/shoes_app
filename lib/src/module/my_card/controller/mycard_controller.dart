@@ -1,6 +1,7 @@
 import 'package:allpay/src/module/my_card/controller/map_controller.dart';
 import 'package:allpay/src/module/my_card/model/address/address_models.dart';
 import 'package:allpay/src/module/my_card/model/mycard/my_card_model.dart';
+import 'package:allpay/src/util/alert_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -19,7 +20,10 @@ class MyCardController extends GetxController {
 
   num get getTotalCost => myCardList.isNotEmpty
       ? myCardList.fold(
-          0, (previousValue, element) => previousValue + (element.price ?? 0))
+          0,
+          (previousValue, element) =>
+              previousValue +
+              ((element.variant?.price ?? 0) * element.quantity!))
       : 0;
 
   final loadingCart = false.obs;
@@ -115,27 +119,34 @@ class MyCardController extends GetxController {
   Future<void> postAddress(
     BuildContext context,
   ) async {
-    await _api.onNetworkRequesting(
-        url: 'delivery-address',
-        methode: METHODE.post,
-        isAuthorize: true,
-        body: {
-          "first_name": firstNameController.text,
-          "last_name": lastNameController.text,
-          "phone": phoneController.text,
-          "street_no": streetNumberController.text,
-          "home_no": homeNumberController.text,
-          "full_address": fullAddressController.text,
-          "latitute": mapController.latitude.toDouble(),
-          "longtitute": mapController.longitude.toDouble(),
-        }).then((response) async {
-      context.pop();
+    final body = {
+      "first_name": firstNameController.text,
+      "last_name": lastNameController.text,
+      "phone": phoneController.text,
+      "street_no": streetNumberController.text,
+      "home_no": homeNumberController.text,
+      "full_address": fullAddressController.text,
+      "latitute": mapController.latitude.toDouble(),
+      "longtitute": mapController.longitude.toDouble(),
+    };
+    await _api
+        .onNetworkRequesting(
+      url: 'delivery-address',
+      methode: METHODE.post,
+      isAuthorize: true,
+      body: body,
+    )
+        .then((response) async {
       context.pop();
       debugPrint('Post adrees Success : $response');
       clearTextController();
     }).onError((ErrorModel error, stackTrace) {
       debugPrint(
           'Post Adress not work : ${error.bodyString}, ${error.statusCode}');
+      alertErrorSnackbar(
+        message: error.bodyString['message'],
+        title: 'Add Fail',
+      );
     });
   }
 

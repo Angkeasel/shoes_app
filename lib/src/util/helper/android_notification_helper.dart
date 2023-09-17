@@ -24,7 +24,7 @@ class AndroidNotificationHelper {
   Future<void> init() async {
     await _requestNotificationPermission();
     await _initLocalNotificationSetting();
-    _messaging.getToken().then((value) => print('TOKEN : $value'));
+    _messaging.getToken().then((value) => print('Firebase Token : $value'));
     _onClickMessageOpenedApp();
     _onListenting();
   }

@@ -15,9 +15,9 @@ _$_MyCardModel _$$_MyCardModelFromJson(Map<String, dynamic> json) =>
       variant: json['variant'] == null
           ? null
           : Variants.fromJson(json['variant'] as Map<String, dynamic>),
-      product: json['product'] == null
+      product: json['size'] == null
           ? null
-          : VariantSizes.fromJson(json['product'] as Map<String, dynamic>),
+          : VariantSizes.fromJson(json['size'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_MyCardModelToJson(_$_MyCardModel instance) =>
@@ -27,5 +27,5 @@ Map<String, dynamic> _$$_MyCardModelToJson(_$_MyCardModel instance) =>
       'quantity': instance.quantity,
       'createdAt': instance.createdAt,
       'variant': instance.variant,
-      'product': instance.product,
+      'size': instance.product,
     };

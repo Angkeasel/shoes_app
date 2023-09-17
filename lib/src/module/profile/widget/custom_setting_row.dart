@@ -9,47 +9,57 @@ class CustomSettingRow extends StatelessWidget {
   final String? lastText;
   final String? moreText;
 
-  const CustomSettingRow( 
+  const CustomSettingRow(
       {super.key,
       this.title,
       this.onTap,
       this.isMoreText = false,
       this.isLastText = false,
-      this.lastText,this.moreText});
+      this.lastText,
+      this.moreText});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical:5 ),
-        color: Colors.transparent,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(title ?? '',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(fontWeight: FontWeight.w500)),
-            const Spacer(),
-            isMoreText!
-                ? Text(moreText??'',
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w400, color: AppColor.grey1Color))
-                : const SizedBox(),
-                const SizedBox(width: 10,),
-            isLastText!
-                ? Text(lastText ?? '',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(fontWeight: FontWeight.w400))
-                : const Icon(
+    return Material(
+      type: MaterialType.transparency,
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          padding: const EdgeInsets.symmetric(
+            vertical: 15,
+            horizontal: 20.0,
+          ),
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(title ?? '',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleSmall!
+                      .copyWith(fontWeight: FontWeight.w500)),
+              const Spacer(),
+              isMoreText!
+                  ? Text(moreText ?? '',
+                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: AppColor.grey1Color))
+                  : const SizedBox(),
+              const SizedBox(
+                width: 10,
+              ),
+              isLastText!
+                  ? Text(lastText ?? '',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall!
+                          .copyWith(fontWeight: FontWeight.w400))
+                  : const Icon(
                       Icons.arrow_forward_ios_sharp,
                       size: 16,
                     )
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -22,37 +22,41 @@ class CustomButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: width ?? double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: color ?? AppColor.primaryColor,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (image != null)
-              image!.contains('svg')
-                  ? SvgPicture.asset(image!)
-                  : Image.asset(
-                      image!,
-                      color: Colors.white,
-                      height: 22,
-                    ),
-            SizedBox(
-              width: image != null ? 10 : 0,
-            ),
-            Text(
-              title ?? '',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: textColor ?? Colors.white),
-            ),
-          ],
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(12),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: onTap,
+        child: Ink(
+          width: width ?? double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          decoration: BoxDecoration(
+            color: color ?? AppColor.primaryColor,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (image != null)
+                image!.contains('svg')
+                    ? SvgPicture.asset(image!)
+                    : Image.asset(
+                        image!,
+                        color: Colors.white,
+                        height: 22,
+                      ),
+              SizedBox(
+                width: image != null ? 10 : 0,
+              ),
+              Text(
+                title ?? '',
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: textColor ?? Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );

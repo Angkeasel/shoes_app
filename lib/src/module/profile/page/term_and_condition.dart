@@ -6,8 +6,10 @@ class TermAndCondition extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Terms and Conditions'),
+        backgroundColor: Colors.white,
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),

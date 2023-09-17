@@ -26,7 +26,6 @@ class VariantSizes with _$VariantSizes {
   factory VariantSizes({
     @JsonKey(name: 'id') final int? id,
     @JsonKey(name: 'size_text') final String? sizeText,
-    @JsonKey(name: 'price') final double? price,
     @JsonKey(name: 'qty') final int? qty,
     @JsonKey(name: 'variant_id') final int? variantId,
   }) = _VariantSizes;
@@ -44,6 +43,7 @@ class Variants with _$Variants {
     @JsonKey(name: 'product_name') final String? productName,
     @JsonKey(name: 'image_url') final String? imageUrl,
     @JsonKey(name: 'sizes') final List<VariantSizes>? sizes,
+    @JsonKey(name: 'price') final double? price,
   }) = _Variants;
 
   factory Variants.fromJson(Map<String, dynamic> json) =>

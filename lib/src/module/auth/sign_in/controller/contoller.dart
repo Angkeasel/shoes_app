@@ -17,6 +17,7 @@ class ControllerSignin extends GetxController {
   var isInputEmail = "".obs;
   var isPassword = "".obs;
   var isvalidate = false.obs;
+
   //login
   var isInputEmailLog = "".obs;
   var isPasswordLog = "".obs;
@@ -54,11 +55,13 @@ class ControllerSignin extends GetxController {
       };
       await api
           .onNetworkRequesting(
-              url: 'signin',
-              methode: METHODE.post,
-              isAuthorize: false,
-              body: loginBody)
+        url: 'signin',
+        methode: METHODE.post,
+        isAuthorize: false,
+        body: loginBody,
+      )
           .then((value) async {
+        debugPrint("Response : $value");
         await LocalStorage.storeData(
             key: 'access_token', value: value['accessToken']);
         loginLoading(false);

@@ -11,7 +11,7 @@ ThemeData theme() {
     disabledColor: AppColor.disableColor,
     scaffoldBackgroundColor: AppColor.backgroundColor,
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColor.backgroundColor,
       // backgroundColor: AppColor.backgroundColor,
       centerTitle: true,
       systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -23,7 +23,7 @@ ThemeData theme() {
         color: AppColor.appbarColor,
       ),
       elevation: 0,
-      surfaceTintColor: Colors.black,
+      surfaceTintColor: Colors.transparent,
       // shadowColor: Colors.transparent,
     ),
     textTheme: const TextTheme(
