@@ -21,7 +21,7 @@ class CustomEmailCart extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.amber,
+            color: Colors.grey[300],
           ),
           child: SvgPicture.asset(
             icons ?? "",

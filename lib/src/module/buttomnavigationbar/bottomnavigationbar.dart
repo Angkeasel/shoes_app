@@ -1,3 +1,4 @@
+import 'package:allpay/src/module/profile/controller/view_order_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,8 @@ class ButtomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bottomBarCon = Get.put(OnBoardingController());
+    final viewOrderCon = Get.put(ViewOrderController());
+
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -82,14 +85,28 @@ class ButtomNavigationBar extends StatelessWidget {
                       )),
                   label: ''),
               BottomNavigationBarItem(
-                  icon: Column(
+                  icon: viewOrderCon.viewOrderList.isEmpty ? Image.asset(
+                        bottomBarCon.activeIndex.value == 3
+                            ? 'assets/png/order_sum.png'
+                            : 'assets/png/order_sum.png',
+                        color: bottomBarCon.activeIndex.value == 3 ? Colors.blue : Colors.grey,
+                        height: 26,
+                      ) : Stack(
                     children: [
                       Image.asset(
                         bottomBarCon.activeIndex.value == 3
-                            ? 'assets/png/notification.png'
-                            : 'assets/png/unNotification.png',
-                        // color: activeIndex == 3 ? Colors.blue : Colors.grey,
+                            ? 'assets/png/order_sum.png'
+                            : 'assets/png/order_sum.png',
+                        color: bottomBarCon.activeIndex.value == 3 ? Colors.blue : Colors.grey,
                         height: 26,
+                      ),
+                     Positioned(
+                        right: 0,
+                        bottom:0,
+                        child: Container(
+                           padding: EdgeInsets.all(viewOrderCon.viewOrderList.length<10 ?5:2),
+                              decoration: const BoxDecoration(color: Colors.red ,shape: BoxShape.circle),
+                              child: Center(child: Text('${viewOrderCon.viewOrderList.length}', style: const TextStyle(color: Colors.white),)),),
                       ),
                     ],
                   ),

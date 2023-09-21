@@ -28,7 +28,7 @@ class CustomTextLable extends StatelessWidget {
                   .copyWith(color: const Color(0xff707B81), fontSize: 16),
         ),
         Text(
-          "\$${NumberFormat('###.00').format(lablePrice)}",
+          "\$${NumberFormat('###0.00').format(lablePrice)}",
           style: styleLable ??
               Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: const Color(0xff1A2530),

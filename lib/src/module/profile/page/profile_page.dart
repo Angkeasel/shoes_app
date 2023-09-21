@@ -566,16 +566,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       CustomSettingRow(
                         title: 'Notification',
-                        onTap: () {},
+                        onTap: () {
+                          context.push('/mycart/-rourter');
+                        },
                       ),
-                      CustomSettingRow(
-                        title: 'Language',
-                        onTap: () {},
-                      ),
+                      // CustomSettingRow(
+                      //   title: 'Language',
+                      //   onTap: () {},
+                      // ),
                       const SizedBox(height: 16),
                       CustomSettingRow(
                         title: 'My Order',
                         onTap: () {
+                          context.push('/view-order');
                           debugPrint('onTap');
 
                           viewOrderCon.fetchOrderProducts();
@@ -584,23 +587,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       CustomSettingRow(
                         title: 'My Favourite',
                         onTap: () {
+                          context.push('/fav');
                           debugPrint('onTap');
                         },
                       ),
                       const SizedBox(height: 16),
 
-                      CustomSettingRow(
-                        title: 'Term and Condition',
-                        onTap: () {
-                          Get.to(() => const TermAndCondition());
-                        },
-                      ),
-                      CustomSettingRow(
-                        title: 'Policy Privacy',
-                        onTap: () {
-                          debugPrint('onTap');
-                        },
-                      ),
+                      // CustomSettingRow(
+                      //   title: 'Term and Condition',
+                      //   onTap: () {
+                      //     Get.to(() => const TermAndCondition());
+                      //   },
+                      // ),
+                      // CustomSettingRow(
+                      //   title: 'Policy Privacy',
+                      //   onTap: () {
+                      //     debugPrint('onTap');
+                      //   },
+                      // ),
 
                       Padding(
                         padding: const EdgeInsets.symmetric(

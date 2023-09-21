@@ -11,6 +11,7 @@ class CustomButtons extends StatelessWidget {
     this.color,
     this.width,
     this.textColor,
+    this.disable = false
   });
 
   final String? title;
@@ -19,6 +20,7 @@ class CustomButtons extends StatelessWidget {
   final Color? color;
   final double? width;
   final Color? textColor;
+  final bool ? disable;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,12 @@ class CustomButtons extends StatelessWidget {
       borderRadius: BorderRadius.circular(12),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
-        onTap: onTap,
+        onTap: disable!?null:onTap,
         child: Ink(
           width: width ?? double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
           decoration: BoxDecoration(
-            color: color ?? AppColor.primaryColor,
+            color:disable!?Colors.grey :color ?? AppColor.primaryColor,
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
