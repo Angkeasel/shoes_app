@@ -24,10 +24,11 @@ class CustomMenu extends StatelessWidget {
           flex: 2,
           child: Text(
             name ?? '',
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
+                  fontFamily: 'poppins-regular',
                 ),
           ),
         ),
@@ -36,6 +37,7 @@ class CustomMenu extends StatelessWidget {
             sized ?? "",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
+                  fontFamily: 'poppins-regular',
                 ),
           ),
         ),
@@ -44,6 +46,7 @@ class CustomMenu extends StatelessWidget {
             "$qty",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
+                  fontFamily: 'poppins-regular',
                 ),
           ),
         ),
@@ -52,6 +55,7 @@ class CustomMenu extends StatelessWidget {
             "\$$price",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
+                  fontFamily: 'poppins-regular',
                 ),
           ),
         ),
@@ -60,6 +64,7 @@ class CustomMenu extends StatelessWidget {
             "\$$amount",
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   color: Colors.black,
+                  fontFamily: 'poppins-regular',
                 ),
           ),
         ),

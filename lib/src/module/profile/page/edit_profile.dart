@@ -425,8 +425,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   Container(
                     color: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 10.0),
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
                     margin: const EdgeInsets.symmetric(vertical: 10.0),
                     child: CustomSettingRow(
                       title: 'Change Password',
@@ -461,8 +460,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     height: 10,
                   ),
                   Container(
-                    padding: const EdgeInsets.only(
-                        left: 20, top: 15, bottom: 15, right: 10),
+                    padding:
+                        const EdgeInsets.only(top: 15, bottom: 15, right: 10),
                     color: Colors.white,
                     child: Column(
                       children: [

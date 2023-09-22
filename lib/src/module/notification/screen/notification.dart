@@ -1,27 +1,28 @@
 import 'package:allpay/src/module/notification/controller/controller_notification.dart';
 import 'package:allpay/src/widget/custom_card_notification.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class NotificationScreen extends StatelessWidget {
+class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);
 
   @override
+  State<NotificationScreen> createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  final _notiController = Get.put(NotificationController());
+  @override
+  void initState() {
+    _notiController.fetchAllNoticaitons();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final notificationCon = Get.put(NotificationController());
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: SvgPicture.asset(
-            "assets/svg/arrowBack.svg",
-            fit: BoxFit.none,
-          ),
-        ),
         title: Text(
           "Notification",
           style: GoogleFonts.poppins(
@@ -31,54 +32,28 @@ class NotificationScreen extends StatelessWidget {
         elevation: 0,
       ),
       backgroundColor: Colors.white,
-      body: ListView(
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        children: [
-          Text(
-            "Today",
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Column(
-            children: notificationCon.notificationList
-                .asMap()
-                .entries
-                .map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: CustomNotification(
-                      notificationModel: e.value,
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-          Text(
-            "Yesterday",
-            style: GoogleFonts.poppins(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Column(
-            children: notificationCon.notificationList
-                .asMap()
-                .entries
-                .map(
-                  (e) => Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: CustomNotification(
-                      notificationModel: e.value,
-                    ),
-                  ),
-                )
-                .toList(),
-          )
-        ],
+      body: Obx(
+        () => _notiController.getNotificationLoading.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: _notiController.fetchAllNoticaitons,
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(left: 20, right: 20)
+                      .copyWith(bottom: 30),
+                  itemCount: _notiController.listNotification.length,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 20),
+                  itemBuilder: (context, index) {
+                    final notification =
+                        _notiController.listNotification[index];
+                    return CustomNotification(
+                      notificationModel: notification,
+                    );
+                  },
+                ),
+              ),
       ),
     );
   }

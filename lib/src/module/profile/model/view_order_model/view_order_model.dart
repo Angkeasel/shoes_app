@@ -26,8 +26,8 @@ class Deliveryaddress with _$Deliveryaddress {
     @JsonKey(name: 'street_no') final String? streetNo,
     @JsonKey(name: 'home_no') final String? homeNo,
     @JsonKey(name: 'full_address') final String? fullAddress,
-    final double? latitute,
-    final int? longtitute,
+    final num? latitute,
+    final num? longtitute,
   }) = _Deliveryaddress;
 
   factory Deliveryaddress.fromJson(Map<String, dynamic> json) =>

@@ -40,7 +40,7 @@ class FavouritePage extends StatelessWidget {
                         children: [
                           const Icon(
                             Icons.favorite_border_rounded,
-                            size: 26,
+                            size: 50,
                           ),
                           const SizedBox(height: 5),
                           Text(

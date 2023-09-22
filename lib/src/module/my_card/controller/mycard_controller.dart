@@ -1,7 +1,9 @@
 import 'package:allpay/src/module/my_card/controller/map_controller.dart';
 import 'package:allpay/src/module/my_card/model/address/address_models.dart';
 import 'package:allpay/src/module/my_card/model/mycard/my_card_model.dart';
+import 'package:allpay/src/module/my_card/screen/order_sucess.dart';
 import 'package:allpay/src/util/alert_snackbar.dart';
+import 'package:allpay/src/util/loading/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -56,7 +58,16 @@ class MyCardController extends GetxController {
   final isDefault = false.obs;
   final deliveryAddressList = <AddressModels>[].obs;
   final deliveryAddressModel = AddressModels().obs;
+  final Rx<AddressModels?> selectedAdress = Rx(null);
   final isFetchingDeliveryAddress = false.obs;
+
+  void selectAdress() {
+    if (deliveryAddressList.isNotEmpty) {
+      selectedAdress.value =
+          deliveryAddressList.where((e) => e.isDefault == true).first;
+      debugPrint('Delivery Address $selectedAdress');
+    }
+  }
 
   Future fetchDeliveryAddress() async {
     isFetchingDeliveryAddress(true);
@@ -87,15 +98,16 @@ class MyCardController extends GetxController {
   }
 
   // Place Order
-  Future<void> placeOrder() async {
+
+  Future<void> placeOrder({
+    required BuildContext context,
+    required String deliveryAddressId,
+    required double total,
+  }) async {
+    showLoading(context);
     final body = {
-      "total_amount": 32.2,
-      "deliveryaddress_id": 1,
-      "prices": myCardList.map((element) => element.price).toList(),
-      "quantities": myCardList.map((element) => element.quantity).toList(),
-      "variant_ids": myCardList.map((element) => element.variant?.id).toList(),
-      // "size_ids": myCardList.map((element) => element.variant.sizes).toList(),
-      "product_ids": myCardList.map((element) => element.product?.id).toList()
+      "deliveryaddress_id": deliveryAddressId,
+      "total": total,
     };
     await _api
         .onNetworkRequesting(
@@ -107,10 +119,21 @@ class MyCardController extends GetxController {
         .then(
       (resBody) async {
         debugPrint(' $resBody');
-        await Get.put(MyCardController()).getMyCard(loading: false);
+        removeLoading();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const OrderDetail();
+            },
+          ),
+        );
+        Get.put(MyCardController()).getMyCard(loading: false);
       },
     ).onError(
       (ErrorModel error, _) {
+        removeLoading();
+        alertErrorSnackbar(title: 'Error', message: "Order Fail");
         debugPrint('${error.bodyString}');
       },
     );
@@ -140,6 +163,7 @@ class MyCardController extends GetxController {
       context.pop();
       debugPrint('Post adrees Success : $response');
       clearTextController();
+      fetchDeliveryAddress();
     }).onError((ErrorModel error, stackTrace) {
       debugPrint(
           'Post Adress not work : ${error.bodyString}, ${error.statusCode}');

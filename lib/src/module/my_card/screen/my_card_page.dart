@@ -251,6 +251,8 @@ class _MyCardPageState extends State<MyCardPage> {
                                   //width: Slidable.of(context)?.animation.isCompleted==true?100:400,
                                   title: myCardController
                                       .myCardList[index].variant!.name,
+                                  size: myCardController
+                                      .myCardList[index].size?.sizeText,
                                   image: myCardController
                                       .myCardList[index].variant!.imageUrl,
                                   price:
@@ -309,7 +311,8 @@ class _MyCardPageState extends State<MyCardPage> {
                                   .titleSmall!
                                   .copyWith(color: const Color(0xff2B2B2B)),
                               lablePrice:
-                                  myCardController.getTotalCost.toDouble()+0.5,
+                                  myCardController.getTotalCost.toDouble() +
+                                      0.5,
                               styleLable: Theme.of(context)
                                   .textTheme
                                   .titleSmall!
@@ -323,21 +326,27 @@ class _MyCardPageState extends State<MyCardPage> {
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 20),
-                          child: myCardController.myCardList.isEmpty?CustomButtons(title: 'Check Out', onTap: (){}, disable: true,): CustomButtons(
-                            title: 'Check Out',
-                           
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) {
-                                    debugPrint('======>${ myCardController.myCardList[0].variant?.sizes?[0].sizeText}');
-                                    return const CheckOutMyCart();
+                          child: myCardController.myCardList.isEmpty
+                              ? CustomButtons(
+                                  title: 'Check Out',
+                                  onTap: () {},
+                                  disable: true,
+                                )
+                              : CustomButtons(
+                                  title: 'Check Out',
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) {
+                                          debugPrint(
+                                              '======>${myCardController.myCardList[0].variant?.sizes?[0].sizeText}');
+                                          return const CheckOutMyCart();
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
-                              );
-                            },
-                          ),
                         )
                       ],
                     ),

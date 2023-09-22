@@ -341,8 +341,8 @@ mixin _$Deliveryaddress {
   String? get homeNo => throw _privateConstructorUsedError;
   @JsonKey(name: 'full_address')
   String? get fullAddress => throw _privateConstructorUsedError;
-  double? get latitute => throw _privateConstructorUsedError;
-  int? get longtitute => throw _privateConstructorUsedError;
+  num? get latitute => throw _privateConstructorUsedError;
+  num? get longtitute => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -361,8 +361,8 @@ abstract class $DeliveryaddressCopyWith<$Res> {
       @JsonKey(name: 'street_no') String? streetNo,
       @JsonKey(name: 'home_no') String? homeNo,
       @JsonKey(name: 'full_address') String? fullAddress,
-      double? latitute,
-      int? longtitute});
+      num? latitute,
+      num? longtitute});
 }
 
 /// @nodoc
@@ -405,11 +405,11 @@ class _$DeliveryaddressCopyWithImpl<$Res, $Val extends Deliveryaddress>
       latitute: freezed == latitute
           ? _value.latitute
           : latitute // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as num?,
       longtitute: freezed == longtitute
           ? _value.longtitute
           : longtitute // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
     ) as $Val);
   }
 }
@@ -427,8 +427,8 @@ abstract class _$$_DeliveryaddressCopyWith<$Res>
       @JsonKey(name: 'street_no') String? streetNo,
       @JsonKey(name: 'home_no') String? homeNo,
       @JsonKey(name: 'full_address') String? fullAddress,
-      double? latitute,
-      int? longtitute});
+      num? latitute,
+      num? longtitute});
 }
 
 /// @nodoc
@@ -469,11 +469,11 @@ class __$$_DeliveryaddressCopyWithImpl<$Res>
       latitute: freezed == latitute
           ? _value.latitute
           : latitute // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as num?,
       longtitute: freezed == longtitute
           ? _value.longtitute
           : longtitute // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as num?,
     ));
   }
 }
@@ -504,9 +504,9 @@ class _$_Deliveryaddress implements _Deliveryaddress {
   @JsonKey(name: 'full_address')
   final String? fullAddress;
   @override
-  final double? latitute;
+  final num? latitute;
   @override
-  final int? longtitute;
+  final num? longtitute;
 
   @override
   String toString() {
@@ -555,8 +555,8 @@ abstract class _Deliveryaddress implements Deliveryaddress {
       @JsonKey(name: 'street_no') final String? streetNo,
       @JsonKey(name: 'home_no') final String? homeNo,
       @JsonKey(name: 'full_address') final String? fullAddress,
-      final double? latitute,
-      final int? longtitute}) = _$_Deliveryaddress;
+      final num? latitute,
+      final num? longtitute}) = _$_Deliveryaddress;
 
   factory _Deliveryaddress.fromJson(Map<String, dynamic> json) =
       _$_Deliveryaddress.fromJson;
@@ -573,9 +573,9 @@ abstract class _Deliveryaddress implements Deliveryaddress {
   @JsonKey(name: 'full_address')
   String? get fullAddress;
   @override
-  double? get latitute;
+  num? get latitute;
   @override
-  int? get longtitute;
+  num? get longtitute;
   @override
   @JsonKey(ignore: true)
   _$$_DeliveryaddressCopyWith<_$_Deliveryaddress> get copyWith =>

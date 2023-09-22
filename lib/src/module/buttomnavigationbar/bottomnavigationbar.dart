@@ -18,7 +18,6 @@ class ButtomNavigationBar extends StatelessWidget {
     final bottomBarCon = Get.put(OnBoardingController());
     final viewOrderCon = Get.put(ViewOrderController());
 
-
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       // resizeToAvoidBottomInset: false,
@@ -70,47 +69,33 @@ class ButtomNavigationBar extends StatelessWidget {
                   label: 'Statistics'),
               BottomNavigationBarItem(
                   icon: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColor.primaryColor,
-                          boxShadow: [
-                            BoxShadow(blurRadius: 7, color: Color(0xFF6E98F8))
-                          ]),
-                      child: SvgPicture.asset(
-                        bottomBarCon.activeIndex.value == 2
-                            ? 'assets/svg/bag-2.svg'
-                            : 'assets/svg/bag-2.svg',
-                        height: 20,
-                      )),
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColor.primaryColor,
+                        boxShadow: [
+                          BoxShadow(blurRadius: 7, color: Color(0xFF6E98F8))
+                        ]),
+                    child: SvgPicture.asset(
+                      bottomBarCon.activeIndex.value == 2
+                          ? 'assets/svg/bag-2.svg'
+                          : 'assets/svg/bag-2.svg',
+                      height: 20,
+                    ),
+                  ),
                   label: ''),
               BottomNavigationBarItem(
-                  icon: viewOrderCon.viewOrderList.isEmpty ? Image.asset(
-                        bottomBarCon.activeIndex.value == 3
-                            ? 'assets/png/order_sum.png'
-                            : 'assets/png/order_sum.png',
-                        color: bottomBarCon.activeIndex.value == 3 ? Colors.blue : Colors.grey,
-                        height: 26,
-                      ) : Stack(
-                    children: [
-                      Image.asset(
-                        bottomBarCon.activeIndex.value == 3
-                            ? 'assets/png/order_sum.png'
-                            : 'assets/png/order_sum.png',
-                        color: bottomBarCon.activeIndex.value == 3 ? Colors.blue : Colors.grey,
-                        height: 26,
-                      ),
-                     Positioned(
-                        right: 0,
-                        bottom:0,
-                        child: Container(
-                           padding: EdgeInsets.all(viewOrderCon.viewOrderList.length<10 ?5:2),
-                              decoration: const BoxDecoration(color: Colors.red ,shape: BoxShape.circle),
-                              child: Center(child: Text('${viewOrderCon.viewOrderList.length}', style: const TextStyle(color: Colors.white),)),),
-                      ),
-                    ],
-                  ),
-                  label: 'My Card'),
+                icon: Image.asset(
+                  bottomBarCon.activeIndex.value == 3
+                      ? 'assets/png/unNotification.png'
+                      : 'assets/png/notification.png',
+                  color: bottomBarCon.activeIndex.value == 3
+                      ? Colors.blue
+                      : Colors.grey,
+                  height: 26,
+                ),
+                label: 'Notification',
+              ),
               BottomNavigationBarItem(
                   icon: Column(
                     children: [
@@ -140,7 +125,7 @@ _selectedIndex(BuildContext context) {
     bottomBarCon.activeIndex(4);
     return 4;
   }
-  if (location.startsWith('/mycart/-rourte')) {
+  if (location.startsWith('/notification')) {
     bottomBarCon.activeIndex(3);
     return 3;
   }
@@ -171,7 +156,7 @@ _onItemTapped(int index, BuildContext context) {
       GoRouter.of(context).push('/cart');
       break;
     case 3:
-      GoRouter.of(context).go('/mycart/-rourter');
+      GoRouter.of(context).go('/notification');
       break;
     case 4:
       GoRouter.of(context).go('/profile/-rourter');

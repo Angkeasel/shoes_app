@@ -26,7 +26,7 @@ mixin _$MyCardModel {
   String? get createdAt => throw _privateConstructorUsedError;
   Variants? get variant => throw _privateConstructorUsedError;
   @JsonKey(name: 'size')
-  VariantSizes? get product => throw _privateConstructorUsedError;
+  VariantSizes? get size => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,10 +46,10 @@ abstract class $MyCardModelCopyWith<$Res> {
       int? quantity,
       String? createdAt,
       Variants? variant,
-      @JsonKey(name: 'size') VariantSizes? product});
+      @JsonKey(name: 'size') VariantSizes? size});
 
   $VariantsCopyWith<$Res>? get variant;
-  $VariantSizesCopyWith<$Res>? get product;
+  $VariantSizesCopyWith<$Res>? get size;
 }
 
 /// @nodoc
@@ -70,7 +70,7 @@ class _$MyCardModelCopyWithImpl<$Res, $Val extends MyCardModel>
     Object? quantity = freezed,
     Object? createdAt = freezed,
     Object? variant = freezed,
-    Object? product = freezed,
+    Object? size = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -93,9 +93,9 @@ class _$MyCardModelCopyWithImpl<$Res, $Val extends MyCardModel>
           ? _value.variant
           : variant // ignore: cast_nullable_to_non_nullable
               as Variants?,
-      product: freezed == product
-          ? _value.product
-          : product // ignore: cast_nullable_to_non_nullable
+      size: freezed == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
               as VariantSizes?,
     ) as $Val);
   }
@@ -114,13 +114,13 @@ class _$MyCardModelCopyWithImpl<$Res, $Val extends MyCardModel>
 
   @override
   @pragma('vm:prefer-inline')
-  $VariantSizesCopyWith<$Res>? get product {
-    if (_value.product == null) {
+  $VariantSizesCopyWith<$Res>? get size {
+    if (_value.size == null) {
       return null;
     }
 
-    return $VariantSizesCopyWith<$Res>(_value.product!, (value) {
-      return _then(_value.copyWith(product: value) as $Val);
+    return $VariantSizesCopyWith<$Res>(_value.size!, (value) {
+      return _then(_value.copyWith(size: value) as $Val);
     });
   }
 }
@@ -139,12 +139,12 @@ abstract class _$$_MyCardModelCopyWith<$Res>
       int? quantity,
       String? createdAt,
       Variants? variant,
-      @JsonKey(name: 'size') VariantSizes? product});
+      @JsonKey(name: 'size') VariantSizes? size});
 
   @override
   $VariantsCopyWith<$Res>? get variant;
   @override
-  $VariantSizesCopyWith<$Res>? get product;
+  $VariantSizesCopyWith<$Res>? get size;
 }
 
 /// @nodoc
@@ -163,7 +163,7 @@ class __$$_MyCardModelCopyWithImpl<$Res>
     Object? quantity = freezed,
     Object? createdAt = freezed,
     Object? variant = freezed,
-    Object? product = freezed,
+    Object? size = freezed,
   }) {
     return _then(_$_MyCardModel(
       id: freezed == id
@@ -186,9 +186,9 @@ class __$$_MyCardModelCopyWithImpl<$Res>
           ? _value.variant
           : variant // ignore: cast_nullable_to_non_nullable
               as Variants?,
-      product: freezed == product
-          ? _value.product
-          : product // ignore: cast_nullable_to_non_nullable
+      size: freezed == size
+          ? _value.size
+          : size // ignore: cast_nullable_to_non_nullable
               as VariantSizes?,
     ));
   }
@@ -203,7 +203,7 @@ class _$_MyCardModel implements _MyCardModel {
       this.quantity,
       this.createdAt,
       this.variant,
-      @JsonKey(name: 'size') this.product});
+      @JsonKey(name: 'size') this.size});
 
   factory _$_MyCardModel.fromJson(Map<String, dynamic> json) =>
       _$$_MyCardModelFromJson(json);
@@ -220,11 +220,11 @@ class _$_MyCardModel implements _MyCardModel {
   final Variants? variant;
   @override
   @JsonKey(name: 'size')
-  final VariantSizes? product;
+  final VariantSizes? size;
 
   @override
   String toString() {
-    return 'MyCardModel(id: $id, price: $price, quantity: $quantity, createdAt: $createdAt, variant: $variant, product: $product)';
+    return 'MyCardModel(id: $id, price: $price, quantity: $quantity, createdAt: $createdAt, variant: $variant, size: $size)';
   }
 
   @override
@@ -239,13 +239,13 @@ class _$_MyCardModel implements _MyCardModel {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.variant, variant) || other.variant == variant) &&
-            (identical(other.product, product) || other.product == product));
+            (identical(other.size, size) || other.size == size));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, price, quantity, createdAt, variant, product);
+  int get hashCode =>
+      Object.hash(runtimeType, id, price, quantity, createdAt, variant, size);
 
   @JsonKey(ignore: true)
   @override
@@ -268,7 +268,7 @@ abstract class _MyCardModel implements MyCardModel {
       final int? quantity,
       final String? createdAt,
       final Variants? variant,
-      @JsonKey(name: 'size') final VariantSizes? product}) = _$_MyCardModel;
+      @JsonKey(name: 'size') final VariantSizes? size}) = _$_MyCardModel;
 
   factory _MyCardModel.fromJson(Map<String, dynamic> json) =
       _$_MyCardModel.fromJson;
@@ -285,7 +285,7 @@ abstract class _MyCardModel implements MyCardModel {
   Variants? get variant;
   @override
   @JsonKey(name: 'size')
-  VariantSizes? get product;
+  VariantSizes? get size;
   @override
   @JsonKey(ignore: true)
   _$$_MyCardModelCopyWith<_$_MyCardModel> get copyWith =>

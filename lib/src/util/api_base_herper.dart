@@ -39,8 +39,8 @@ class ApiBaseHelper {
       'Authorization': isAuthorize ? 'Bearer $token' : '',
     };
 
-    debugPrint('Full Url > $fullUrl');
-    debugPrint('Access Token > $token');
+    debugPrint('💎 $fullUrl');
+
     try {
       switch (methode) {
         case METHODE.get:

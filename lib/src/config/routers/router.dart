@@ -11,6 +11,7 @@ import 'package:allpay/src/module/home/pages/search_result_screen.dart';
 import 'package:allpay/src/module/my_card/screen/add_new_delivery_address.dart';
 import 'package:allpay/src/module/my_card/screen/choose_location_address.dart';
 import 'package:allpay/src/module/my_card/screen/my_card_page.dart';
+import 'package:allpay/src/module/my_card/screen/order_list_screen.dart';
 import 'package:allpay/src/module/notification/screen/notification.dart';
 import 'package:allpay/src/module/profile/page/edit_profile.dart';
 import 'package:allpay/src/module/profile/page/profile_page.dart';
@@ -210,7 +211,7 @@ final _shellRoutes = <GoRoute>[
   //GoRoute(path: '/boarding',builder: (_, state)=>const OnBoardingScreen()),
 
   GoRoute(
-    path: '/mycart/-rourter',
+    path: '/notification',
     pageBuilder: (_, state) => const NoTransitionPage(
       child: NotificationScreen(),
     ),

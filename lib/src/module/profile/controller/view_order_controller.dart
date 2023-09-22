@@ -1,8 +1,10 @@
 import 'package:allpay/src/module/profile/model/order_invoice_model/order_invoice_model.dart';
 import 'package:allpay/src/module/profile/model/view_order_model/view_order_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
+import 'package:allpay/src/util/loading/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class ViewOrderController extends GetxController {
   final _apiBaseHelper = ApiBaseHelper();
@@ -12,6 +14,7 @@ class ViewOrderController extends GetxController {
   Future<List<ViewOrderModel>> fetchOrderProducts() async {
     try {
       isLoadingOrderProduct(true);
+
       await _apiBaseHelper
           .onNetworkRequesting(
         url: 'order',
@@ -54,5 +57,27 @@ class ViewOrderController extends GetxController {
       isLoadingOrderInvoice(false);
     }
     return orderInvoiceModel.value;
+  }
+
+  Future canCelOrder(int id, BuildContext context) async {
+    try {
+      showLoading(context);
+      await _apiBaseHelper.onNetworkRequesting(
+        url: 'cancel-order/$id',
+        methode: METHODE.update,
+        isAuthorize: true,
+        body: {},
+      ).then((response) {
+        fetchOrderProducts();
+        removeLoading();
+        context.pop();
+      }).onError((ErrorModel error, stackTrace) {
+        removeLoading();
+        debugPrint('Error fetch order product: ${error.bodyString}');
+      });
+      isLoadingOrderInvoice(false);
+    } catch (e) {
+      removeLoading();
+    }
   }
 }

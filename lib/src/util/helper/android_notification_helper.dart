@@ -38,8 +38,8 @@ class AndroidNotificationHelper {
       initializationSettings,
       onDidReceiveNotificationResponse: (details) {
         String? payload = details.payload;
-        debugPrint('Notification 1');
-        if (payload != null) {
+        debugPrint('Notification $payload');
+        if (payload != null && payload.isNotEmpty) {
           router.go(payload);
           // adminRouter.
         }

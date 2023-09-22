@@ -1,72 +1,32 @@
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:allpay/src/module/notification/model/notification_model.dart';
+import 'package:allpay/src/util/api_base_herper.dart';
+import 'package:get/get.dart';
 
 class NotificationController extends GetxController {
-  List<NotificationModel> notificationList = [
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (1).svg",
-      text: "You get \$5 cashback from payment",
-      title: "You Get Cashback!",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (2).svg",
-      text: "You get \$5 cashback from payment",
-      title: "New Service is Available!",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (3).svg",
-      text: "You get \$5 cashback from payment",
-      title: "Netflix Supscription Bill",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829.svg",
-      text: "You get \$5 cashback from payment",
-      title: "Verification Successful",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (1).svg",
-      text: "You get \$5 cashback from payment",
-      title: "E_Wallet is Connected!",
-    ),
-  ];
+  final _apiBaseHelper = ApiBaseHelper();
+  final listNotification = <NotificationModel>[].obs;
+  final getNotificationLoading = false.obs;
+  Future<List<NotificationModel>> fetchAllNoticaitons() async {
+    getNotificationLoading(true);
+    List<NotificationModel> notifications = [];
+    await _apiBaseHelper
+        .onNetworkRequesting(
+            url: 'notifications', methode: METHODE.get, isAuthorize: true)
+        .then(
+      (value) {
+        value.map((e) {
+          notifications.add(
+            NotificationModel.fromJson(e),
+          );
+        }).toList();
 
-  List<NotificationModel> ydtNotificationList = [
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (1).svg",
-      text: "You get \$5 cashback from payment",
-      title: "You Get Cashback!",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (2).svg",
-      text: "You get \$5 cashback from payment",
-      title: "New Service is Available!",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (3).svg",
-      text: "You get \$5 cashback from payment",
-      title: "Netflix Supscription Bill",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829.svg",
-      text: "You get \$5 cashback from payment",
-      title: "Verification Successful",
-    ),
-    NotificationModel(
-      svg: "assets/svg/Group 427322829 (1).svg",
-      text: "You get \$5 cashback from payment",
-      title: "E_Wallet is Connected!",
-    ),
-  ];
-}
+        listNotification.assignAll(notifications);
 
-///
-///
-class NotificationModel {
-  String? svg;
-  String? text;
-  String? title;
-  NotificationModel({
-    this.svg,
-    this.text,
-    this.title,
-  });
+        getNotificationLoading(false);
+      },
+    ).onError((ErrorModel error, stackTrace) {
+      getNotificationLoading(false);
+    });
+    return notifications;
+  }
 }

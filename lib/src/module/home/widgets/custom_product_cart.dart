@@ -125,19 +125,29 @@ class CustomProductCart extends StatelessWidget {
                             fontFamily: 'poppins-regular'),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: onAdd,
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: const BoxDecoration(
+                    Material(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      type: MaterialType.transparency,
+                      child: InkWell(
+                        onTap: onAdd,
+                        child: Ink(
+                          height: 30,
+                          width: 30,
+                          decoration: const BoxDecoration(
                             color: AppColor.primaryColor,
                             borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12))),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
+                              topLeft: Radius.circular(12),
+                              bottomRight: Radius.circular(12),
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

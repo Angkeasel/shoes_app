@@ -39,8 +39,8 @@ _$_Deliveryaddress _$$_DeliveryaddressFromJson(Map<String, dynamic> json) =>
       streetNo: json['street_no'] as String?,
       homeNo: json['home_no'] as String?,
       fullAddress: json['full_address'] as String?,
-      latitute: (json['latitute'] as num?)?.toDouble(),
-      longtitute: json['longtitute'] as int?,
+      latitute: json['latitute'] as num?,
+      longtitute: json['longtitute'] as num?,
     );
 
 Map<String, dynamic> _$$_DeliveryaddressToJson(_$_Deliveryaddress instance) =>

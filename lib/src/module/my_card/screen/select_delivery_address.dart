@@ -5,13 +5,24 @@ import 'package:allpay/src/widget/no_product_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-class SelectDeliveryAddressPage extends StatelessWidget {
+class SelectDeliveryAddressPage extends StatefulWidget {
   const SelectDeliveryAddressPage({super.key});
 
   @override
+  State<SelectDeliveryAddressPage> createState() =>
+      _SelectDeliveryAddressPageState();
+}
+
+class _SelectDeliveryAddressPageState extends State<SelectDeliveryAddressPage> {
+  @override
+  void initState() {
+    myCardController.fetchDeliveryAddress();
+    super.initState();
+  }
+
+  final myCardController = Get.put(MyCardController());
+  @override
   Widget build(BuildContext context) {
-    final myCardController = Get.put(MyCardController());
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Delivery Address'),
@@ -46,8 +57,13 @@ class SelectDeliveryAddressPage extends StatelessWidget {
                                     isSelected: e.key ==
                                         myCardController.currentIndex.value,
                                     ontap: () {
-                                      myCardController.currentIndex.value = e.key;
-                                      debugPrint('${ myCardController.currentIndex.value}');
+                                      myCardController.selectedAdress.value =
+                                          e.value;
+
+                                      myCardController.currentIndex.value =
+                                          e.key;
+                                      debugPrint(
+                                          '${myCardController.currentIndex.value}');
                                     },
                                     isDefualt: e.value.isDefault,
                                   );

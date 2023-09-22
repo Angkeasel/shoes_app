@@ -205,11 +205,12 @@ class _HomePageState extends State<HomePage> {
                                 title: e.value.name,
                                 image: e.value.thumbnailUrl,
                                 price: e.value.price,
+                                onAdd: () {
+                                  context.push('/detail/${e.value.id}');
+                                },
                                 // isFav: e.value.,
                                 onTap: () {
-                                  context.push(
-                                    '/detail/${e.value.id}',
-                                  );
+                                  context.push('/detail/${e.value.id}');
                                 },
                                 // onFav: () {
                                 //   // homeController.detailsModelList[index].isFav =

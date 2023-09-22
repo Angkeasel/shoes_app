@@ -166,118 +166,118 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                     .cover,
                                                               ),
                                                   ),
-                                            Positioned(
-                                              bottom: -5.0,
-                                              right: 0.0,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  onShowBottomSheet(
-                                                    isDimissible: false,
-                                                    enableDrag: false,
-                                                    context: context,
-                                                    height:
-                                                        context.height * 1 / 3,
-                                                    child: Column(
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            CustomSeletedItemWidget(
-                                                              label:
-                                                                  'View Photo',
-                                                              onTap: () {
-                                                                context.pop();
-                                                                Navigator.of(
-                                                                        context,
-                                                                        rootNavigator:
-                                                                            true)
-                                                                    .push(
-                                                                  MaterialPageRoute(
-                                                                    builder:
-                                                                        (context) =>
-                                                                            ImageViewFullScreen(
-                                                                      imageFile: profileCon
-                                                                          .imagePath
-                                                                          .value,
-                                                                      isImageFile: profileCon
-                                                                              .imagePath
-                                                                              .value
-                                                                              .isNotEmpty
-                                                                          ? true
-                                                                          : false,
-                                                                      isUrl: e.value.isLatest == true ||
-                                                                              e.value.imageUrl!.isNotEmpty && profileCon.imagePath.value.isEmpty
-                                                                          ? true
-                                                                          : false,
-                                                                      urlImage: e
-                                                                          .value
-                                                                          .imageUrl,
-                                                                    ),
-                                                                    maintainState:
-                                                                        false,
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ),
-                                                            CustomSeletedItemWidget(
-                                                              label: 'Gallery',
-                                                              onTap: () async {
-                                                                profileCon
-                                                                    .pickedImage(
-                                                                  ImageSource
-                                                                      .gallery,
-                                                                );
-                                                                profileCon
-                                                                    .onSubmitProfilePicutre();
+                                            // Positioned(
+                                            //   bottom: -5.0,
+                                            //   right: 0.0,
+                                            //   child: InkWell(
+                                            //     onTap: () {
+                                            //       onShowBottomSheet(
+                                            //         isDimissible: false,
+                                            //         enableDrag: false,
+                                            //         context: context,
+                                            //         height:
+                                            //             context.height * 1 / 3,
+                                            //         child: Column(
+                                            //           children: [
+                                            //             Column(
+                                            //               children: [
+                                            //                 CustomSeletedItemWidget(
+                                            //                   label:
+                                            //                       'View Photo',
+                                            //                   onTap: () {
+                                            //                     context.pop();
+                                            //                     Navigator.of(
+                                            //                             context,
+                                            //                             rootNavigator:
+                                            //                                 true)
+                                            //                         .push(
+                                            //                       MaterialPageRoute(
+                                            //                         builder:
+                                            //                             (context) =>
+                                            //                                 ImageViewFullScreen(
+                                            //                           imageFile: profileCon
+                                            //                               .imagePath
+                                            //                               .value,
+                                            //                           isImageFile: profileCon
+                                            //                                   .imagePath
+                                            //                                   .value
+                                            //                                   .isNotEmpty
+                                            //                               ? true
+                                            //                               : false,
+                                            //                           isUrl: e.value.isLatest == true ||
+                                            //                                   e.value.imageUrl!.isNotEmpty && profileCon.imagePath.value.isEmpty
+                                            //                               ? true
+                                            //                               : false,
+                                            //                           urlImage: e
+                                            //                               .value
+                                            //                               .imageUrl,
+                                            //                         ),
+                                            //                         maintainState:
+                                            //                             false,
+                                            //                       ),
+                                            //                     );
+                                            //                   },
+                                            //                 ),
+                                            //                 CustomSeletedItemWidget(
+                                            //                   label: 'Gallery',
+                                            //                   onTap: () async {
+                                            //                     profileCon
+                                            //                         .pickedImage(
+                                            //                       ImageSource
+                                            //                           .gallery,
+                                            //                     );
+                                            //                     profileCon
+                                            //                         .onSubmitProfilePicutre();
 
-                                                                profileCon
-                                                                    .update();
-                                                                context.pop();
-                                                              },
-                                                            ),
-                                                            CustomSeletedItemWidget(
-                                                              label: 'Camera',
-                                                              onTap: () {
-                                                                profileCon
-                                                                    .pickedImage(
-                                                                  ImageSource
-                                                                      .camera,
-                                                                );
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(
-                                                                  top: 8.0),
-                                                          child:
-                                                              CustomSeletedItemWidget(
-                                                            label: 'Cancel',
-                                                            onTap: () {
-                                                              context.pop();
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(4),
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.camera_alt_outlined,
-                                                    size: 20,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
+                                            //                     profileCon
+                                            //                         .update();
+                                            //                     context.pop();
+                                            //                   },
+                                            //                 ),
+                                            //                 CustomSeletedItemWidget(
+                                            //                   label: 'Camera',
+                                            //                   onTap: () {
+                                            //                     profileCon
+                                            //                         .pickedImage(
+                                            //                       ImageSource
+                                            //                           .camera,
+                                            //                     );
+                                            //                   },
+                                            //                 ),
+                                            //               ],
+                                            //             ),
+                                            //             Padding(
+                                            //               padding:
+                                            //                   const EdgeInsets
+                                            //                       .only(
+                                            //                       top: 8.0),
+                                            //               child:
+                                            //                   CustomSeletedItemWidget(
+                                            //                 label: 'Cancel',
+                                            //                 onTap: () {
+                                            //                   context.pop();
+                                            //                 },
+                                            //               ),
+                                            //             ),
+                                            //           ],
+                                            //         ),
+                                            //       );
+                                            //     },
+                                            //     child: Container(
+                                            //       padding:
+                                            //           const EdgeInsets.all(4),
+                                            //       decoration:
+                                            //           const BoxDecoration(
+                                            //         shape: BoxShape.circle,
+                                            //         color: Colors.white,
+                                            //       ),
+                                            //       child: const Icon(
+                                            //         Icons.camera_alt_outlined,
+                                            //         size: 20,
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
                                           ],
                                         ),
                                         Padding(
@@ -367,120 +367,120 @@ class _ProfilePageState extends State<ProfilePage> {
                                                           fit: BoxFit.cover,
                                                         ),
                                                 ),
-                                          Positioned(
-                                            bottom: -5.0,
-                                            right: 0.0,
-                                            child: InkWell(
-                                              onTap: () {
-                                                onShowBottomSheet(
-                                                  isDimissible: false,
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  height:
-                                                      context.height * 1 / 3,
-                                                  child: Column(
-                                                    children: [
-                                                      Column(
-                                                        children: [
-                                                          CustomSeletedItemWidget(
-                                                            label: 'View Photo',
-                                                            onTap: () {
-                                                              context.pop();
-                                                              Navigator.of(
-                                                                      context,
-                                                                      rootNavigator:
-                                                                          true)
-                                                                  .push(
-                                                                MaterialPageRoute(
-                                                                  builder:
-                                                                      (context) {
-                                                                    return ImageViewFullScreen(
-                                                                      isUrl:
-                                                                          false,
-                                                                      urlImage:
-                                                                          'assets/image/profile.png',
-                                                                      imageFile:
-                                                                          '${profileCon.imagePath}',
-                                                                      isImageFile: profileCon
-                                                                              .imagePath
-                                                                              .isEmpty
-                                                                          ? false
-                                                                          : true,
-                                                                    );
-                                                                  },
-                                                                  maintainState:
-                                                                      false,
-                                                                ),
-                                                              );
-                                                            },
-                                                          ),
-                                                          CustomSeletedItemWidget(
-                                                            label: 'Gallery',
-                                                            onTap: () async {
-                                                              profileCon
-                                                                  .pickedImage(
-                                                                ImageSource
-                                                                    .gallery,
-                                                              );
-                                                              profileCon
-                                                                  .update();
-                                                              context.pop();
-                                                              Future.delayed(
-                                                                  const Duration(
-                                                                      milliseconds:
-                                                                          800),
-                                                                  () {
-                                                                if (profileCon
-                                                                    .imagePath
-                                                                    .isNotEmpty) {
-                                                                  profileCon
-                                                                      .onSubmitProfilePicutre();
-                                                                }
-                                                              });
-                                                            },
-                                                          ),
-                                                          CustomSeletedItemWidget(
-                                                            label: 'Camera',
-                                                            onTap: () {
-                                                              profileCon
-                                                                  .pickedImage(
-                                                                ImageSource
-                                                                    .camera,
-                                                              );
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(top: 8.0),
-                                                        child:
-                                                            CustomSeletedItemWidget(
-                                                          label: 'Cancel',
-                                                          onTap: () {
-                                                            context.pop();
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(4),
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.white,
-                                                ),
-                                                child: const Icon(
-                                                  Icons.camera_alt_outlined,
-                                                  size: 20,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          // Positioned(
+                                          //   bottom: -5.0,
+                                          //   right: 0.0,
+                                          //   child: InkWell(
+                                          //     onTap: () {
+                                          //       onShowBottomSheet(
+                                          //         isDimissible: false,
+                                          //         enableDrag: false,
+                                          //         context: context,
+                                          //         height:
+                                          //             context.height * 1 / 3,
+                                          //         child: Column(
+                                          //           children: [
+                                          //             Column(
+                                          //               children: [
+                                          //                 CustomSeletedItemWidget(
+                                          //                   label: 'View Photo',
+                                          //                   onTap: () {
+                                          //                     context.pop();
+                                          //                     Navigator.of(
+                                          //                             context,
+                                          //                             rootNavigator:
+                                          //                                 true)
+                                          //                         .push(
+                                          //                       MaterialPageRoute(
+                                          //                         builder:
+                                          //                             (context) {
+                                          //                           return ImageViewFullScreen(
+                                          //                             isUrl:
+                                          //                                 false,
+                                          //                             urlImage:
+                                          //                                 'assets/image/profile.png',
+                                          //                             imageFile:
+                                          //                                 '${profileCon.imagePath}',
+                                          //                             isImageFile: profileCon
+                                          //                                     .imagePath
+                                          //                                     .isEmpty
+                                          //                                 ? false
+                                          //                                 : true,
+                                          //                           );
+                                          //                         },
+                                          //                         maintainState:
+                                          //                             false,
+                                          //                       ),
+                                          //                     );
+                                          //                   },
+                                          //                 ),
+                                          //                 CustomSeletedItemWidget(
+                                          //                   label: 'Gallery',
+                                          //                   onTap: () async {
+                                          //                     profileCon
+                                          //                         .pickedImage(
+                                          //                       ImageSource
+                                          //                           .gallery,
+                                          //                     );
+                                          //                     profileCon
+                                          //                         .update();
+                                          //                     context.pop();
+                                          //                     Future.delayed(
+                                          //                         const Duration(
+                                          //                             milliseconds:
+                                          //                                 800),
+                                          //                         () {
+                                          //                       if (profileCon
+                                          //                           .imagePath
+                                          //                           .isNotEmpty) {
+                                          //                         profileCon
+                                          //                             .onSubmitProfilePicutre();
+                                          //                       }
+                                          //                     });
+                                          //                   },
+                                          //                 ),
+                                          //                 CustomSeletedItemWidget(
+                                          //                   label: 'Camera',
+                                          //                   onTap: () {
+                                          //                     profileCon
+                                          //                         .pickedImage(
+                                          //                       ImageSource
+                                          //                           .camera,
+                                          //                     );
+                                          //                   },
+                                          //                 ),
+                                          //               ],
+                                          //             ),
+                                          //             Padding(
+                                          //               padding:
+                                          //                   const EdgeInsets
+                                          //                       .only(top: 8.0),
+                                          //               child:
+                                          //                   CustomSeletedItemWidget(
+                                          //                 label: 'Cancel',
+                                          //                 onTap: () {
+                                          //                   context.pop();
+                                          //                 },
+                                          //               ),
+                                          //             ),
+                                          //           ],
+                                          //         ),
+                                          //       );
+                                          //     },
+                                          //     child: Container(
+                                          //       padding:
+                                          //           const EdgeInsets.all(4),
+                                          //       decoration: const BoxDecoration(
+                                          //         shape: BoxShape.circle,
+                                          //         color: Colors.white,
+                                          //       ),
+                                          //       child: const Icon(
+                                          //         Icons.camera_alt_outlined,
+                                          //         size: 20,
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                       Padding(
@@ -564,17 +564,12 @@ class _ProfilePageState extends State<ProfilePage> {
                           context.push('/profile/-rourter/edit-profile');
                         },
                       ),
-                      CustomSettingRow(
-                        title: 'Notification',
-                        onTap: () {
-                          context.push('/mycart/-rourter');
-                        },
-                      ),
+
                       // CustomSettingRow(
                       //   title: 'Language',
                       //   onTap: () {},
                       // ),
-                      const SizedBox(height: 16),
+
                       CustomSettingRow(
                         title: 'My Order',
                         onTap: () {
@@ -584,50 +579,43 @@ class _ProfilePageState extends State<ProfilePage> {
                           viewOrderCon.fetchOrderProducts();
                         },
                       ),
-                      CustomSettingRow(
-                        title: 'My Favourite',
-                        onTap: () {
-                          context.push('/fav');
-                          debugPrint('onTap');
-                        },
-                      ),
+
                       const SizedBox(height: 16),
 
-                      // CustomSettingRow(
-                      //   title: 'Term and Condition',
-                      //   onTap: () {
-                      //     Get.to(() => const TermAndCondition());
-                      //   },
-                      // ),
-                      // CustomSettingRow(
-                      //   title: 'Policy Privacy',
-                      //   onTap: () {
-                      //     debugPrint('onTap');
-                      //   },
-                      // ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 50, horizontal: 20),
-                        child: CustomButtons(
-                          title: 'Log Out',
-                          onTap: () async {
-                            showDialogConfirmation(
-                              context: context,
-                              txt: 'Log out',
-                              accept: 'Yes',
-                              cancel: 'Cancel',
-                              onTap: () async {
-                                // await authController.onlogout();
-                                await authController.onlogout();
-                              },
-                            );
-                          },
-                        ),
+                      CustomSettingRow(
+                        title: 'Term and Condition',
+                        onTap: () {
+                          Get.to(() => const TermAndCondition());
+                        },
+                      ),
+                      CustomSettingRow(
+                        title: 'Policy Privacy',
+                        onTap: () {
+                          debugPrint('onTap');
+                        },
                       ),
                     ],
                   ),
                 ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: CustomButtons(
+          title: 'Log Out',
+          onTap: () async {
+            showDialogConfirmation(
+              context: context,
+              txt: 'Log out',
+              accept: 'Yes',
+              cancel: 'Cancel',
+              onTap: () async {
+                // await authController.onlogout();
+                await authController.onlogout();
+              },
+            );
+          },
         ),
       ),
     );

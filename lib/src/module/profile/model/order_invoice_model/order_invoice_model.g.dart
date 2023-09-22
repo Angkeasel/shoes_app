@@ -9,7 +9,7 @@ part of 'order_invoice_model.dart';
 _$_OrderInvoiceModel _$$_OrderInvoiceModelFromJson(Map<String, dynamic> json) =>
     _$_OrderInvoiceModel(
       id: json['id'] as int?,
-      totalAmount: json['total_amount'] as int?,
+      totalAmount: (json['total_amount'] as num?)?.toDouble(),
       status: json['status'] as String?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
@@ -42,7 +42,7 @@ _$_DeliveryAddressInvoice _$$_DeliveryAddressInvoiceFromJson(
       homeNo: json['home_no'] as String?,
       fullAddress: json['full_address'] as String?,
       latitute: (json['latitute'] as num?)?.toDouble(),
-      longtitute: json['longtitute'] as int?,
+      longtitute: (json['longtitute'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$_DeliveryAddressInvoiceToJson(

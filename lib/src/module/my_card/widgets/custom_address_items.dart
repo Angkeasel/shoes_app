@@ -50,7 +50,10 @@ class CustomDeliveryAddressCard extends StatelessWidget {
                 children: [
                   Text(
                     fullAddress ?? '',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontFamily: 'poppins-regular'),
                     maxLines: 2,
                     overflow: TextOverflow.clip,
                   ),
@@ -59,7 +62,10 @@ class CustomDeliveryAddressCard extends StatelessWidget {
                   ),
                   Text(
                     '$phoneNumber, $firstName $lastName',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontFamily: 'poppins-regular'),
                     maxLines: 2,
                     overflow: TextOverflow.clip,
                   ),
@@ -69,13 +75,13 @@ class CustomDeliveryAddressCard extends StatelessWidget {
                   Row(
                     children: [
                       isSelected == true
-                          ? const CustomDefaultWidget(
-                              title: 'Default',
+                          ? const Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: CustomDefaultWidget(
+                                title: 'Default',
+                              ),
                             )
                           : Container(),
-                      const SizedBox(
-                        width: 8.0,
-                      ),
                       CustomDefaultWidget(
                         isNotdefault: true,
                         title: label ?? '',

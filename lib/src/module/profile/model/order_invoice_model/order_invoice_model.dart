@@ -7,7 +7,7 @@ part 'order_invoice_model.g.dart';
 class OrderInvoiceModel with _$OrderInvoiceModel {
   factory OrderInvoiceModel({
     @JsonKey(name: 'id') final int? id,
-    @JsonKey(name: 'total_amount') final int? totalAmount,
+    @JsonKey(name: 'total_amount') final double? totalAmount,
     @JsonKey(name: 'status') final String? status,
     @JsonKey(name: 'created_at') final String? createdAt,
     @JsonKey(name: 'updated_at') final String? updatedAt,
@@ -27,7 +27,7 @@ class DeliveryAddressInvoice with _$DeliveryAddressInvoice {
     @JsonKey(name: 'home_no') final String? homeNo,
     @JsonKey(name: 'full_address') final String? fullAddress,
     @JsonKey(name: 'latitute') final double? latitute,
-    @JsonKey(name: 'longtitute') final int? longtitute,
+    @JsonKey(name: 'longtitute') final double? longtitute,
   }) = _DeliveryAddressInvoice;
 
   factory DeliveryAddressInvoice.fromJson(Map<String, dynamic> json) =>

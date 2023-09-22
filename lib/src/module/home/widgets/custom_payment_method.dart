@@ -11,20 +11,30 @@ class CustomPaymentMethod extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Row(
-       
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Image.asset('assets/png/sack-dollar.png',height: 20,),
-         const SizedBox(width: 10),
+          Image.asset(
+            'assets/png/sack-dollar.png',
+            height: 20,
+          ),
+          const SizedBox(width: 10),
           Text(
             title ?? "",
-            style:const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
           ),
-         const Spacer(),
-        Text(  "\$${NumberFormat('###0.00').format(total)}",
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.blueAccent, fontFamily: 'poppins-regular',),
-        ),
-         
+          const Spacer(),
+          Text(
+            "\$${NumberFormat('###0.00').format(total)}",
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.blueAccent,
+              fontFamily: 'poppins-regular',
+            ),
+          ),
         ],
       ),
     );

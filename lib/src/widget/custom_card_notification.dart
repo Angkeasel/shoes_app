@@ -1,7 +1,6 @@
+import 'package:allpay/src/module/notification/model/notification_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
-import '../module/notification/controller/controller_notification.dart';
 
 class CustomNotification extends StatelessWidget {
   final NotificationModel? notificationModel;
@@ -47,7 +46,7 @@ class CustomNotification extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  notificationModel!.text!,
+                  notificationModel?.body ?? '',
                   style: const TextStyle(
                     fontWeight: FontWeight.w100,
                     fontSize: 12,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:allpay/src/module/home/models/product/big_product_model.dart';
 import 'package:allpay/src/util/api_base_herper.dart';
 import 'package:allpay/src/util/loading/loading_dialog.dart';
@@ -87,7 +89,7 @@ class HomeController extends GetxController {
           print("length ${productList.length}");
         }).toList();
         currentPage.value++;
-        totalPage.value = bigProductModel.value.totalPages!;
+        totalPage.value = bigProductModel.value.totalPages ?? 0;
 
         debugPrint('==========> get List pro:$productList');
         loadingFetchAllProduct(false);
@@ -146,13 +148,20 @@ class HomeController extends GetxController {
     try {
       await api
           .onNetworkRequesting(
-              url: "product/$id", methode: METHODE.get, isAuthorize: true)
-          .then((value) {
-        proDetailsModel = ProductDetailsModel.fromJson(value);
-        debugPrint('=========proDetailsModel>$proDetailsModel');
-      }).onError((ErrorModel error, stackTrace) {
-        debugPrint('=======>Error Body :${error.bodyString}');
-      });
+        url: "product/$id",
+        methode: METHODE.get,
+        isAuthorize: true,
+      )
+          .then(
+        (value) {
+          proDetailsModel = ProductDetailsModel.fromJson(value);
+          debugPrint('=========proDetailsModel>$proDetailsModel');
+        },
+      ).onError(
+        (ErrorModel error, stackTrace) {
+          debugPrint('=======>Error Body :${error.bodyString}');
+        },
+      );
       isLoadingDetails(false);
     } catch (e) {
       debugPrint('======>Error Body catch :${e.toString()}');
@@ -349,6 +358,8 @@ class HomeController extends GetxController {
       },
     ).onError(
       (ErrorModel error, _) {
+        alertErrorSnackbar(
+            title: 'Error', message: error.bodyString['message'] ?? '');
         debugPrint('Update Cart Error: ${error.bodyString}');
         removeLoading();
       },

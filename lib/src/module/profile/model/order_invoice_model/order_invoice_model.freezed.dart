@@ -23,7 +23,7 @@ mixin _$OrderInvoiceModel {
   @JsonKey(name: 'id')
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_amount')
-  int? get totalAmount => throw _privateConstructorUsedError;
+  double? get totalAmount => throw _privateConstructorUsedError;
   @JsonKey(name: 'status')
   String? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -50,7 +50,7 @@ abstract class $OrderInvoiceModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int? id,
-      @JsonKey(name: 'total_amount') int? totalAmount,
+      @JsonKey(name: 'total_amount') double? totalAmount,
       @JsonKey(name: 'status') String? status,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
@@ -89,7 +89,7 @@ class _$OrderInvoiceModelCopyWithImpl<$Res, $Val extends OrderInvoiceModel>
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -137,7 +137,7 @@ abstract class _$$_OrderInvoiceModelCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'id') int? id,
-      @JsonKey(name: 'total_amount') int? totalAmount,
+      @JsonKey(name: 'total_amount') double? totalAmount,
       @JsonKey(name: 'status') String? status,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
@@ -175,7 +175,7 @@ class __$$_OrderInvoiceModelCopyWithImpl<$Res>
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -221,7 +221,7 @@ class _$_OrderInvoiceModel implements _OrderInvoiceModel {
   final int? id;
   @override
   @JsonKey(name: 'total_amount')
-  final int? totalAmount;
+  final double? totalAmount;
   @override
   @JsonKey(name: 'status')
   final String? status;
@@ -299,7 +299,7 @@ class _$_OrderInvoiceModel implements _OrderInvoiceModel {
 abstract class _OrderInvoiceModel implements OrderInvoiceModel {
   factory _OrderInvoiceModel(
       {@JsonKey(name: 'id') final int? id,
-      @JsonKey(name: 'total_amount') final int? totalAmount,
+      @JsonKey(name: 'total_amount') final double? totalAmount,
       @JsonKey(name: 'status') final String? status,
       @JsonKey(name: 'created_at') final String? createdAt,
       @JsonKey(name: 'updated_at') final String? updatedAt,
@@ -316,7 +316,7 @@ abstract class _OrderInvoiceModel implements OrderInvoiceModel {
   int? get id;
   @override
   @JsonKey(name: 'total_amount')
-  int? get totalAmount;
+  double? get totalAmount;
   @override
   @JsonKey(name: 'status')
   String? get status;
@@ -356,7 +356,7 @@ mixin _$DeliveryAddressInvoice {
   @JsonKey(name: 'latitute')
   double? get latitute => throw _privateConstructorUsedError;
   @JsonKey(name: 'longtitute')
-  int? get longtitute => throw _privateConstructorUsedError;
+  double? get longtitute => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -376,7 +376,7 @@ abstract class $DeliveryAddressInvoiceCopyWith<$Res> {
       @JsonKey(name: 'home_no') String? homeNo,
       @JsonKey(name: 'full_address') String? fullAddress,
       @JsonKey(name: 'latitute') double? latitute,
-      @JsonKey(name: 'longtitute') int? longtitute});
+      @JsonKey(name: 'longtitute') double? longtitute});
 }
 
 /// @nodoc
@@ -424,7 +424,7 @@ class _$DeliveryAddressInvoiceCopyWithImpl<$Res,
       longtitute: freezed == longtitute
           ? _value.longtitute
           : longtitute // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ) as $Val);
   }
 }
@@ -443,7 +443,7 @@ abstract class _$$_DeliveryAddressInvoiceCopyWith<$Res>
       @JsonKey(name: 'home_no') String? homeNo,
       @JsonKey(name: 'full_address') String? fullAddress,
       @JsonKey(name: 'latitute') double? latitute,
-      @JsonKey(name: 'longtitute') int? longtitute});
+      @JsonKey(name: 'longtitute') double? longtitute});
 }
 
 /// @nodoc
@@ -489,7 +489,7 @@ class __$$_DeliveryAddressInvoiceCopyWithImpl<$Res>
       longtitute: freezed == longtitute
           ? _value.longtitute
           : longtitute // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ));
   }
 }
@@ -525,7 +525,7 @@ class _$_DeliveryAddressInvoice implements _DeliveryAddressInvoice {
   final double? latitute;
   @override
   @JsonKey(name: 'longtitute')
-  final int? longtitute;
+  final double? longtitute;
 
   @override
   String toString() {
@@ -576,7 +576,7 @@ abstract class _DeliveryAddressInvoice implements DeliveryAddressInvoice {
           @JsonKey(name: 'home_no') final String? homeNo,
           @JsonKey(name: 'full_address') final String? fullAddress,
           @JsonKey(name: 'latitute') final double? latitute,
-          @JsonKey(name: 'longtitute') final int? longtitute}) =
+          @JsonKey(name: 'longtitute') final double? longtitute}) =
       _$_DeliveryAddressInvoice;
 
   factory _DeliveryAddressInvoice.fromJson(Map<String, dynamic> json) =
@@ -599,7 +599,7 @@ abstract class _DeliveryAddressInvoice implements DeliveryAddressInvoice {
   double? get latitute;
   @override
   @JsonKey(name: 'longtitute')
-  int? get longtitute;
+  double? get longtitute;
   @override
   @JsonKey(ignore: true)
   _$$_DeliveryAddressInvoiceCopyWith<_$_DeliveryAddressInvoice> get copyWith =>
